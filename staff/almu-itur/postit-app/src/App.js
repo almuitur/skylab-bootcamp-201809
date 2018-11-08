@@ -5,8 +5,10 @@ import Postits from './components/Postits'
 import Error from './components/Error'
 import Landing from './components/Landing'
 import logic from './logic'
+import Profile from './components/Profile'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
+logic.url = 'http://localhost:5000/api'
 
 class App extends Component {
     state = { error: null }
@@ -30,7 +32,7 @@ class App extends Component {
     handleLogin = (username, password) => {
         try {
             logic.login(username, password)
-                .then(() =>  this.props.history.push('/postits'))
+                .then(() => this.props.history.push('/postits'))
                 .catch(err => this.setState({ error: err.message }))
         } catch (err) {
             this.setState({ error: err.message })
@@ -45,6 +47,8 @@ class App extends Component {
 
     handleGoBack = () => this.props.history.push('/')
 
+    handleProfileClick = () => this.props.history.push('/profile')
+
     render() {
         const { error } = this.state
 
@@ -55,10 +59,11 @@ class App extends Component {
             {error && <Error message={error} />}
 
             <Route path="/postits" render={() => logic.loggedIn ? <div>
+                <section><button onClick={this.handleProfileClick}>Profile</button></section>
                 <section><button onClick={this.handleLogoutClick}>Logout</button></section>
                 <Postits />
             </div> : <Redirect to="/" />} />
-
+            <Route path="/profile" render={() => logic.loggedIn ? <Profile /> : <Redirect to="/" /> } />
         </div>
     }
 }

@@ -20,3 +20,8 @@
 .error {
     color: red;
 }
+
+button {
+    border: none;
+    background: transparent;
+}

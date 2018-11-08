@@ -267,5 +267,23 @@ describe('logic', () => {
                     })
             )
         })
+
+        !false && describe('modify', () => {
+            let user, postit, newText
+
+            beforeEach(() => {
+               
+                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123', postits: [postit] })
+
+                newName = `new-name-${Math.random()}`
+                newSurname = `new-name-${Math.random()}`
+
+                fs.writeFileSync(User._file, JSON.stringify([user]))
+            })
+
+            it('should succeed on correct data', () => {
+                logic.modifyPostit(user.id, postit.id, newText)
+                    .then(() => {
+            })
     })
 })

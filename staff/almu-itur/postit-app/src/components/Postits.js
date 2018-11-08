@@ -14,36 +14,41 @@ class Postits extends Component {
     }
 
     handleSubmit = text =>
-        logic.createPostit(text)
+        logic.addPostit(text)
             .then(() => logic.listPostits())
             .then(postits => this.setState({ postits }))
 
     // TODO error handling!
 
-    handleDeletePost = id =>
-        logic.deletePostit(id)
+    handleRemovePostit = id =>
+        logic.removePostit(id)
             .then(() => logic.listPostits())
             .then(postits => this.setState({ postits }))
 
     // TODO error handling!
 
 
-    handleUpdatePost = (id, text) =>
-        logic.updatePostit(id, text)
+    handleModifyPostit = (id, text) =>
+        logic.modifyPostit(id, text)
             .then(() => logic.listPostits())
             .then(postits => this.setState({ postits }))
 
     // TODO error handling!
 
+    handleUpdateProfile = () => {
+        logic.updateUser()
+
+        this.props.history.push('/profile')
+    }
 
     render() {
         return <div>
             <h1>Post-It App <i className="fas fa-sticky-note"></i></h1>
-
+            <button onClick="">Profile</button>
             <InputForm onSubmit={this.handleSubmit} />
 
             <section>
-                {this.state.postits.map(postit => <Post key={postit.id} text={postit.text} id={postit.id} onDeletePost={this.handleDeletePost} onUpdatePost={this.handleUpdatePost} />)}
+                {this.state.postits.map(postit => <Post key={postit.id} text={postit.text} id={postit.id} onDeletePost={this.handleRemovePostit} onUpdatePost={this.handleModifyPostit} />)}
             </section>
         </div>
     }
