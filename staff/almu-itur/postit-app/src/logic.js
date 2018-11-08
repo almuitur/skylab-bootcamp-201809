@@ -19,7 +19,7 @@ const logic = {
         if (!username.trim()) throw Error('username is empty or blank')
         if (!password.trim()) throw Error('password is empty or blank')
 
-        return fetch('https://skylabcoders.herokuapp.com/api/user', {
+        return fetch('http://localhost:5000/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -39,7 +39,7 @@ const logic = {
         if (!username.trim()) throw Error('username is empty or blank')
         if (!password.trim()) throw Error('password is empty or blank')
 
-        return fetch('https://skylabcoders.herokuapp.com/api/auth', {
+        return fetch('http://localhost:5000/api/auth', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8'
@@ -80,8 +80,8 @@ const logic = {
 
         this._postits.push(new Postit(text))
 
-        return fetch(`https://skylabcoders.herokuapp.com/api/user/${this._userId}`, {
-            method: 'PUT',
+        return fetch(`http://localhost:5000/api/users/${this._userId}/postits`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Bearer ${this._token}`
@@ -95,7 +95,7 @@ const logic = {
     },
 
     listPostits() {
-        return fetch(`https://skylabcoders.herokuapp.com/api/user/${this._userId}`, {
+        return fetch(`http://localhost:5000/api/users/${this._userId}/postits`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${this._token}`
@@ -114,7 +114,7 @@ const logic = {
 
         this._postits = this._postits.filter(postit => postit.id !== id)
 
-        return fetch(`https://skylabcoders.herokuapp.com/api/user/${this._userId}`, {
+        return fetch(`http://localhost:5000/api/users/${this._userId}/postits/:${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
@@ -139,7 +139,7 @@ const logic = {
 
         postit.text = text
 
-        return fetch(`https://skylabcoders.herokuapp.com/api/user/${this._userId}`, {
+        return fetch(`http://localhost:5000/api/users/${this._userId}/postits/:${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
