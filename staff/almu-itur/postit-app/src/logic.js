@@ -141,23 +141,6 @@ const logic = {
             .then(res => {
                 if (res.error) throw Error(res.error)
             })
-    },
-
-    updateUser(id, name, surname, oldPassword, newPassword) {
-        if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
-        if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
-        if (typeof surname !== 'string') throw TypeError(`${surname} is not a string`)
-        if (typeof oldPassword !== 'string') throw TypeError(`${oldPassword} is not a string`)
-        if (typeof newPassword !== 'string') throw TypeError(`${newPassword} is not a string`)
-
-        if (!id.trim().length) throw new ValueError('id is empty or blank')
-        if (!name.trim().length) throw new ValueError('name is empty or blank')
-        if (!surname.trim().length) throw new ValueError('surname is empty or blank')
-        if (!oldPassword.trim().length) throw new ValueError('oldPassword is empty or blank')
-        if (!newPassword.trim().length) throw new ValueError('newPassword is empty or blank')
-
-
-         
     }
 }
 
