@@ -2,8 +2,7 @@ const { Schema } = require('mongoose')
 
 const Postit = new Schema({
     text: String,
-    status: String,
-    user: String
+    status: String
 })
 
 const User = new Schema({
