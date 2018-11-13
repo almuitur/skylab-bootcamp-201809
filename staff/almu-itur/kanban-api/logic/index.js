@@ -205,21 +205,25 @@ const logic = {
         if (!id.trim().length) throw new ValueError('id is empty or blank')
 
         return (async () => {
-            let user = await  User.findById(id).lean()
+            const user = await User.findById(id).lean()
+
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            let postits =  await Postit.find({ user: user._id }).lean()
-                    postits.forEach(postit => {
-                        postit.id = postit._id.toString()
-                        
-                        delete postit._id
+            const postits = await Postit.find({ user: user._id })
+                .lean()
 
-                        postit.user = postit.user.toString()
+            postits.forEach(postit => {
+                postit.id = postit._id.toString()
 
-                        return postit
-                    })
-                return _postits
-            })()
+                delete postit._id
+
+                postit.user = postit.user.toString()
+
+                return postit
+            })
+
+            return postits
+        })()
     },
 
     /**
@@ -248,26 +252,12 @@ const logic = {
             
                 if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-                const { postits } = user
+                const postit = await Postit.findOne({ user: user._id, _id: postitId })
 
-                // by filtering
+                if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
 
-                // const _postits = postits.filter(postit => postit.id !== postitId)
-
-                // if (_postits.length !== postits.length - 1) throw Error(`postit with id ${postitId} not found in user with id ${id}`)
-
-                // user.postits = _postits
-
-                // by finding index
-
-                const index = postits.findIndex(postit => postit.id === postitId)
-
-                if (index < 0) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
-
-                postits.splice(index, 1)
-
-                await user.save()
-        })
+                await postit.remove()
+        })()
     },
 
     modifyPostit(id, postitId, text, status) {
@@ -287,21 +277,20 @@ const logic = {
 
         // if (!status.trim().length) throw new ValueError('status is empty or blank')
 
-        return User.findById(id)
-            .then(user => {
-                if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        return (async () => {
+            const user = await User.findById(id)
 
-                const { postits } = user
+            if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-                const postit = postits.find(postit => postit.id === postitId)
+            const postit = await Postit.findOne({ user: user._id, _id: postitId })
 
-                if (!postit) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
+            if (!postit) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
 
-                postit.text = text
-                postit.status = status
+            postit.text = text
+            postit.status = status
 
-                return user.save()
-            })
+            await postit.save()
+        })()
     }
 }
 
