@@ -59,43 +59,14 @@ class Postits extends Component {
         this.handleModifyPostit(idPostit, textPostit, status)
     }
 
-    
-
     render() {
 
         let postits = { todo: [], doing: [], review: [], done: [] }
-        // let template = (postit) => (
-        //     <div className="postits" key={postit.id} draggable onDragStart={event => this.dragStart(event, postit.id)}>
-        //         {postit.text}
-        //     </div>
-        // )
-
-        // this.state.postits.forEach(postit => {
-        //     switch (postit.status) {
-        //         case 'todo':
-        //             postits.todo.push(template(postit))
-        //             break;
-        //         case 'doing':
-        //             postits.doing.push(template(postit))
-        //             break;
-        //         case 'review':
-        //             postits.review.push(template(postit))
-        //             break;
-        //         case 'done':
-        //             postits.done.push(template(postit))
-        //             break;
-        //     }
-        // })
 
         return <div className="postits-page">
-            {/* <div className="top"> */}
-            <h1>Kanban App</h1>
+   
+            <h1 className="postits-page-title">Kanban App</h1>
             <InputForm onSubmit={this.handleSubmit} />
-            {/* </div> */}
-
-            {/* <section>
-                {this.state.postits.map(postit => <Post key={postit.id} text={postit.text} id={postit.id} onDeletePost={this.handleRemovePostit} onUpdatePost={this.handleModifyPostit} />)}
-            </section> */}
 
             <div className="columns-container">
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'todo')}>

@@ -1,4 +1,4 @@
-const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
+const { Schema } = require('mongoose')
 
 const Postit = new Schema({
     text: {

@@ -5,6 +5,9 @@ import Postits from './components/Postits'
 import Error from './components/Error'
 import Landing from './components/Landing'
 import logic from './logic'
+import Profile from './components/Profile'
+import NavbarLoggin from './components/NavbarLoggin'
+
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
 logic.url = 'http://localhost:5000/api'
@@ -44,6 +47,8 @@ class App extends Component {
         this.props.history.push('/')
     }
 
+    handleProfileClick = () => this.props.history.push('/profile')
+
     handleGoBack = () => this.props.history.push('/')
 
     render() {
@@ -54,12 +59,12 @@ class App extends Component {
             <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onGoBack={this.handleGoBack} /> : <Redirect to="/postits" />} />
             <Route path="/login" render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onGoBack={this.handleGoBack} /> : <Redirect to="/postits" />} />
             {error && <Error message={error} />}
-
-            <Route path="/postits" render={() => logic.loggedIn ? <div>
-                <div className="logout-button-section"><a className="logout-button" onClick={this.handleLogoutClick}>Logout</a></div>
-                <Postits />
-            </div> : <Redirect to="/" />} />
-
+            {logic.loggedIn && <NavbarLoggin onLogout = { this.handleLogoutClick } onProfileClick = { this.handleProfileClick }></NavbarLoggin>}
+            <Route path="/postits" render={() => logic.loggedIn ? <div> <Postits /> </div> : <Redirect to="/" />} />
+            <Route path="/profile" render={() => logic.loggedIn ? <div>
+                {/* <Profile updateProfile = {this.handleUpdateProfile} listBuddies={this.handleListBuddies} addBuddies={this.handleAddBuddies} removeBuddies = {this.handleRemoveBuddies} />  */}
+                <Profile />
+                </div> : <Redirect to="/" /> } />
         </div>
     }
 }

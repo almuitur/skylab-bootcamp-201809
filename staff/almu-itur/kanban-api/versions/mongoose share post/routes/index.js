@@ -129,44 +129,4 @@ router.delete('/users/:id/postits/:postitId', [bearerTokenParser, jwtVerifier, j
 
 })
 
-router.post('/users/:id/buddies/:buddyUsername', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    routeHandler(() => {
-        const { sub, params: { id, buddyUsername } } = req
-
-        if (id !== sub) throw Error('token sub does not match user id')
-        
-        return logic.addBuddy(id, buddyUsername)
-            .then(() => res.json({
-                message: 'buddy added'
-            }))
-    }, res)
-})
-
-router.get('/users/:id/buddies', [bearerTokenParser, jwtVerifier], (req, res) => {
-    routeHandler(() => {
-        const { sub, params: { id } } = req
-
-        if (id !== sub) throw Error('token sub does not match user id')
-
-        return logic.listBuddies(id)
-            .then(buddies => res.json({
-                data: buddies
-            }))
-    }, res)
-})
-
-router.delete('/users/:id/buddies/:buddyUsername', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    routeHandler(() => {
-        const { sub, params: { id, buddyUsername } } = req
-
-        if (id !== sub) throw Error('token sub does not match user id')
-
-        return logic.removeBuddy(id, buddyUsername)
-            .then(() => res.json({
-                message: 'buddy removed'
-            }))
-    }, res)
-
-})
-
 module.exports = router
