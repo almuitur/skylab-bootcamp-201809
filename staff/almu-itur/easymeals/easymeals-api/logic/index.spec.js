@@ -12,16 +12,46 @@ const { expect } = require('chai')
 
 const MONGO_URL = 'mongodb://localhost:27017/easymeals-test'
 
-// running test from CLI
-// normal -> $ mocha src/logic.spec.js --timeout 10000
-// debug -> $ mocha debug src/logic.spec.js --timeout 10000
-
 describe('logic', () => {
     before(() => mongoose.connect(MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }))
 
-    beforeEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+    describe('search meal'), () => {
 
-    describe('user', () => {
+        it('should succeed on correct data', async () => {
+            const res = await logic.searchRandomMeal(searchParams)
+
+            expect(res).not.to.be.undefined
+            expect(res).to.be.instanceOf(Meal)
+            expect(res.category).to.equal(searchParams.category)
+            searchParams.subcategory != null && expect(res.subcategory).to.equal(searchParams.subcategory)
+            searchParams.diet != null && expect(res.diet).to.equal(searchParams.diet)
+            searchParams.isSpecial != null && expect(res.isSpecial).to.equal(searchParams.isSpecial)
+            searchParams.isCold != null && expect(res.isCold).to.equal(searchParams.isCold)
+            if (searchParams.intolerances !=null) {
+                res.intolerances.forEach(intoleranceRes => {
+                    searchParams.intolerances.forEach(intoleranceUser => {
+                        res_ = intoleranceRes.includes(intoleranceUser)
+                        expect(res_).not.to.be(true)
+                    })
+                })
+            }
+            searchParams.isLight != null && expect(res.isLight).to.equal(searchParams.isLight)
+            if (searchParams.seasons !=null) {
+                res.seasons.forEach(seasonRes => {
+                    searchParams.seasons.forEach(seasonUser => {
+                        res_ = seasonRes.includes(seasonUser)
+                        expect(res_).not.to.be(true)
+                    })
+                })
+            }
+        })
+    }
+
+
+
+    false && beforeEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+
+    false && describe('user', () => {
         describe('register', () => {
             let name, surname, username, password
 
@@ -241,7 +271,7 @@ describe('logic', () => {
             })
         })
 
-        describe('add collaborator', () => {
+        false && describe('add collaborator', () => {
             let user, user2
 
             beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save()
@@ -264,7 +294,7 @@ describe('logic', () => {
             })
         })
 
-        describe('list collaborators', () => {
+        false && describe('list collaborators', () => {
             let user, user2
 
             beforeEach(() => (user2 = new User({ name: 'Pepe', surname: 'Grillo', username: 'pg', password: '123' })).save()
@@ -288,7 +318,7 @@ describe('logic', () => {
             })
         })
 
-        describe('save photo', () => {
+        false && describe('save photo', () => {
             let user
 
             beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
@@ -306,7 +336,7 @@ describe('logic', () => {
             afterEach(() => fs.removeSync(`data/users/${user.id}`))
         })
 
-        describe('retrieve photo', () => {
+        false && describe('retrieve photo', () => {
             let user
 
             beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
@@ -345,20 +375,20 @@ describe('logic', () => {
 
                 it('should succeed on correct data', async () => {
                     const userPhotoReadStream = await logic.retrieveUserPhoto(user.id)
-    
+
                     const userPhotoHashReadStream = userPhotoReadStream.pipe(hasha.stream())
-    
+
                     const actualPhotoHashReadStream = fs.createReadStream(path.join(folder, file)).pipe(hasha.stream())
-    
+
                     const hashes = await Promise.all([
                         streamToArray(userPhotoHashReadStream)
                             .then(arr => arr[0]),
                         streamToArray(actualPhotoHashReadStream)
                             .then(arr => arr[0])
                     ])
-    
+
                     const [userPhotoHash, actualPhotoHash] = hashes
-    
+
                     debugger
 
                     expect(userPhotoHash).to.equal(actualPhotoHash)
@@ -370,7 +400,7 @@ describe('logic', () => {
     })
 
 
-    describe('postits', () => {
+    false && describe('postits', () => {
         describe('add', () => {
             let user, text
 
@@ -581,7 +611,8 @@ describe('logic', () => {
         })
     })
 
-    afterEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+    // afterEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+
 
     after(() => mongoose.disconnect())
 })

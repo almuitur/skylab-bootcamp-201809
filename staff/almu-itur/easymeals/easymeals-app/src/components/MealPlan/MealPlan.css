@@ -1,0 +1,39 @@
+
+.meal-plan {
+    background: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 0 auto;
+}
+
+.meal-plan-days-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ef9a9a;
+}
+
+.meal-plan-day {
+    font-size: 1.2em;
+}
+
+.meal-plan-meals-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.day-meal {
+    margin: 10px;
+    font-size: 1em;
+}
+
+.column{
+    width: 14%;
+    padding: 5px;
+    margin: 20px 5px;
+    background-color: #E8E2E1;
+    border-radius: 10px;
+}

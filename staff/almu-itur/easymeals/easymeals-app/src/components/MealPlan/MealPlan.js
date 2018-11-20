@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import logic from '../logic'
-import InputForm from './InputForm'
-import Meal from './Meal'
+import logic from '../../logic'
+import InputForm from '../InputForm'
+import Meal from '../Meal'
 import { Button } from "mdbreact"
+import './MealPlan.css'
 
-class Postits extends Component {
+class MealPlan extends Component {
     state = { postits: [] }
 
     componentDidMount() {
@@ -91,21 +92,21 @@ class Postits extends Component {
             sundayBreak: [], 
             sundayLunch: [] }
 
-        return <div className="meals-plan">
-            <h1>Meals Plan</h1>
+        return <div className="meal-plan">
+            <h1>Meal Plan</h1>
             <InputForm onSubmit={this.handleSubmit} />
 
-            <div className="meals-plan-days-container">
-                <h4 className="meals-plan-day">MONDAY</h4>
-                <h4 className="meals-plan-day">TUESDAY</h4>
-                <h4 className="meals-plan-day">WEDNESDAY</h4>
-                <h4 className="meals-plan-day">THURSDAY</h4>
-                <h4 className="meals-plan-day">FRIDAY</h4>
-                <h4 className="meals-plan-day">SATURDAY</h4>
-                <h4 className="meals-plan-day">SUNDAY</h4>
+            <div className="meal-plan-days-container">
+                <h4 className="meal-plan-day">MONDAY</h4>
+                <h4 className="meal-plan-day">TUESDAY</h4>
+                <h4 className="meal-plan-day">WEDNESDAY</h4>
+                <h4 className="meal-plan-day">THURSDAY</h4>
+                <h4 className="meal-plan-day">FRIDAY</h4>
+                <h4 className="meal-plan-day">SATURDAY</h4>
+                <h4 className="meal-plan-day">SUNDAY</h4>
             </div>
 
-            <div className="meals-plan-meals-container">
+            <div className="meal-plan-meals-container">
 
                           
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayBreak')}>
@@ -145,7 +146,7 @@ class Postits extends Component {
                 </div>
             </div>
 
-            <div className="meals-plan-meals-container">
+            <div className="meal-plan-meals-container">
 
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
@@ -193,4 +194,4 @@ class Postits extends Component {
     }
 }
 
-export default Postits
+export default MealPlan

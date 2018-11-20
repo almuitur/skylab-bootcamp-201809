@@ -3,6 +3,17 @@
   margin: 1%;
 }
 
+.login-left-container {
+  display: none;
+}
+
+.login-right-container {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+}
+
 .login-right-logo {
   margin: auto;
   width: 100px;
@@ -29,12 +40,26 @@
 
 .login-right-form-container form {
   width: 80%;
+  justify-content: center;
+  margin: auto;
 }
 
-@media screen and (max-device-width: 568px) {
+@media screen and (min-width: 500px) and (max-width: 700px) {
 
-  .login-general-container {
-    flex-direction: column;  
+  .login-left-container {
+    display: block;
+    background-image: url("../../images/login-image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 40%;
+    height: 99vh;
+    margin: 1%;
+  }
+
+  .login-right-container {
+    width: 60%;  
+    text-align: center;
   }
 
   .login-right-form-container {
@@ -43,9 +68,10 @@
   }
 }
 
-@media screen and (min-width: 569px) {
+@media screen and (min-width: 700px) {
 
   .login-left-container {
+    display: block;
     background-image: url("../../images/login-image.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -53,8 +79,6 @@
     width: 50%;
     height: 99vh;
     margin: 1%;
-    text-align: center;
-    text-justify: center;
   }
 
   .login-right-container {

@@ -3,43 +3,34 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 import { BrowserRouter as Router } from 'react-router-dom'
 
 class NavbarLogged extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            collapse: false,
-            isWideEnough: false,
-        };
-    this.onClick = this.onClick.bind(this);
-    }
 
-    onClick(){
-        this.setState({
-            collapse: !this.state.collapse,
-        });
-    }
+    state = { collapse: false, isWideEnough: false }
+
+    onClick = () => this.setState({ collapse: !this.state.collapse })
+
     render() {
         return (
             <Router>
                 <Navbar color="rgba-red-strong" dark expand="md" scrolling>
                     <NavbarBrand href="/">
-                        <strong>EasyMeals</strong>
+                    <a className="nav-link waves-effect waves-light" onClick={this.props.onHomeClick}><strong>EasyMeals</strong></a>
                     </NavbarBrand>
                     { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                     <Collapse isOpen = { this.state.collapse } navbar>
                         <NavbarNav right>
                         <NavItem>
-                              <NavLink to="#">Meals Plan</NavLink>
+                              <a className="nav-link waves-effect waves-light" onClick={this.props.onMealsPlanClick}>Meal Plan</a>
                           </NavItem>
-                          <NavItem>
+                          {/* <NavItem>
                               <NavLink to="#">Add Meal</NavLink>
-                          </NavItem>
+                          </NavItem> */}
                           <NavItem>
                             <Dropdown>
                                 <DropdownToggle nav caret>Profile</DropdownToggle>
                                 <DropdownMenu>
-                                    <DropdownItem href="#">My saved meals plan</DropdownItem>
-                                    <DropdownItem href="#">Account settings</DropdownItem>
-                                    <DropdownItem href="#">Logout</DropdownItem>
+                                    <DropdownItem href="#" onClick={this.props.onMyMealsClick}>My meals</DropdownItem>
+                                    <DropdownItem href="#" onClick={this.props.onSettingsClick}>Settings</DropdownItem>
+                                    <DropdownItem href="#" onClick={this.props.onLogoutClick}>Logout</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                           </NavItem>

@@ -1,19 +1,81 @@
 const { Schema, SchemaTypes: { ObjectId } } = require('mongoose')
 
 const Meal = new Schema({
-    text: {
+    name: {
         type: String,
         required: true
     },
-    status: {
+    diet: {
         type: String,
-        enum: ['mondayBreak', 'tuesdayBreak', 'wednesdayBreak', 'thursdayBreak', 'fridayBreak', 'saturdayBreak', 'sundayBreak',
-                'mondayLunch', 'tuesdayLunch', 'wednesdayLunch', 'thursdayLunch', 'fridayLunch', 'saturdayLunch', 'sundayLunch' ],
+        enum: ['vegan', 'vegetarian', 'pescatarian', 'flexitarian'],
         required: true
     },
+    category: {
+        type: String,
+        enum: ['carb', 'milk', 'fruit', 'snack', 'vegetable', 'legume', 'salad', 'soup',
+         'protein', 'patisserie', 'dairy'],
+        required: true
+    },
+    subCategory: {
+        type: String,
+        enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
+        'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
+         'omelette', 'vegetable', 'none'],
+        required: true
+    },
+    mainIngredients: [{
+        type: String,
+        required: true
+    }],
+    optionalIngredients: [{
+        type: String,
+        required: false
+    }],
+    isSpecialMeal: {
+        type: Boolean,
+        required: true
+    },
+    isColdDish: {
+        type: Boolean,
+        required: true
+    },
+    intolerances: [{
+        type: String,
+        enum: ['Gluten', 'Lactose'],
+    }],
+    isLight: {
+        type: Boolean,
+        required: true
+    },
+    season: [{
+        type: String,
+        enum: ['Spring', 'Summer', 'Autum', 'Winter'],
+        required: true
+    }],
+    recipeLink: {
+        type: String,
+        required: false
+    },
+    imageLink: {
+        type: String,
+        required: false
+    }
 })
 
-const Menu = new Schema({
+const Day = new Schema({
+    name: {
+        type: String,
+        enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        required: true
+    },
+    break: [{ type: ObjectId, ref: 'Meal', required: true }],
+    midMorning: [{ type: ObjectId, ref: 'Meal', required: true }],
+    lunch: [{ type: ObjectId, ref: 'Meal', required: true }],
+    afternoon: [{ type: ObjectId, ref: 'Meal', required: true }],
+    dinner: [{ type: ObjectId, ref: 'Meal', required: true }]
+})
+
+const MealPlan = new Schema({
     date: {
         type: String,
         required: true
@@ -22,11 +84,7 @@ const Menu = new Schema({
         type: String,
         required: true
     },
-    id: {
-        type: String,
-        required: true
-    },
-    meals: [Meal]
+    days: [Day]
 })
 
 const User = new Schema({
@@ -47,12 +105,19 @@ const User = new Schema({
         type: String,
         required: true
     },
-    savedMenus: [Menu]
+    savedMeals: [Meal],
+
+    savedMealPlans: [MealPlan],
+
+    favouriteMeals: [Meal],
+
+    mealsToAvoid: [Meal]
 })
 
 module.exports = {
     Meal,
-    Menu,
+    Day,
+    MealPlan,
     User
 }
 
