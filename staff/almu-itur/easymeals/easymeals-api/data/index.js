@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
 
-const { Meal, Menu, User } = require('./schemas')
+const { Meal, Day, MealPlan, User } = require('./schemas')
 
 module.exports = {
     Meal: mongoose.model('Meal', Meal),
-    Menu: mongoose.model('Menu', Menu),
+    Day: mongoose.model('Day', Day),
+    MealPlan: mongoose.model('MealPlan', MealPlan),
     User: mongoose.model('User', User)
 }

@@ -1,5 +1,5 @@
-const { User, Meal, Menu } = require('../data')
-const { AlreadyExistsError, AuthError, NotAllowedError, NotFoundError } = require('../errors')
+const { Meal, Day, MealPlan, User } = require('../data')
+const { AlreadyExistsError, AuthError, NotAllowedError, NotFoundError, ValueError } = require('../errors')
 const validate = require('../utils/validate')
 const fs = require('fs')
 const path = require('path')
@@ -45,42 +45,97 @@ const logic = {
         })()
     },
 
-    updateUser(id, name, surname, username, newPassword, password) {
+    updateUser(id, name, surname, username, password, newPassword, confirmNewPassword) {
         validate([
             { key: 'id', value: id, type: String },
             { key: 'name', value: name, type: String, optional: true },
             { key: 'surname', value: surname, type: String, optional: true },
             { key: 'username', value: username, type: String, optional: true },
-            { key: 'password', value: password, type: String }
+            { key: 'password', value: password, type: String },
+            { key: 'newPassword', value: newPassword, type: String, optional: true },
+            { key: 'confirmNewPassword', value: confirmNewPassword, type: String, optional: true },
         ])
 
         return (async () => {
+            
             const user = await User.findById(id)
 
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
             if (user.password !== password) throw new AuthError('invalid password')
-
+            
             if (username) {
                 const _user = await User.findOne({ username })
 
                 if (_user) throw new AlreadyExistsError(`username ${username} already exists`)
+               //Llega aqui, los datos llegan bien
 
                 name != null && (user.name = name)
                 surname != null && (user.surname = surname)
                 user.username = username
-                newPassword != null && (user.password = newPassword)
-
+                // if (newPassword!=null) {
+                //     newPassword === confirmNewPassword ? user.password = newPassword : function () { throw new ValueError('new passwords do not match') }
+                // }
+                
+                if (newPassword!=null) {
+                    console.log('newpassword is not null')
+                    if(newPassword === confirmNewPassword) {
+                        console.log('compara passwords')
+                        user.password = newPassword
+                    }
+                    else {
+                        console.log('Not same pass!')
+                    }
+                }
                 await user.save()
             } else {
                 name != null && (user.name = name)
                 surname != null && (user.surname = surname)
                 newPassword != null && (user.password = newPassword)
-
-                await user.save()
             }
+                await user.save()
         })()
     },
+
+    // searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season) {
+    searchRandomMeal(category) {
+        // validate([
+            // { key: 'category', value: category, type: String },
+            // { key: 'subcategory', value: subcategory, type: String, optional: true },
+            // { key: 'diet', value: diet, type: String, optional: true },
+            // { key: 'isSpecial', value: isSpecial, type: Boolean, optional: true },
+            // { key: 'isCold', value: isCold, type: Boolean, optional: true},
+            // { key: 'intolerances', value: intolerances, type: Array, optional: true },
+            // { key: 'isLight', value: isLight, type: Boolean, optional: true },
+            // { key: 'season', value: season, type: Array, optional: true },
+        // ])
+        debugger
+        return (async () => {
+            const meals = await Meal.find({
+                category: category
+                // subcategory: (subcategory) ? subcategory : /.*/,
+                // diet: {$gte: diet},
+                // isSpecial: (isSpecial)? isSpecial: /.*/,
+                // isCold: (isCold)? isCold : /.*/,
+                // intolerances: {$nin: intolerances},
+                // isLight: (isLight)? isLight : /.*/,
+                // season: {$in: season }
+            })
+            
+            if (!meals) throw new NotFoundError(`no meals`)
+            if(!meals.length) meals[0]= { name: "No meals found with the parameters entered" }
+
+        //     //TO CONSIDER
+        //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
+        //     // if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        //     // user.id = id
+        //     //name != null && (user.name = name)
+
+            const meal = meals[Math.floor(Math.random() * meals.length)]
+            debugger
+            return meal
+        })()
+    }
 
     // addCollaborator(id, collaboratorUsername) {
     //     validate([
@@ -123,61 +178,6 @@ const logic = {
 
     //         return collaborators.map(({ id, username }) => ({ id, username }))
     //     })()
-    // },
-
-    // // TODO review! fails because of "Uncaught Error [ERR_STREAM_DESTROYED]: Cannot call write after a stream was destroyed"
-    // _saveUserPhoto(id, file, filename) {
-    //     const folder = `data/users/${id}`
-
-    //     return new Promise((resolve, reject) => {
-    //         const pathToFile = path.join(folder, filename)
-
-    //         debugger
-
-    //         const ws = fs.createWriteStream(pathToFile)
-
-    //         fs.access(folder, fs.constants.F_OK, err => {
-    //             if (err)
-    //                 fs.mkdir(folder, err => {
-    //                     if (err) return reject(err)
-
-    //                     file.pipe(ws)
-
-    //                     file.on('end', () => {
-    //                         debugger
-
-    //                         ws.close()
-
-    //                         resolve()
-    //                     })
-
-    //                     file.on('error', err => {
-    //                         debugger
-    //                     })
-    //                 })
-    //             else
-    //                 fs.readdir(folder, (err, files) => {
-    //                     debugger
-    //                     if (err) return reject(err)
-
-    //                     const deletes = files.map(file => new Promise((resolve, reject) => {
-    //                         debugger
-    //                         fs.unlink(path.join(folder, file), err => {
-    //                             if (err) return reject(err)
-
-    //                             resolve()
-    //                         })
-    //                     }))
-
-    //                     Promise.all(deletes)
-    //                         .then(() => {
-    //                             file.pipe(ws)
-
-    //                             file.on('end', () => resolve())
-    //                         })
-    //                 })
-    //         })
-    //     })
     // },
 
     // saveUserPhoto(id, file, filename) {
@@ -242,22 +242,22 @@ const logic = {
      * 
      * @returns {Promise} Resolves on correct data, rejects on wrong user id
      */
-    addPostit(id, text) {
-        validate([
-            { key: 'id', value: id, type: String },
-            { key: 'text', value: text, type: String }
-        ])
+    // addPostit(id, text) {
+    //     validate([
+    //         { key: 'id', value: id, type: String },
+    //         { key: 'text', value: text, type: String }
+    //     ])
 
-        return (async () => {
-            const user = await User.findById(id)
+    //     return (async () => {
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            const postit = new Postit({ text, user: user.id })
+    //         const postit = new Postit({ text, user: user.id })
 
-            await postit.save()
-        })()
-    },
+    //         await postit.save()
+    //     })()
+    // },
 
     // saveMenu(userId, menu) {
     //     validate([
@@ -277,7 +277,7 @@ const logic = {
     // },
 
     //ESTO SERA VER MENU AL CLICKAR EN UN SAVED MENU
-    listPostits(id) {
+    // listPostits(id) {
         // validate([
         //     { key: 'id', value: id, type: String }
         // ])
@@ -306,25 +306,25 @@ const logic = {
         //     return postits
         // })()
 
-        if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
+    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
 
-        if (!id.trim().length) throw new ValueError('id is empty or blank')
+    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
 
-        return User.findById(id)
-            .lean()
-            .then(user => {
-                if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //     return User.findById(id)
+    //         .lean()
+    //         .then(user => {
+    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-                // return user.postits.map(({ _id, text }) => { id: _id.toString(), text })
-                return user.postits.map(postit => {
-                    postit.id = postit._id.toString()
+    //             // return user.postits.map(({ _id, text }) => { id: _id.toString(), text })
+    //             return user.postits.map(postit => {
+    //                 postit.id = postit._id.toString()
 
-                    delete postit._id
+    //                 delete postit._id
 
-                    return postit
-                })
-            })
-    },
+    //                 return postit
+    //             })
+    //         })
+    // },
 
     /**
      * Removes a postit
@@ -356,30 +356,30 @@ const logic = {
     //     })()
     // },
 
-    removePostit(id, postitId) {
-        if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
+    // removePostit(id, postitId) {
+    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
 
-        if (!id.trim().length) throw new ValueError('id is empty or blank')
+    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
 
-        if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
+    //     if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
 
-        if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
+    //     if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
 
-        return User.findById(id)
-            .then(user => {
-                if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //     return User.findById(id)
+    //         .then(user => {
+    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-                const { postits } = user
+    //             const { postits } = user
 
-                const index = postits.findIndex(postit => postit.id === postitId)
+    //             const index = postits.findIndex(postit => postit.id === postitId)
 
-                if (index < 0) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
+    //             if (index < 0) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
 
-                postits.splice(index, 1)
+    //             postits.splice(index, 1)
 
-                return user.save()
-            })
-    },
+    //             return user.save()
+    //         })
+    // },
 
     // modifyPostit(id, postitId, text) {
     //     validate([
@@ -403,78 +403,78 @@ const logic = {
     //     })()
     // },
 
-    modifyPostit(id, postitId, text) {
-        if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
+    // modifyPostit(id, postitId, text) {
+    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
 
-        if (!id.trim().length) throw new ValueError('id is empty or blank')
+    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
 
-        if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
+    //     if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
 
-        if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
+    //     if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
 
-        if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
+    //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
 
-        if (!text.trim().length) throw new ValueError('text is empty or blank')
+    //     if (!text.trim().length) throw new ValueError('text is empty or blank')
 
-        return User.findById(id)
-            .then(user => {
-                if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //     return User.findById(id)
+    //         .then(user => {
+    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-                const { postits } = user
+    //             const { postits } = user
 
-                const postit = postits.find(postit => postit.id === postitId)
+    //             const postit = postits.find(postit => postit.id === postitId)
 
-                if (!postit) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
+    //             if (!postit) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
 
-                postit.text = text
+    //             postit.text = text
 
-                return user.save()
-            })
-    },
+    //             return user.save()
+    //         })
+    // },
 
-    movePostit(id, postitId, status) {
-        validate([
-            { key: 'id', value: id, type: String },
-            { key: 'postitId', value: postitId, type: String },
-            { key: 'status', value: status, type: String }
-        ])
+    // movePostit(id, postitId, status) {
+    //     validate([
+    //         { key: 'id', value: id, type: String },
+    //         { key: 'postitId', value: postitId, type: String },
+    //         { key: 'status', value: status, type: String }
+    //     ])
 
-        return (async () => {
-            const user = await User.findById(id)
+    //     return (async () => {
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            const postit = await Postit.findOne({ user: user._id, _id: postitId })
+    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
 
-            if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
+    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
 
-            postit.status = status
+    //         postit.status = status
 
-            await postit.save()
-        })()
-    },
+    //         await postit.save()
+    //     })()
+    // },
 
-    assignPostit(id, postitId, collaboratorId) {
-        validate([
-            { key: 'id', value: id, type: String },
-            { key: 'postitId', value: postitId, type: String },
-            { key: 'collaboratorId', value: collaboratorId, type: String }
-        ])
+    // assignPostit(id, postitId, collaboratorId) {
+    //     validate([
+    //         { key: 'id', value: id, type: String },
+    //         { key: 'postitId', value: postitId, type: String },
+    //         { key: 'collaboratorId', value: collaboratorId, type: String }
+    //     ])
 
-        return (async () => {
-            const user = await User.findById(id)
+    //     return (async () => {
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            const postit = await Postit.findOne({ user: user._id, _id: postitId })
+    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
 
-            if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
+    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
 
-            postit.assignedTo = collaboratorId
+    //         postit.assignedTo = collaboratorId
 
-            await postit.save()
-        })()
-    }
+    //         await postit.save()
+    //     })()
+    // }
 }
 
 module.exports = logic

@@ -62,44 +62,15 @@ body {
     text-justify: center;
 }
 
-.meals-plan {
-    background: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    width: 95%;
-    margin: 0 auto;
-}
 
-.meals-plan-days-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ef9a9a;
-}
 
-.meals-plan-day {
-    font-size: 1.2em;
-}
 
-.meals-plan-meals-container{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
 
-.column{
-    width: 14%;
-    padding: 5px;
-    margin: 20px 5px;
-    background-color: #E8E2E1;
-    border-radius: 10px;
-}
 
-.day-meal {
-    margin: 10px;
-    font-size: 1em;
-}
+
+
+
+
 
 .options-meal {
     display: flex;
