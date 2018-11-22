@@ -1,3 +1,5 @@
+var Promise = require('bluebird')
+
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
     _token: sessionStorage.getItem('token') || null,
@@ -189,7 +191,7 @@ const logic = {
         if (mealPlan) {
 
             mealPlan.forEach(day => {
-                day.forEach((meal)=> {
+                Promise.all([day.forEach((meal)=> {
                     const category = meal.category
                     // const subcategory = meal.subcategory
                     // const isSpecial =  meal.isSpecial
@@ -215,7 +217,11 @@ const logic = {
                             return res.data
                         })
                 })
+            ]).then(meals => console.log(meals))
+            .catch(function(err) {
+                console.error(err)
             })
+        })
            
         }
         else {
