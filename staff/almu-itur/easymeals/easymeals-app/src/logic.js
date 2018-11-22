@@ -1,8 +1,9 @@
-var Promise = require('bluebird')
+
 
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
     _token: sessionStorage.getItem('token') || null,
+    _mealPlan: sessionStorage.getItem('mealplan') || null,
 
     url: 'NO-URL',
 
@@ -115,7 +116,7 @@ const logic = {
                     { category: 'vegetable', isSpecial: false },
                     { category: 'snack', subcategory: 'nut', isSpecial: false },
                     { category: 'salad', isSpecial: false },
-                    { category: 'protein', subcategory:'meat', isSpecial: false }]
+                    { category: 'protein', subcategory: 'meat', isSpecial: false }]
                 const tuesday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: false },
                     { category: 'fruit', subcategory: 'juice', isSpecial: false },
@@ -124,7 +125,7 @@ const logic = {
                     { category: 'legume', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
                     { category: 'soup', season: season, isCold: false, isSpecial: false },
-                    { category: 'protein', subcategory:'fish', isSpecial: false }]
+                    { category: 'protein', subcategory: 'fish', isSpecial: false }]
                 const wednesday = [
                     { category: 'carb', subcategory: 'flake', isSpecial: false },
                     { category: 'dairy', subcategory: 'yoghurt', isSpecial: false },
@@ -133,7 +134,7 @@ const logic = {
                     { category: 'vegetable', isSpecial: false },
                     { category: 'snack', subcategory: 'panini', isSpecial: false },
                     { category: 'salad', isSpecial: false },
-                    { category: 'protein', subcategory:'meat', isSpecial: false }]
+                    { category: 'protein', subcategory: 'meat', isSpecial: false }]
                 const thursday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', isSpecial: false },
@@ -142,7 +143,7 @@ const logic = {
                     { category: 'legume', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
                     { category: 'soup', season: season, isCold: false, isSpecial: false },
-                    { category: 'protein', subcategory:'fish', isSpecial: false }]
+                    { category: 'protein', subcategory: 'fish', isSpecial: false }]
                 const friday = [
                     { category: 'carb', subcategory: 'flake', isSpecial: false },
                     { category: 'milk', isSpecial: false },
@@ -152,20 +153,20 @@ const logic = {
                     { category: 'snack', subcategory: 'nut', isSpecial: false },
                     { category: 'carb', subcategory: 'pizza', isSpecial: false }]
                 const saturday = [
-                    { category: 'carb', subcategory: 'pancake'},
+                    { category: 'carb', subcategory: 'pancake' },
                     { category: 'fruit', subcategory: 'milkshake', isSpecial: false },
                     { category: 'carb', isSpecial: true },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
-                    { category: 'protein', subcategory:'egg',isSpecial: false }]
+                    { category: 'protein', subcategory: 'egg', isSpecial: false }]
                 const sunday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: true },
                     { category: 'fruit', subcategory: 'juice', isSpecial: false },
                     { category: 'protein', isSpecial: true },
                     { category: 'pastisserie', isSpecial: true },
                     { category: 'salad', isSpecial: false },
-                    { category: 'snack', subcategory: 'yoghurt', isSpecial: false }]  
+                    { category: 'snack', subcategory: 'yoghurt', isSpecial: false }]
 
-                mealPlan.push(monday)
+                mealPlan.push(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
                 break
             case 'diet':
                 break
@@ -184,53 +185,58 @@ const logic = {
         // if (!diet.trim()) throw Error('diet is empty or blank')
         // if (!plan.trim()) throw Error('plan is empty or blank')
         // if (!intolerances.trim()) throw Error('intolerances is empty or blank')
-        const mealPlan = []
+
         const season = 'autum' //Create function getSeason() with Date.now()
         const plan = this.selectPlan(_plan)
-        
-        if (plan) {            
-            
-            plan.map(day => {
 
-                let _day = []
+        if (plan) {
 
-                day.map((meal)=> {
-                    const category = meal.category
-                    const subcategory = meal.subcategory
-                    // const isSpecial =  meal.isSpecial
-                    // const isCold = meal.isCold
-                    // const isLight = meal.isLight
-                    
-                    _day.push(
-                        fetch(`${this.url}/meals/find`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json; charset=utf-8',
-                            'Authorization': `Bearer ${this._token}`
-                        },
-                        // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
-                        body: JSON.stringify({ category, subcategory })
-                    })
-                        .then(res => res.json())
-                        
-                        .then(res => {
-                            
-                            if (res.error) throw Error(res.error)
+            let mealsWeek = plan.map(day => {
 
-                            return res.data
+                return new Promise((resolve, reject) => {
+                    try {
+                        let mealsDay = day.map(meal => {
+                            const category = meal.category
+                            const subcategory = meal.subcategory
+                            // const isSpecial =  meal.isSpecial
+                            // const isCold = meal.isCold
+                            // const isLight = meal.isLight
+
+                            return fetch(`${this.url}/meals/find`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json; charset=utf-8',
+                                    'Authorization': `Bearer ${this._token}`
+                                },
+                                // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
+                                body: JSON.stringify({ category, subcategory })
+                            })
+                                .then(res => res.json())
+
+                                .then(res => {
+
+                                    if (res.error) throw Error(res.error)
+
+                                    return res.data
+                                })
                         })
-                )
+                        Promise.all(mealsDay).then((res) => {
+                            resolve(res)
+                        })
+
+                    } catch (err) {
+                        reject(err)
+                    }
                 })
-                Promise.all(_day).then(() => {
-                    mealPlan.push(_day)
-                    console.log(_day)
-                })
-        })
-           
+            })
+            Promise.all(mealsWeek).then((res) => {
+                this._mealPlan = res
+            })
         }
         else {
             throw Error('No meal plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
         }
+
     }
 
 
