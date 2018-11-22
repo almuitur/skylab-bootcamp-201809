@@ -42,7 +42,7 @@ class Home extends Component {
 
         const { diet, plan, intolerances } = this.state
 
-        this.props.onCreateMenu(diet, plan, intolerances)
+        this.props.onCreateMealPlan(diet, plan, intolerances)
     }
 
     render() {
@@ -97,7 +97,7 @@ class Home extends Component {
                             <img className='selectIntolerance-img' src={require('../../images/gluten.png')} alt='gluten' />
                         </label>
                     </div>
-                    <div className='home-create-button-container'><button className='home-create-button' type='submit'>CREATE MENU</button></div>
+                    <div className='home-create-button-container'><button className='home-create-button' type='submit'>CREATE MEAL PLAN</button></div>
                 </form>
             </div>
             }

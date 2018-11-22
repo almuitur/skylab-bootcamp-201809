@@ -6,13 +6,15 @@ import { Button } from "mdbreact"
 import './MealPlan.css'
 
 class MealPlan extends Component {
-    state = { mealPlan: [] }
+    state = { mealPlan: ['hello', 'hello'] }
+    //PASAR A JSON
+    // var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+
 
     // componentDidMount() {
-    //     // logic.listpostits()
-    //     //     .then(postits => { this.setState({ postits }) })
+    //     { this.setState({ mealPlan: this._mealPlan }) })
 
-    //     // // TODO error handling!
+    //     // TODO error handling!
     // }
 
     handleSubmit = text => {

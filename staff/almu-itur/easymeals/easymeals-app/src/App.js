@@ -85,10 +85,13 @@ class App extends Component {
         // this.props.history.push('/home')
     }
 
-    handleCreateMenu = (diet, plan, intolerances) => {
+    handleCreateMealPlan = (diet, plan, intolerances) => {
         try {
-            logic.createMenu(diet, plan, intolerances)
-                .then(() =>  this.props.history.push('/mealplan'))
+            logic.createMealPlan(diet, plan, intolerances)
+                .then(() =>  { 
+                    debugger
+                    this.props.history.push('/mealplan')
+                })
                 .catch(err => this.setState({ error: err.message }))
         } catch (err) {
             this.setState({ error: err.message })
@@ -106,7 +109,7 @@ class App extends Component {
             <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/login" render={() => !logic.loggedIn ?  <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" /> } />
-            <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMenu={this.handleCreateMenu} /> : <Redirect to="/" />} />
+            <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to="/" />} />
 
             {/* <Route path="/customplan" render={() => logic.loggedIn ? <div> 
                 <div className="logout-button-section"><a className="logout-button" onClick={this.handleLogoutClick}>Logout</a></div>

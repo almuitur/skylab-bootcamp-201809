@@ -53,7 +53,7 @@ const logic = {
 
                 this._userId = id
                 this._token = token
-
+                
                 sessionStorage.setItem('userId', id)
                 sessionStorage.setItem('token', token)
             })
@@ -177,7 +177,7 @@ const logic = {
         return mealPlan
     },
 
-    createMenu(diet, _plan, intolerances) {
+    createMealPlan(diet, _plan, intolerances) {
         // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
         // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
         // if (typeof intolerances !== 'array') throw TypeError(`${intolerances} is not a string`)
@@ -230,7 +230,9 @@ const logic = {
                 })
             })
             Promise.all(mealsWeek).then((res) => {
-                this._mealPlan = res
+                const mealPlan = JSON.stringify(res);
+              
+                sessionStorage.setItem('mealPlan', mealPlan)
             })
         }
         else {
@@ -238,8 +240,6 @@ const logic = {
         }
 
     }
-
-
 
     // addPostit(text) {
     //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
