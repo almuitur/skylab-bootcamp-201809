@@ -20,7 +20,7 @@ const Meal = new Schema({
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
         'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
-         'omelette', 'vegetable', 'none'],
+         'egg', 'vegetable', 'none'],
         required: true
     },
     mainIngredients: [{

@@ -85,7 +85,7 @@ router.post('/meals/find', [bearerTokenParser, jwtVerifier, jsonBodyParser], (re
         // if (id !== sub) throw Error('token sub does not match user id')
         
         // return logic.searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season)
-        return logic.searchRandomMeal(category)
+        return logic.searchRandomMeal(category, subcategory)
             .then(meal =>
                 res.json({
                     data: meal
