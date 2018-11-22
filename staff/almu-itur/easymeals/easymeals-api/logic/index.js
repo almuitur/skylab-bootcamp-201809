@@ -97,8 +97,8 @@ const logic = {
         })()
     },
 
-
-    searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, isLight, seasons) {
+    // searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season) {
+    searchRandomMeal(category) {
         // validate([
             // { key: 'category', value: category, type: String },
             // { key: 'subcategory', value: subcategory, type: String, optional: true },
@@ -107,22 +107,22 @@ const logic = {
             // { key: 'isCold', value: isCold, type: Boolean, optional: true},
             // { key: 'intolerances', value: intolerances, type: Array, optional: true },
             // { key: 'isLight', value: isLight, type: Boolean, optional: true },
-            // { key: 'seasons', value: seasons, type: Array, optional: true },
+            // { key: 'season', value: season, type: Array, optional: true },
         // ])
-        
+        debugger
         return (async () => {
             const meals = await Meal.find({
-                category: category, 
-                subcategory: (subcategory)? subcategory : /.*/,
-                diet: (diet)? diet : /.*/,
-                isSpecial: (isSpecial)? isSpecial: /.*/,
-                isCold: (isCold)? isCold : /.*/,
-                intolerances: (intolerances)? intolerances : /.*/,
-                isLight: (isLight)? isLight : /.*/,
-                seasons: (seasons)? seasons : /.*/
+                category: category
+                // subcategory: (subcategory) ? subcategory : /.*/,
+                // diet: {$gte: diet},
+                // isSpecial: (isSpecial)? isSpecial: /.*/,
+                // isCold: (isCold)? isCold : /.*/,
+                // intolerances: {$nin: intolerances},
+                // isLight: (isLight)? isLight : /.*/,
+                // season: {$in: season }
             })
             
-            if (!meals) throw new NotFoundError(`no meals found for category ${category}`)
+            if (!meals) throw new NotFoundError(`no meals`)
             if(!meals.length) meals[0]= { name: "No meals found with the parameters entered" }
 
         //     //TO CONSIDER
@@ -132,7 +132,7 @@ const logic = {
         //     //name != null && (user.name = name)
 
             const meal = meals[Math.floor(Math.random() * meals.length)]
-            
+            debugger
             return meal
         })()
     }

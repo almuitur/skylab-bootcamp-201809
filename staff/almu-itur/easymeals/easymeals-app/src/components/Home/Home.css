@@ -17,9 +17,10 @@
     justify-content: space-between;
 }
 
-.selectDiet-img{
-    width: 24%;
-    height: 100%;  
+.selectDiet-img {
+    width: 90%;
+    height: 100%;
+    cursor: pointer;  
 }
 
 .selectPlan {
@@ -31,8 +32,9 @@
 
 .selectPlan-img {
     margin-right: 1%;
-    width: 24%;
-    height: 100%;  
+    width: 90%;
+    height: 100%; 
+    cursor: pointer; 
 }
 
 .selectIntolerance {
@@ -44,8 +46,9 @@
 
 .selectIntolerance-img {
     margin-right: 1%;
-    width: 24%;
-    height: 100%; 
+    width: 90%;
+    height: 100%;
+    cursor: pointer;
 }
 
 .home-create-button-container{
@@ -62,4 +65,10 @@
     border-radius: 10px;
     border: none;
     margin: 5%;
+}
+
+select, input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }

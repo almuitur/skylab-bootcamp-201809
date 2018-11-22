@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Input } from "mdbreact";
+import { Input } from 'mdbreact';
 import './Register.css'
 
 class Register extends Component {
@@ -45,23 +45,23 @@ class Register extends Component {
 
     render() {
 
-    return <div className="register-general-container">
-        <div className="register-left-container"></div>
-        <div className="register-right-container">
-            <div className="register-right-logo"></div>
-            <h2 className="register-right-title">Join Easy Meals today!</h2>
-            <div className="register-right-form-container">
+    return <div className='register-general-container'>
+        <div className='register-left-container'></div>
+        <div className='register-right-container'>
+            <div className='register-right-logo'></div>
+            <h2 className='register-right-title'>Join Easy Meals today!</h2>
+            <div className='register-right-form-container'>
             <form onSubmit={this.handleSubmit}>
-                <Input type="text" label="Name" onChange={this.handleNameChange} />
-                <Input type="text" label="Surname" onChange={this.handleSurnameChange} />
-                <Input type="text" label="Username" onChange={this.handleSurnameChange} />
-                <Input type="password" label="Password" onChange={this.handleUsernameChange} />
-                <Input type="password" label="Repeat Password" onChange={this.handleRepeatPasswordChange}/>
-                <button className="btn btn-unique" type="submit">Register</button>
+                <Input type='text' label='Name' onChange={this.handleNameChange} />
+                <Input type='text' label='Surname' onChange={this.handleSurnameChange} />
+                <Input type='text' label='Username' onChange={this.handleSurnameChange} />
+                <Input type='password' label='Password' onChange={this.handleUsernameChange} />
+                <Input type='password' label='Repeat Password' onChange={this.handleRepeatPasswordChange}/>
+                <button className='btn btn-unique' type='submit'>Register</button>
             </form>
             </div>
-            <div className="register-right-container-login"><p>Already registered?</p><a href="#" onClick={this.props.onLoginClick}>Login</a></div>
-            <div className="register-right-back"><a href="#" onClick={this.props.onGoBack}>Back</a></div>
+            <div className='register-right-container-login'><p>Already registered?</p><a href='#' onClick={this.props.onLoginClick}>Login</a></div>
+            <div className='register-right-back'><a href='#' onClick={this.props.onGoBack}>Back</a></div>
         </div>
     </div>
     }

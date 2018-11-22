@@ -6,8 +6,8 @@ const Meal = new Schema({
         required: true
     },
     diet: {
-        type: String,
-        enum: ['vegan', 'vegetarian', 'pescatarian', 'flexitarian'],
+        type: Number,
+        enum: [0, 1, 2, 3], // ['vegan', 'vegetarian', 'pescatarian', 'flexitarian'
         required: true
     },
     category: {
@@ -43,10 +43,10 @@ const Meal = new Schema({
         type: String,
         enum: ['Gluten', 'Lactose'],
     }],
-    isLight: {
-        type: Boolean,
-        required: true
-    },
+    // isLight: {
+    //     type: Boolean,
+    //     required: true
+    // },
     season: [{
         type: String,
         enum: ['Spring', 'Summer', 'Autum', 'Winter'],

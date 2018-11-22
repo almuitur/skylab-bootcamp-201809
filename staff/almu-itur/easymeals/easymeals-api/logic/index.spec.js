@@ -15,37 +15,37 @@ const MONGO_URL = 'mongodb://localhost:27017/easymeals-test'
 describe('logic', () => {
     before(() => mongoose.connect(MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }))
 
-    describe('search meal'), () => {
+    describe('search meal', () => {
 
         it('should succeed on correct data', async () => {
-            const res = await logic.searchRandomMeal(searchParams)
+            const res = await logic.searchRandomMeal('carb', 'pizza', null, null, null, ['gluten'], null, null)
 
             expect(res).not.to.be.undefined
-            expect(res).to.be.instanceOf(Meal)
-            expect(res.category).to.equal(searchParams.category)
-            searchParams.subcategory != null && expect(res.subcategory).to.equal(searchParams.subcategory)
-            searchParams.diet != null && expect(res.diet).to.equal(searchParams.diet)
-            searchParams.isSpecial != null && expect(res.isSpecial).to.equal(searchParams.isSpecial)
-            searchParams.isCold != null && expect(res.isCold).to.equal(searchParams.isCold)
-            if (searchParams.intolerances !=null) {
+            // expect(res).to.be.instanceOf(Meal)
+            expect(res.category).to.equal('carb')
+            subcategory != null && expect(res.subcategory).to.equal('pizza')
+            diet != null && expect(res.diet).to.equal(null)
+            isSpecial != null && expect(res.isSpecial).to.equal(null)
+            isCold != null && expect(res.isCold).to.equal(null)
+            if (intolerances !=null) {
                 res.intolerances.forEach(intoleranceRes => {
-                    searchParams.intolerances.forEach(intoleranceUser => {
+                    intolerances.forEach(intoleranceUser => {
                         res_ = intoleranceRes.includes(intoleranceUser)
                         expect(res_).not.to.be(true)
                     })
                 })
             }
-            searchParams.isLight != null && expect(res.isLight).to.equal(searchParams.isLight)
-            if (searchParams.seasons !=null) {
+            isLight != null && expect(res.isLight).to.equal(null)
+            if (seasons !=null) {
                 res.seasons.forEach(seasonRes => {
-                    searchParams.seasons.forEach(seasonUser => {
+                    seasons.forEach(seasonUser => {
                         res_ = seasonRes.includes(seasonUser)
                         expect(res_).not.to.be(true)
                     })
                 })
             }
         })
-    }
+    })
 
 
 

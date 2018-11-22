@@ -6,38 +6,38 @@ import { Button } from "mdbreact"
 import './MealPlan.css'
 
 class MealPlan extends Component {
-    state = { postits: [] }
+    state = { mealPlan: [] }
 
-    componentDidMount() {
-        logic.listPostits()
-            .then(postits => { this.setState({ postits }) })
+    // componentDidMount() {
+    //     // logic.listpostits()
+    //     //     .then(postits => { this.setState({ postits }) })
 
-        // TODO error handling!
-    }
+    //     // // TODO error handling!
+    // }
 
     handleSubmit = text => {
-        try {
-            logic.addPostit(text)
-                .then(() => logic.listPostits())
-                .then(postits => this.setState({ postits }))
-        } catch ({ message }) {
-            alert(message) // HORROR! FORBIDDEN! ACHTUNG!
-        }
+        // try {
+        //     logic.addPostit(text)
+        //         .then(() => logic.listPostits())
+        //         .then(postits => this.setState({ postits }))
+        // } catch ({ message }) {
+        //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
+        // }
     }
 
     // TODO error handling!
 
     handleRemoveMeal = id => {
-        logic.removePostit(id)
-            .then(() => logic.listPostits())
-            .then(postits => this.setState({ postits }))
-        // TODO error handling!
+        // logic.removePostit(id)
+        //     .then(() => logic.listPostits())
+        //     .then(postits => this.setState({ postits }))
+        // // TODO error handling!
     }
 
     handleModifyMeal = (id, text, status) => {
-        logic.modifyPostit(id, text, status)
-            .then(() => logic.listPostits())
-            .then(postits => this.setState({ postits }))
+        // logic.modifyPostit(id, text, status)
+        //     .then(() => logic.listPostits())
+        //     .then(postits => this.setState({ postits }))
         // TODO error handling!
     }
 
@@ -57,8 +57,8 @@ class MealPlan extends Component {
         console.log('AvoidMeal')
     }
 
-    dragStart = (event, postitId, text) => {
-        event.dataTransfer.setData('id', postitId)
+    dragStart = (event, mealId, text) => {
+        event.dataTransfer.setData('id', mealId)
         event.dataTransfer.setData('text', text)
     }
 
@@ -68,29 +68,29 @@ class MealPlan extends Component {
 
     onDrop = (event, status) => {
 
-        const idPostit = event.dataTransfer.getData('id')
-        const textPostit = event.dataTransfer.getData('text')
+        const idMeal = event.dataTransfer.getData('id')
+        const textMeal = event.dataTransfer.getData('text')
 
-        this.handleModifyMeal(idPostit, textPostit, status)
+        this.handleModifyMeal(idMeal, textMeal, status)
     }
 
     render() {
 
-        let postits = { 
-            mondayBreak: [], 
-            mondayLunch: [], 
-            tuesdayBreak: [],
-            tuesdayLunch: [],
-            wednesdayBreak: [],
-            wednesdayLunch: [],
-            thursdayBreak: [], 
-            thursdayLunch: [], 
-            fridayBreak: [], 
-            fridayLunch: [], 
-            saturdayBreak: [], 
-            saturdayLunch: [], 
-            sundayBreak: [], 
-            sundayLunch: [] }
+        // let mealPlan = { 
+        //     mondayBreak: [], 
+        //     mondayLunch: [], 
+        //     tuesdayBreak: [],
+        //     tuesdayLunch: [],
+        //     wednesdayBreak: [],
+        //     wednesdayLunch: [],
+        //     thursdayBreak: [], 
+        //     thursdayLunch: [], 
+        //     fridayBreak: [], 
+        //     fridayLunch: [], 
+        //     saturdayBreak: [], 
+        //     saturdayLunch: [], 
+        //     sundayBreak: [], 
+        //     sundayLunch: [] }
 
         return <div className="meal-plan">
             <h1>Meal Plan</h1>
@@ -112,37 +112,37 @@ class MealPlan extends Component {
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
-                    {this.state.postits.filter(postit => postit.status === 'mondayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'mondayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'tuesdayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
-                    {this.state.postits.filter(postit => postit.status === 'tuesdayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'tuesdayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'wednesdayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                  
-                    {this.state.postits.filter(postit => postit.status === 'wednesdayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'wednesdayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'thursdayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
-                    {this.state.postits.filter(postit => postit.status === 'thursdayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'thursdayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'fridayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
-                    {this.state.postits.filter(postit => postit.status === 'fridayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'fridayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'saturdayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
-                    {this.state.postits.filter(postit => postit.status === 'saturdayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'saturdayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'sundayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                    
-                    {this.state.postits.filter(postit => postit.status === 'sundayBreak').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'sundayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
             </div>
 
@@ -151,37 +151,37 @@ class MealPlan extends Component {
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                   
-                    {this.state.postits.filter(postit => postit.status === 'mondayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'mondayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'tuesdayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                   
-                    {this.state.postits.filter(postit => postit.status === 'tuesdayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'tuesdayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'wednesdayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                    
-                    {this.state.postits.filter(postit => postit.status === 'wednesdayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'wednesdayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'thursdayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                    
-                    {this.state.postits.filter(postit => postit.status === 'thursdayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'thursdayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'fridayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                   
-                    {this.state.postits.filter(postit => postit.status === 'fridayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'fridayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'saturdayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                  
-                    {this.state.postits.filter(postit => postit.status === 'saturdayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'saturdayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'sundayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
                  
-                    {this.state.postits.filter(postit => postit.status === 'sundayLunch').map(postit => <Meal key={postit.id} id={postit.id} text={postit.text} status={postit.status} draggable onDragStart={event => this.dragStart(event, postit.id, postit.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                    {this.state.mealPlan.filter(meal => meal.status === 'sundayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
             </div>
             <div>

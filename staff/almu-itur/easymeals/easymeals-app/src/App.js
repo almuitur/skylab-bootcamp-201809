@@ -12,7 +12,7 @@ import MealPlan from './components/MealPlan/MealPlan'
 import Error from './components/Error'
 import logic from './logic'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-import AlertPage from './components/AlertPage'
+// import AlertPage from './components/AlertPage'
 
 logic.url = 'http://localhost:5000/api'
 
@@ -85,17 +85,28 @@ class App extends Component {
         // this.props.history.push('/home')
     }
 
+    handleCreateMenu = (diet, plan, intolerances) => {
+        try {
+            logic.createMenu(diet, plan, intolerances)
+                .then(() =>  this.props.history.push('/mealplan'))
+                .catch(err => this.setState({ error: err.message }))
+        } catch (err) {
+            this.setState({ error: err.message })
+        }
+    }
+
     render() {
         const { error } = this.state
 
         return <div>
             {error && <Error message={error} />}
             {logic.loggedIn && <NavbarLogged  onHomeClick={this.handleHomeClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
+            
             <Route exact path="/" render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to="/home" />} />
             <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/login" render={() => !logic.loggedIn ?  <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" /> } />
-            <Route path="/home" render={() => logic.loggedIn ? <Home /> : <Redirect to="/" />} />
+            <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMenu={this.handleCreateMenu} /> : <Redirect to="/" />} />
 
             {/* <Route path="/customplan" render={() => logic.loggedIn ? <div> 
                 <div className="logout-button-section"><a className="logout-button" onClick={this.handleLogoutClick}>Logout</a></div>
@@ -105,6 +116,7 @@ class App extends Component {
             <Route path="/mealplan" render={() => logic.loggedIn ? <MealPlan /> : <Redirect to="/" />} />
             <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} /> } />
             {logic.loggedIn && <FooterPage />}
+            
 
         </div>
     }
