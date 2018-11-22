@@ -98,7 +98,7 @@ const logic = {
     },
 
     // searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season) {
-    searchRandomMeal(category) {
+    searchRandomMeal(category, subcategory) {
         // validate([
             // { key: 'category', value: category, type: String },
             // { key: 'subcategory', value: subcategory, type: String, optional: true },
@@ -109,11 +109,11 @@ const logic = {
             // { key: 'isLight', value: isLight, type: Boolean, optional: true },
             // { key: 'season', value: season, type: Array, optional: true },
         // ])
-        debugger
+        
         return (async () => {
             const meals = await Meal.find({
-                category: category
-                // subcategory: (subcategory) ? subcategory : /.*/,
+                category: category,
+                subcategory: (subcategory) ? subcategory : /.*/
                 // diet: {$gte: diet},
                 // isSpecial: (isSpecial)? isSpecial: /.*/,
                 // isCold: (isCold)? isCold : /.*/,
@@ -132,7 +132,7 @@ const logic = {
         //     //name != null && (user.name = name)
 
             const meal = meals[Math.floor(Math.random() * meals.length)]
-            debugger
+            
             return meal
         })()
     }

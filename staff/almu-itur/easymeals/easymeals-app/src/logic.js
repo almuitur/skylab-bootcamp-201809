@@ -110,12 +110,12 @@ const logic = {
                 const monday = [
                     { category: 'carb', subcategory: 'flake', isSpecial: false },
                     { category: 'milk', isSpecial: false },
-                    { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false }]
-                    // { category: 'snack', subcategory: 'panini', isCold: true, isSpecial: false },
-                    // { category: 'vegetable', isSpecial: false },
-                    // { category: 'snack', subcategory: 'nut', isSpecial: false },
-                    // { category: 'salad', isSpecial: false },
-                    // { category: 'protein', isSpecial: false }]
+                    { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
+                    { category: 'snack', subcategory: 'panini', isCold: true, isSpecial: false },
+                    { category: 'vegetable', isSpecial: false },
+                    { category: 'snack', subcategory: 'nut', isSpecial: false },
+                    { category: 'salad', isSpecial: false },
+                    { category: 'protein', subcategory:'meat', isSpecial: false }]
                 const tuesday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: false },
                     { category: 'fruit', subcategory: 'juice', isSpecial: false },
@@ -124,7 +124,7 @@ const logic = {
                     { category: 'legume', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
                     { category: 'soup', season: season, isCold: false, isSpecial: false },
-                    { category: 'protein', isSpecial: false }]
+                    { category: 'protein', subcategory:'fish', isSpecial: false }]
                 const wednesday = [
                     { category: 'carb', subcategory: 'flake', isSpecial: false },
                     { category: 'dairy', subcategory: 'yoghurt', isSpecial: false },
@@ -133,7 +133,7 @@ const logic = {
                     { category: 'vegetable', isSpecial: false },
                     { category: 'snack', subcategory: 'panini', isSpecial: false },
                     { category: 'salad', isSpecial: false },
-                    { category: 'protein', isSpecial: false }]
+                    { category: 'protein', subcategory:'meat', isSpecial: false }]
                 const thursday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', isSpecial: false },
@@ -142,7 +142,7 @@ const logic = {
                     { category: 'legume', isSpecial: false },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
                     { category: 'soup', season: season, isCold: false, isSpecial: false },
-                    { category: 'protein', isSpecial: false }]
+                    { category: 'protein', subcategory:'fish', isSpecial: false }]
                 const friday = [
                     { category: 'carb', subcategory: 'flake', isSpecial: false },
                     { category: 'milk', isSpecial: false },
@@ -156,13 +156,14 @@ const logic = {
                     { category: 'fruit', subcategory: 'milkshake', isSpecial: false },
                     { category: 'carb', isSpecial: true },
                     { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false },
-                    { category: 'protein', isSpecial: false }]
+                    { category: 'protein', subcategory:'egg',isSpecial: false }]
                 const sunday = [
                     { category: 'carb', subcategory: 'toast', isSpecial: true },
                     { category: 'fruit', subcategory: 'juice', isSpecial: false },
                     { category: 'protein', isSpecial: true },
                     { category: 'pastisserie', isSpecial: true },
-                    { category: 'salad', isSpecial: false }]  
+                    { category: 'salad', isSpecial: false },
+                    { category: 'snack', subcategory: 'yoghurt', isSpecial: false }]  
 
                 mealPlan.push(monday)
                 break
@@ -175,7 +176,7 @@ const logic = {
         return mealPlan
     },
 
-    createMenu(diet, plan, intolerances) {
+    createMenu(diet, _plan, intolerances) {
         // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
         // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
         // if (typeof intolerances !== 'array') throw TypeError(`${intolerances} is not a string`)
@@ -183,29 +184,32 @@ const logic = {
         // if (!diet.trim()) throw Error('diet is empty or blank')
         // if (!plan.trim()) throw Error('plan is empty or blank')
         // if (!intolerances.trim()) throw Error('intolerances is empty or blank')
-
+        const mealPlan = []
         const season = 'autum' //Create function getSeason() with Date.now()
-        const mealPlan = this.selectPlan(plan)
-        console.log(mealPlan)
+        const plan = this.selectPlan(_plan)
         
-        if (mealPlan) {
+        if (plan) {            
+            
+            plan.map(day => {
 
-            mealPlan.forEach(day => {
-                Promise.all([day.forEach((meal)=> {
+                let _day = []
+
+                day.map((meal)=> {
                     const category = meal.category
-                    // const subcategory = meal.subcategory
+                    const subcategory = meal.subcategory
                     // const isSpecial =  meal.isSpecial
                     // const isCold = meal.isCold
                     // const isLight = meal.isLight
                     
-                    return fetch(`${this.url}/meals/find`, {
+                    _day.push(
+                        fetch(`${this.url}/meals/find`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json; charset=utf-8',
                             'Authorization': `Bearer ${this._token}`
                         },
                         // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
-                        body: JSON.stringify({ category })
+                        body: JSON.stringify({ category, subcategory })
                     })
                         .then(res => res.json())
                         
@@ -213,14 +217,14 @@ const logic = {
                             
                             if (res.error) throw Error(res.error)
 
-                            console.log(res.data)
                             return res.data
                         })
+                )
                 })
-            ]).then(meals => console.log(meals))
-            .catch(function(err) {
-                console.error(err)
-            })
+                Promise.all(_day).then(() => {
+                    mealPlan.push(_day)
+                    console.log(_day)
+                })
         })
            
         }
