@@ -63,16 +63,16 @@ const Meal = new Schema({
 })
 
 const Day = new Schema({
-    name: {
+    day: {
         type: String,
-        enum: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+        enum: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'],
         required: true
     },
-    break: [{ type: ObjectId, ref: 'Meal', required: true }],
-    midMorning: [{ type: ObjectId, ref: 'Meal', required: true }],
-    lunch: [{ type: ObjectId, ref: 'Meal', required: true }],
-    afternoon: [{ type: ObjectId, ref: 'Meal', required: true }],
-    dinner: [{ type: ObjectId, ref: 'Meal', required: true }]
+    breakfast: [{ type: ObjectId, ref: 'Meal', required: false }],
+    midMorning: [{ type: ObjectId, ref: 'Meal', required: false }],
+    lunch: [{ type: ObjectId, ref: 'Meal', required: false }],
+    afternoon: [{ type: ObjectId, ref: 'Meal', required: false }],
+    dinner: [{ type: ObjectId, ref: 'Meal', required: false }]
 })
 
 const MealPlan = new Schema({

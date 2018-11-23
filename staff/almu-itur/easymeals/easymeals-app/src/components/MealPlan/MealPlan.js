@@ -6,26 +6,25 @@ import { Button } from "mdbreact"
 import './MealPlan.css'
 
 class MealPlan extends Component {
-    state = { mealPlan: ['hello', 'hello'] }
-    //PASAR A JSON
-    // var obj = JSON.parse('{ "name":"John", "age":30, "city":"New York"}');
+    state = { mealPlan: {} }
 
+    componentDidMount() {
 
-    // componentDidMount() {
-    //     { this.setState({ mealPlan: this._mealPlan }) })
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
 
-    //     // TODO error handling!
-    // }
-
-    handleSubmit = text => {
-        // try {
-        //     logic.addPostit(text)
-        //         .then(() => logic.listPostits())
-        //         .then(postits => this.setState({ postits }))
-        // } catch ({ message }) {
-        //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
-        // }
+        { this.setState({ mealPlan }) }
     }
+
+    // handleSubmit = text => {
+    // try {
+    //     logic.addPostit(text)
+    //         .then(() => logic.listPostits())
+    //         .then(postits => this.setState({ postits }))
+    // } catch ({ message }) {
+    //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
+    // }
+    // }
 
     // TODO error handling!
 
@@ -77,40 +76,49 @@ class MealPlan extends Component {
     }
 
     render() {
-
-        // let mealPlan = { 
-        //     mondayBreak: [], 
-        //     mondayLunch: [], 
-        //     tuesdayBreak: [],
-        //     tuesdayLunch: [],
-        //     wednesdayBreak: [],
-        //     wednesdayLunch: [],
-        //     thursdayBreak: [], 
-        //     thursdayLunch: [], 
-        //     fridayBreak: [], 
-        //     fridayLunch: [], 
-        //     saturdayBreak: [], 
-        //     saturdayLunch: [], 
-        //     sundayBreak: [], 
-        //     sundayLunch: [] }
+        const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY']
+        // let keys = Object.keys(this.state.mealPlan.days[0][0])
 
         return <div className="meal-plan">
-            <h1>Meal Plan</h1>
-            <InputForm onSubmit={this.handleSubmit} />
 
-            <div className="meal-plan-days-container">
-                <h4 className="meal-plan-day">MONDAY</h4>
-                <h4 className="meal-plan-day">TUESDAY</h4>
-                <h4 className="meal-plan-day">WEDNESDAY</h4>
-                <h4 className="meal-plan-day">THURSDAY</h4>
-                <h4 className="meal-plan-day">FRIDAY</h4>
-                <h4 className="meal-plan-day">SATURDAY</h4>
-                <h4 className="meal-plan-day">SUNDAY</h4>
+            <h1>Meal Plan</h1>
+
+            <p>{this.state.mealPlan.name}</p>
+
+            {/* <InputForm onSubmit={this.handleSubmit} /> */}
+
+            {/* DIAS DE LA SEMANA */}
+            <div className="meal-plan-days-container">{days.map(day => <h4 className="meal-plan-day">{day}</h4>)}</div>
+
+
+            {/* UN DIA */}
+            <div className="meal-plan-meals-container">{ this.state.mealPlan.days && this.state.mealPlan.days.map((meal, mealIndex) => {
+                return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `mondaybreakfast`)}>
+                    <h2 className="day-meal">BREAKFAST</h2>
+                    { this.state.mealPlan.days[0][{mealIndex}] ? this.state.mealPlan.days[0][{mealIndex}].breakfast.status = `mondaybreakfast` : null }
+                    {/* { console.log(this.state.mealPlan.days[0][{mealIndex}]) } */}
+                    {/* {  this.state.mealPlan.days[0][{mealIndex}] ? this.state.mealPlan.days[0][{mealIndex}].breakfast.name : null } */}
+                    
+                    { this.state.mealPlan.days[0][{mealIndex}] ? this.state.mealPlan.days[0][mealIndex].breakfast.filter(meal => meal.status === `mondaybreakfast`).map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />) : null }
+                </div>
+            })}
             </div>
 
-            <div className="meal-plan-meals-container">
+            {/* {this.state.mealPlan.days ? <p> {this.state.mealPlan.days[0][0].breakfast.name} </p> : null}
+            {this.state.mealPlan.days ? <p> {this.state.mealPlan.days[0][0].breakfast.name} </p> : null}
+            {this.state.mealPlan.days ? <p> {this.state.mealPlan.days[0][0].breakfast.name} </p> : null}
+            {this.state.mealPlan.days ? <p> {this.state.mealPlan.days[0][2].breakfast.name} </p> : null}
+             */}
+            {/* // 
 
-                          
+                        // <h2 className="day-meal">SNACK</h2>
+                        // <h2 className="day-meal">LUNCH</h2>
+                        // <h2 className="day-meal">SNACK</h2>
+                        // <h2 className="day-meal">DINNER</h2> */}
+
+
+            {/* <div className="meal-plan-meals-container">
+            
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayBreak')}>
                     <h2 className="day-meal">BREAKFAST</h2>
                     
@@ -146,9 +154,9 @@ class MealPlan extends Component {
                    
                     {this.state.mealPlan.filter(meal => meal.status === 'sundayBreak').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
-            </div>
+            </div> */}
 
-            <div className="meal-plan-meals-container">
+            {/* <div className="meal-plan-meals-container">
 
                 <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, 'mondayLunch')}>
                     <h2 className="day-meal">LUNCH</h2>
@@ -185,14 +193,14 @@ class MealPlan extends Component {
                  
                     {this.state.mealPlan.filter(meal => meal.status === 'sundayLunch').map(meal => <Meal key={meal.id} id={meal.id} text={meal.text} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.text)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleFindMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                 </div>
-            </div>
+            </div> */}
             <div>
-                <Button onSubmit={this.handleSubmit}>PRINT</Button> 
-                <Button onSubmit={this.handleSubmit}>SHOPPING LIST</Button> 
-                <Button onSubmit={this.handleSubmit}>SAVE</Button> 
-                <Button onSubmit={this.handleSubmit}>SHARE</Button> 
+                <Button onSubmit={this.handleSubmit}>PRINT</Button>
+                <Button onSubmit={this.handleSubmit}>SHOPPING LIST</Button>
+                <Button onSubmit={this.handleSubmit}>SAVE</Button>
+                <Button onSubmit={this.handleSubmit}>SHARE</Button>
             </div>
-        </div>
+        </div >
     }
 }
 
