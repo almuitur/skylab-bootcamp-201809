@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './Home.css'
+import './Home.css' 
 
 class Home extends Component {
 
@@ -49,7 +49,7 @@ class Home extends Component {
 
         return <div className='home'>
 
-                <form onSubmit={this.handleSubmit} >
+               <form onSubmit={this.handleSubmit} >
                     <h3 className='home-title'>Choose a diet</h3>
                     <div className='selectDiet'>
                         <label for='vegan'>

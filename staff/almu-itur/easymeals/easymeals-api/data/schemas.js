@@ -59,6 +59,10 @@ const Meal = new Schema({
     imageLink: {
         type: String,
         required: false
+    },
+    status: {
+        type: String,
+        required: false
     }
 })
 

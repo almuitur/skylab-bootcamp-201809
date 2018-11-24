@@ -44,7 +44,9 @@ class App extends Component {
     handleLogin = (username, password) => {
         try {
             logic.login(username, password)
-                .then(() =>  this.props.history.push('/home'))
+                .then(() => {
+                    this.setState({ error: null }, () => this.props.history.push('/home'))
+                })
                 .catch(err => this.setState({ error: err.message }))
         } catch (err) {
             this.setState({ error: err.message })
@@ -68,7 +70,7 @@ class App extends Component {
         event.preventDefault()
         this.props.history.push('/settings')
     }
-    
+
     handleMealsPlanClick = event => {
         event.preventDefault()
         this.props.history.push('/mealplan')
@@ -80,16 +82,21 @@ class App extends Component {
     }
 
     handleUpdateProfile = (name, surname, username, newPassword, password, confirmNewPassword) => {
-        logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
-        //alert
-        // this.props.history.push('/home')
+        try {
+            logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
+                .then(() => {
+                    this.setState({ error: null }, () => this.props.history.push('/home'))
+                })
+                .catch(err => this.setState({ error: err.message }))
+        } catch (err) {
+            this.setState({ error: err.message })
+        }
     }
 
     handleCreateMealPlan = (diet, plan, intolerances) => {
         try {
             logic.createMealPlan(diet, plan, intolerances)
-                .then(() =>  { 
-                    debugger
+                .then(() => {
                     this.props.history.push('/mealplan')
                 })
                 .catch(err => this.setState({ error: err.message }))
@@ -103,23 +110,23 @@ class App extends Component {
 
         return <div>
             {error && <Error message={error} />}
-            {logic.loggedIn && <NavbarLogged  onHomeClick={this.handleHomeClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
-            
+            {logic.loggedIn && <NavbarLogged onHomeClick={this.handleHomeClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
+
             <Route exact path="/" render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to="/home" />} />
             <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
-            <Route path="/login" render={() => !logic.loggedIn ?  <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
-            <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" /> } />
+            <Route path="/login" render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
+            <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" />} />
             <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to="/" />} />
 
             {/* <Route path="/customplan" render={() => logic.loggedIn ? <div> 
                 <div className="logout-button-section"><a className="logout-button" onClick={this.handleLogoutClick}>Logout</a></div>
                 <CustomPlan />
             </div> : <Redirect to="/" />} /> */}
-            
+
             <Route path="/mealplan" render={() => logic.loggedIn ? <MealPlan /> : <Redirect to="/" />} />
-            <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} /> } />
+            <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
             {logic.loggedIn && <FooterPage />}
-            
+
 
         </div>
     }
