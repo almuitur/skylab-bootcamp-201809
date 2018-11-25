@@ -64,7 +64,7 @@ const logic = {
     },
 
     logout() {
-        this._postits = []
+        this._mealPlan = []
         this._userId = null
         this._token = null
 
@@ -272,7 +272,7 @@ const logic = {
             throw Error('No meal plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
         }
 
-    }
+    },
 
     // addPostit(text) {
     //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
@@ -308,36 +308,139 @@ const logic = {
     //         })
     // },
 
-    // removePostit(id) {
-    //     if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
+    removeMeal(id, status) {
+        // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
+        // if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
 
-    //     if (!id.trim().length) throw Error('id is empty or blank')
+        // if (!id.trim().length) throw Error('id is empty or blank')
+        // if (!status.trim().length) throw Error('status is empty or blank')
 
-    //     return fetch(`${this.url}/users/${this._userId}/postits/${id}`, {
-    //         method: 'DELETE',
-    //         headers: {
-    //             'Authorization': `Bearer ${this._token}`
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => {
-    //             if (res.error) throw Error(res.error)
-    //         })
-    // },
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
+
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        let index = status.indexOf('y')
+        let mealDay = status.slice(0, index + 1)
+        let mealTime = status.slice(index + 1)
+        let dayIndex = 0
+
+        days.forEach((day, index) => mealDay === day ? dayIndex = index : null)
+
+        mealPlan.days[dayIndex][mealTime] = mealPlan.days[dayIndex][mealTime].filter(meal => {
+            if (meal.id !== id) return meal
+        })
+
+        mealPlan = JSON.stringify(mealPlan);
+        sessionStorage.setItem('mealPlan', mealPlan)
+        _mealPlan = sessionStorage.getItem('mealPlan')
+        mealPlan = JSON.parse(_mealPlan)
+
+        return mealPlan
+    },
+
+    moveMeal(id, name, status, previousStatus) {
+        // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
+        // if (!id.trim().length) throw Error('id is empty or blank')
+
+        if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
+        if (!name.trim()) throw Error('name is empty or blank')
+
+        if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
+        if (!status.trim()) throw Error('status is empty or blank')
+
+        if (typeof previousStatus !== 'string') throw new TypeError(`${previousStatus} is not a string`)
+        if (!previousStatus.trim()) throw Error('previousStatus is empty or blank')
+
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
+
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
+        //PREVIOUS STATE
+        let index = previousStatus.indexOf('y')
+        let mealDay = previousStatus.slice(0, index + 1)
+        let mealTime = previousStatus.slice(index + 1)
+        let dayIndex = 0
+        days.forEach((day, index) => mealDay === day ? dayIndex = index : null)
+
+        //GET MEAL
+        let meal = {}
+        meal = mealPlan.days[dayIndex][mealTime].filter(meal => {
+            if (meal.id === id) return meal
+        })
+
+        //DELETE OLD STATE
+        mealPlan.days[dayIndex][mealTime] = mealPlan.days[dayIndex][mealTime].filter(meal => {
+            if (meal.id !== id) return meal
+        })
+
+        //UPDATE NEW STATE
+        index = status.indexOf('y')
+        mealDay = status.slice(0, index + 1)
+        mealTime = status.slice(index + 1)
+
+        days.forEach((day, index) => mealDay === day ? dayIndex = index : null)
+        // mealPlan.days[dayIndex][mealTime].push(meal[0])
+
+        mealPlan.days[dayIndex][mealTime].push(meal[mealPlan.days[dayIndex][mealTime].length])
+
+        // mealPlan.days[dayIndex][mealTime][mealPlan.days[dayIndex][mealTime].length] = meal
+        mealPlan = JSON.stringify(mealPlan);
+        sessionStorage.setItem('mealPlan', mealPlan)
+        _mealPlan = sessionStorage.getItem('mealPlan')
+        mealPlan = JSON.parse(_mealPlan)
+
+        return mealPlan
+    },
+
+    generateShoppingList() {
+
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
+
+        const mealsDay = ['breakfast', 'midMorning', 'lunch', 'afternoon', 'dinner']
+        let mainIngredients = []
+        let optionalIngredients = []
+
+        mealsDay.map(mealTime => {
+
+            mealPlan.days.map((day, dayIndex) => {
+
+                day[dayIndex][mealTime].length > 0 && day[dayIndex][mealTime].map(meal => {
+
+                    if (meal.mainIngredients.length > 0) {
+                        meal.mainIngredients.map(mainIngredient => {
+                            if (!mainIngredients.includes(mainIngredient)) mainIngredients.push(mainIngredient)
+                        })
+                    }
+                    if (meal.optionalIngredients.length > 0) {
+                        meal.optionalIngredients.map(optionalIngredient => {
+                            if (!optionalIngredients.includes(optionalIngredient)) optionalIngredients.push(optionalIngredient)
+                        })
+                    }
+                })
+            })
+        })
+        const shoppingList = {
+            mainIngredients: mainIngredients,
+            optionalIngredients: optionalIngredients
+        }
+        return shoppingList
+    }
 
     // modifyPostit(id, text, status) {
 
-    //     if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
+    // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
 
-    //     if (!id.trim().length) throw Error('id is empty or blank')
+    // if (!id.trim().length) throw Error('id is empty or blank')
 
-    //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
+    // if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
 
-    //     if (!text.trim()) throw Error('text is empty or blank')
+    // if (!text.trim()) throw Error('text is empty or blank')
 
-    //     if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
+    // if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
 
-    //     if (!status.trim()) throw Error('text is empty or blank')
+    // if (!status.trim()) throw Error('text is empty or blank')
 
     //     return fetch(`${this.url}/users/${this._userId}/postits/${id}`, {
     //         method: 'PUT',
@@ -354,5 +457,5 @@ const logic = {
     // }
 }
 
-// export default logic
-module.exports = logic
+export default logic
+// module.exports = logic

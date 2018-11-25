@@ -17,7 +17,7 @@
 
 .meal-plan-day {
     font-size: 1.2em;
-}
+}   
 
 .meal-plan-meals-container{
     width: 100%;
@@ -30,10 +30,11 @@
     font-size: 1em;
 }
 
-.column{
+.column {
     width: 14%;
     padding: 5px;
     margin: 20px 5px;
-    background-color: #E8E2E1;
+    background-color: #FDEDEC;
     border-radius: 10px;
 }
+
