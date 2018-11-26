@@ -1,5 +1,4 @@
-const mongoose = require('mongoose')
-const { User, Postit } = require('../data')
+const { mongoose, models: { Meal, Day, MealPlan, User} } = require('easymeals-data')
 const logic = require('.')
 const { AlreadyExistsError, ValueError } = require('../errors')
 const fs = require('fs-extra')

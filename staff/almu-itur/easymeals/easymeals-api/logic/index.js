@@ -1,4 +1,4 @@
-const { Meal, Day, MealPlan, User } = require('../data')
+const { models: { Meal, Day, MealPlan, User} } = require('easymeals-data')
 const { AlreadyExistsError, AuthError, NotAllowedError, NotFoundError, ValueError } = require('../errors')
 const validate = require('../utils/validate')
 const fs = require('fs')
