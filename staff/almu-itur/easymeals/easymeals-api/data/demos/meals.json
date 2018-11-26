@@ -1,16 +1,13 @@
 [
     {
         "name": "Corn flakes",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "flake",
         "mainIngredients": [
             "corn"
         ],
-        "optionalIngredients": [
-            "honey",
-            "maple syrup"
-        ],
+        "optionalIngredients": [],
         "isSpecialMeal": false,
         "isColdDish": false,
         "intolerances": [],
@@ -25,8 +22,85 @@
         "imageLink": "https://cdn.pixabay.com/photo/2016/12/18/12/53/corn-flakes-1915632_1280.jpg"
     },
     {
+        "name": "Rice flakes",
+        "diet": 0,
+        "category": "carb",
+        "subcategory": "flake",
+        "mainIngredients": [
+            "rice"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://cdn.pixabay.com/photo/2012/02/22/09/06/food-15183_1280.jpg"
+    },
+    {
+        "name": "Oatmeal",
+        "diet": 0,
+        "category": "carb",
+        "subcategory": "flake",
+        "mainIngredients": [
+            "oat"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://cdn.pixabay.com/photo/2015/05/10/19/49/oatmeal-761434_1280.jpg"
+    },
+    {
+        "name": "Muesli",
+        "diet": 0,
+        "category": "carb",
+        "subcategory": "flake",
+        "mainIngredients": [
+            "oat",
+            "pumpkin seeds",
+            "nuts",
+            "chia Seeds"
+        ],
+        "optionalIngredients": [
+            "cacao",
+            "cocounit",
+            "dried fruit"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "https://frommybowl.com/easy-muesli-recipe/",
+        "imageLink": "https://cdn.pixabay.com/photo/2015/05/02/20/09/muesli-750365_1280.jpg"
+    },
+    {
         "name": "Avocado toast",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -54,7 +128,7 @@
     },
     {
         "name": "Avocado toast (gluten-free)",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -80,7 +154,7 @@
     },
     {
         "name": "Avocado toast with egg",
-        "diet": "vegetarian",
+        "diet": 1,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -111,7 +185,7 @@
     },
     {
         "name": "Avocado toast with egg (gluten-free)",
-        "diet": "vegetarian",
+        "diet": 1,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -140,7 +214,7 @@
     },
     {
         "name": "Ham and cheese toast",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -171,7 +245,7 @@
     },
     {
         "name": "Gluten-free ham and cheese toast",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -200,7 +274,7 @@
     },
     {
         "name": "Gluten-free avocado toast",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "toast",
         "mainIngredients": [
@@ -226,7 +300,7 @@
     },
     {
         "name": "Margarita Pizza",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "pizza",
         "mainIngredients": [
@@ -256,7 +330,7 @@
     },
     {
         "name": "Gluten-free margarita Pizza",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "pizza",
         "mainIngredients": [
@@ -285,7 +359,7 @@
     },
     {
         "name": "Gluten-free margarita Pizza (lactose free)",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "pizza",
         "mainIngredients": [
@@ -312,7 +386,7 @@
     },
     {
         "name": "Roman style carbonara pasta",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "pasta",
         "mainIngredients": [
@@ -342,7 +416,7 @@
     },
     {
         "name": "Gluten-free Roman style carbonara pasta",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "pasta",
         "mainIngredients": [
@@ -370,7 +444,7 @@
     },
     {
         "name": "Pasta with pesto sauce",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "pasta",
         "mainIngredients": [
@@ -399,7 +473,7 @@
     },
     {
         "name": "Gluten-free pasta with pesto sauce",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "carb",
         "subcategory": "pasta",
         "mainIngredients": [
@@ -425,8 +499,43 @@
         "imageLink": "https://cdn.pixabay.com/photo/2015/11/08/07/38/pasta-1033216_1280.jpg"
     },
     {
+        "name": "Couscous and roasted vegetables",
+        "diet": 1,
+        "category": "carb",
+        "subcategory": "pasta",
+        "mainIngredients": [
+            "couscous",
+            "red pepper",
+            "green pepper",
+            "onion",
+            "courgette",
+            "eggplant"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "garlic",
+            "black pepper",
+            "soy sauce"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
         "name": "Plain rice",
-        "diet": "vegan",
+        "diet": 0,
         "category": "carb",
         "subcategory": "rice",
         "mainIngredients": [
@@ -449,8 +558,97 @@
         "imageLink": ""
     },
     {
+        "name": "Prawn and soy noodles",
+        "diet": 2,
+        "category": "carb",
+        "subcategory": "rice",
+        "mainIngredients": [
+            "rice noodles",
+            "prawn",
+            "soy sauce"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "garlic",
+            "black pepper",
+            "green pepper",
+            "carrot"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Cashew and Prawn Rice",
+        "diet": 2,
+        "category": "carb",
+        "subcategory": "rice",
+        "mainIngredients": [
+            "basmatti rice",
+            "prawn",
+            "cashew"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "tomato",
+            "cumin",
+            "chilli",
+            "onion",
+            "coriander"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "https://www.edamam.com/recipe/cashew-prawn-rice-285f55cbf61f184605a79d62a57ba7f9/rice+flakes/gluten-free",
+        "imageLink": ""
+    },
+    {
+        "name": "Cuban style Rice",
+        "diet": 1,
+        "category": "carb",
+        "subcategory": "rice",
+        "mainIngredients": [
+            "rice",
+            "tomato sauce",
+            "egg"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "onion",
+            "pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
         "name": "Crepe",
-        "diet": "vegetarian",
+        "diet": 1,
         "category": "carb",
         "subcategory": "pancake",
         "mainIngredients": [
@@ -460,7 +658,10 @@
             "butter"
         ],
         "optionalIngredients": [
-            "salt"
+            "salt",
+            "sugar",
+            "lemon",
+            "honey"
         ],
         "isSpecialMeal": true,
         "isColdDish": false,
@@ -480,7 +681,7 @@
     },
     {
         "name": "Crepe (gluten-free)",
-        "diet": "vegetarian",
+        "diet": 1,
         "category": "carb",
         "subcategory": "pancake",
         "mainIngredients": [
@@ -509,7 +710,7 @@
     },
     {
         "name": "Green beans and potatoes",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -535,7 +736,7 @@
     },
     {
         "name": "Carrots and potatoes",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -562,7 +763,7 @@
     },
     {
         "name": "Baked green beans, potates and carrots",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -599,7 +800,7 @@
     },
     {
         "name": "Spinach and potatoes",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -626,7 +827,7 @@
     },
     {
         "name": "Collard greens and potatoes",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -653,7 +854,7 @@
     },
     {
         "name": "Kale, potatoes and carrots",
-        "diet": "vegan",
+        "diet": 0,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
@@ -683,31 +884,23 @@
         "imageLink": ""
     },
     {
-        "name": "Menestra",
-        "diet": "vegan",
+        "name": "Trinxat from la Cerdanya",
+        "diet": 3,
         "category": "vegetable",
         "subcategory": "none",
         "mainIngredients": [
-            "collard greens",
-            "green beans",
-            "carrot",
-            "potato"
+            "cabbage",
+            "potato",
+            "garlic",
+            "bacon"
         ],
         "optionalIngredients": [
             "salt",
             "olive oil",
-            "garlic",
-            "lemon",
-            "black pepper",
-            "onion",
-            "artichoke",
-            "mushroom",
-            "parsley",
-            "sweet paprika",
-            "bay leave"
+            "black pepper"
         ],
         "isSpecialMeal": false,
-        "isColdDish": true,
+        "isColdDish": false,
         "intolerances": [],
         "isLight": true,
         "season": [
@@ -716,12 +909,113 @@
             "Autum",
             "Winter"
         ],
-        "recipeLink": "https://www.edamam.com/recipe/menestra-spanish-style-veggie-stew-vegan-too-c19dfef6aa3f8e4f1c1c5c84cb9f1b33/menestra",
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Dairy milk",
+        "diet": 1,
+        "category": "milk",
+        "subcategory": "none",
+        "mainIngredients": [
+            "dairy milk"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Almond milk",
+        "diet": 0,
+        "category": "milk",
+        "subcategory": "none",
+        "mainIngredients": [
+            "almonds"
+        ],
+        "optionalIngredients": [
+            "sugar",
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Hazelnut milk",
+        "diet": 0,
+        "category": "milk",
+        "subcategory": "none",
+        "mainIngredients": [
+            "hazelnuts"
+        ],
+        "optionalIngredients": [
+            "sugar",
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Oat milk",
+        "diet": 0,
+        "category": "milk",
+        "subcategory": "none",
+        "mainIngredients": [
+            "oat"
+        ],
+        "optionalIngredients": [
+            "sugar",
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
         "imageLink": ""
     },
     {
         "name": "Red apple",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -743,7 +1037,7 @@
     },
     {
         "name": "Green apple",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -765,7 +1059,7 @@
     },
     {
         "name": "Orange",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -787,7 +1081,7 @@
     },
     {
         "name": "Clementine",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -807,7 +1101,7 @@
     },
     {
         "name": "Kiwi",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -829,7 +1123,7 @@
     },
     {
         "name": "Banana",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -851,7 +1145,7 @@
     },
     {
         "name": "Peach",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -870,7 +1164,7 @@
     },
     {
         "name": "Apricot",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "fruit",
         "mainIngredients": [
@@ -889,7 +1183,7 @@
     },
     {
         "name": "Orange juice",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "juice",
         "mainIngredients": [
@@ -914,7 +1208,7 @@
     },
     {
         "name": "Orange and carrot juice",
-        "diet": "vegan",
+        "diet": 0,
         "category": "fruit",
         "subcategory": "juice",
         "mainIngredients": [
@@ -938,8 +1232,89 @@
         "imageLink": "https://images.pexels.com/photos/162669/carrot-juice-juice-carrots-vegetable-juice-162669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
     },
     {
+        "name": "Macedonia",
+        "diet": 0,
+        "category": "fruit",
+        "subcategory": "none",
+        "mainIngredients": [
+            "peach",
+            "banana",
+            "grape",
+            "pineapple"
+        ],
+        "optionalIngredients": [
+            "mint"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "York Ham panini",
+        "diet": 3,
+        "category": "snack",
+        "subcategory": "panini",
+        "mainIngredients": [
+            "bread",
+            "york ham"
+        ],
+        "optionalIngredients": [
+            "tomato",
+            "olive oil"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "York Ham panini (Gluten-free)",
+        "diet": 3,
+        "category": "snack",
+        "subcategory": "panini",
+        "mainIngredients": [
+            "gluten free bread",
+            "york ham"
+        ],
+        "optionalIngredients": [
+            "tomato",
+            "olive oil"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
         "name": "Ham panini",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "snack",
         "subcategory": "panini",
         "mainIngredients": [
@@ -960,12 +1335,78 @@
             "Autum",
             "Winter"
         ],
-        "recipeLink": "https://www.edamam.com/recipe/simple-orange-carrot-juice-recipe-f2f2736d1554c88bdb8459f1ca562bd9/orange+carrot+juice",
-        "imageLink": "https://images.pexels.com/photos/162669/carrot-juice-juice-carrots-vegetable-juice-162669.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Walnuts",
+        "diet": 0,
+        "category": "snack",
+        "subcategory": "nuts",
+        "mainIngredients": [
+            "walnuts"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Almonds",
+        "diet": 0,
+        "category": "snack",
+        "subcategory": "nuts",
+        "mainIngredients": [
+            "almonds"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Hazelnuts",
+        "diet": 0,
+        "category": "snack",
+        "subcategory": "nuts",
+        "mainIngredients": [
+            "hazelnuts"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
     },
     {
         "name": "Gluten-free ham panini",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "snack",
         "subcategory": "panini",
         "mainIngredients": [
@@ -990,8 +1431,236 @@
         "imageLink": ""
     },
     {
+        "name": "Chickpeas and egg",
+        "diet": 1,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "chickpeas",
+            "egg"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Chickpeas salad",
+        "diet": 0,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "chickpeas",
+            "tomato",
+            "celery",
+            "lettuce",
+            "apple",
+            "beetroot"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "vinager",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Sauteed chickpeas",
+        "diet": 0,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "chickpeas",
+            "garlic",
+            "tomato sauce",
+            "spinach"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Ham and peas",
+        "diet": 3,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "garden peas",
+            "ham",
+            "onion"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Peas and potatoes",
+        "diet": 0,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "garden peas",
+            "potatoes"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Lentils",
+        "diet": 0,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "lentils",
+            "potatoes",
+            "onion",
+            "carrot",
+            "garlic"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "rice"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Hummus",
+        "diet": 0,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "chickpeas",
+            "tahini",
+            "lemon",
+            "paprika",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Beans and sausage",
+        "diet": 3,
+        "category": "legume",
+        "subcategory": "none",
+        "mainIngredients": [
+            "beans",
+            "sausage"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "garlic",
+            "parsley"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
         "name": "Hamburger",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "protein",
         "subcategory": "meat",
         "mainIngredients": [
@@ -1022,7 +1691,7 @@
     },
     {
         "name": "Hamburger (gluten-free)",
-        "diet": "flexitarian",
+        "diet": 3,
         "category": "protein",
         "subcategory": "meat",
         "mainIngredients": [
@@ -1051,9 +1720,9 @@
     },
     {
         "name": "Pasta salad with tomato and pesto",
-        "diet": "vegan",
-        "category": "salad",
-        "subcategory": "none",
+        "diet": 0,
+        "category": "carb",
+        "subcategory": "pasta",
         "mainIngredients": [
             "pasta",
             "lettuce",
@@ -1081,9 +1750,9 @@
     },
     {
         "name": "Gluten-free pasta salad with tomato and pesto",
-        "diet": "vegan",
-        "category": "salad",
-        "subcategory": "none",
+        "diet": 0,
+        "category": "carb",
+        "subcategory": "pasta",
         "mainIngredients": [
             "gluten-free pasta",
             "lettuce",
@@ -1109,7 +1778,7 @@
     },
     {
         "name": "Rocket, tomato and avocado salad",
-        "diet": "vegan",
+        "diet": 0,
         "category": "salad",
         "subcategory": "none",
         "mainIngredients": [
@@ -1137,5 +1806,943 @@
         ],
         "recipeLink": "",
         "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Greek salad",
+        "diet": 0,
+        "category": "salad",
+        "subcategory": "none",
+        "mainIngredients": [
+            "tomato",
+            "basil",
+            "mozzarella",
+            "olives"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": "https://images.pexels.com/photos/1213710/pexels-photo-1213710.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    },
+    {
+        "name": "Menestra",
+        "diet": 0,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "collard greens",
+            "green beans",
+            "carrot",
+            "potato"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "garlic",
+            "lemon",
+            "black pepper",
+            "onion",
+            "artichoke",
+            "mushroom",
+            "parsley",
+            "sweet paprika",
+            "bay leave"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "https://www.edamam.com/recipe/menestra-spanish-style-veggie-stew0too-c19dfef6aa3f8e4f1c1c5c84cb9f1b33/menestra",
+        "imageLink": ""
+    },
+    {
+        "name": "Fish soup",
+        "diet": 2,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "rice",
+            "onion",
+            "hake"
+        ],
+        "optionalIngredients": [
+            "clams",
+            "salt",
+            "olive oil",
+            "garlic",
+            "parsley",
+            "black pepper",
+            "tomato"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Chicken soup",
+        "diet": 3,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "orzo",
+            "onion",
+            "chicken broth"
+        ],
+        "optionalIngredients": [
+            "chickpeas",
+            "salt",
+            "olive oil",
+            "tomato"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Courgette soup",
+        "diet": 0,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "courgette",
+            "potato",
+            "onion",
+            "broth"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Carrot soup",
+        "diet": 0,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "carrot",
+            "potato",
+            "leek",
+            "broth"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Pumpking and carrot soup",
+        "diet": 0,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "pumpking",
+            "carrot",
+            "potato",
+            "leek",
+            "broth"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Gazpacho",
+        "diet": 0,
+        "category": "soup",
+        "subcategory": "none",
+        "mainIngredients": [
+            "tomato",
+            "red pepper",
+            "cucumber",
+            "garlic",
+            "olive oil",
+            "apple vinegar"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Battered hake",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "fish",
+        "mainIngredients": [
+            "hake",
+            "egg",
+            "breadcrumbs",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "lemon",
+            "black pepper",
+            "tartar sauce"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Baked Seabream and potatoes",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "fish",
+        "mainIngredients": [
+            "seabream",
+            "potato",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "lemon",
+            "black pepper",
+            "onion"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Baked Seabass",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "fish",
+        "mainIngredients": [
+            "seabass",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "lemon",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Salmon",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "fish",
+        "mainIngredients": [
+            "salmon",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "soy sauce",
+            "black pepper"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Fried shrimps",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "seafood",
+        "mainIngredients": [
+            "shrimps",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "garlic",
+            "parsley"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Cooked king prawns",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "seafood",
+        "mainIngredients": [
+            "cooked king prawns"
+        ],
+        "optionalIngredients": [
+            "tartar sauce"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": true,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Grilled tunna",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "seafood",
+        "mainIngredients": [
+            "tunna"
+        ],
+        "optionalIngredients": [
+            "soy sauce"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Grilled chicken breast",
+        "diet": 3,
+        "category": "protein",
+        "subcategory": "meat",
+        "mainIngredients": [
+            "chicken breast"
+        ],
+        "optionalIngredients": [
+            "salt",
+            "olive oil"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Battered pork loin",
+        "diet": 3,
+        "category": "protein",
+        "subcategory": "meat",
+        "mainIngredients": [
+            "pork loin",
+            "egg",
+            "breadcrumbs",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "gluten"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Omelette",
+        "diet": 1,
+        "category": "protein",
+        "subcategory": "egg",
+        "mainIngredients": [
+            "egg",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Tunna Omelette",
+        "diet": 2,
+        "category": "protein",
+        "subcategory": "egg",
+        "mainIngredients": [
+            "egg",
+            "tunna",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": true,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Spanish Omelette",
+        "diet": 1,
+        "category": "protein",
+        "subcategory": "egg",
+        "mainIngredients": [
+            "egg",
+            "potato",
+            "onion",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Fried egg and potatos",
+        "diet": 1,
+        "category": "protein",
+        "subcategory": "egg",
+        "mainIngredients": [
+            "egg",
+            "potato",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Broken eggs and ham",
+        "diet": 3,
+        "category": "protein",
+        "subcategory": "egg",
+        "mainIngredients": [
+            "egg",
+            "potato",
+            "ham",
+            "olive oil"
+        ],
+        "optionalIngredients": [
+            "salt"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Butter croissant",
+        "diet": 1,
+        "category": "pastissery",
+        "subcategory": "pastry",
+        "mainIngredients": [
+            "flour",
+            "olive oil",
+            "butter",
+            "egg",
+            "salt",
+            "sugar"
+        ],
+        "optionalIngredients": [
+            "honey"
+        ],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Chocolate croissant",
+        "diet": 1,
+        "category": "pastissery",
+        "subcategory": "pastry",
+        "mainIngredients": [
+            "flour",
+            "olive oil",
+            "butter",
+            "egg",
+            "salt",
+            "sugar",
+            "chocolate"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Tiramisu",
+        "diet": 1,
+        "category": "pastissery",
+        "subcategory": "cake",
+        "mainIngredients": [
+            "mascarpone",
+            "philadelphia",
+            "coffee",
+            "egg",
+            "sugar",
+            "soletilla biscuits",
+            "cocoa"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": true,
+        "isColdDish": true,
+        "intolerances": [
+            "lactose",
+            "gluten"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Carrot cake",
+        "diet": 1,
+        "category": "pastissery",
+        "subcategory": "cake",
+        "mainIngredients": [
+            "carrot",
+            "flour",
+            "egg",
+            "sugar",
+            "cinnamon"
+        ],
+        "optionalIngredients": [
+            "nuts"
+        ],
+        "isSpecialMeal": true,
+        "isColdDish": true,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Chocolate brownie",
+        "diet": 1,
+        "category": "pastissery",
+        "subcategory": "cake",
+        "mainIngredients": [
+            "chocolate",
+            "floar",
+            "egg",
+            "sugar"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": true,
+        "isColdDish": true,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Greek yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "dairy milk",
+            "yoghurt",
+            "cream"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Natural yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "dairy milk"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Natural yoghurt and strawberries",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "dairy milk",
+            "strawberries"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Lemon yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "dairy milk",
+            "lemon"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Strawvberry yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "dairy milk",
+            "strawberry"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [
+            "lactose"
+        ],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Soy and chocolate yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "soy milk",
+            "chocolate"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
+    },
+    {
+        "name": "Almond yoghurt",
+        "diet": 1,
+        "category": "dairy",
+        "subcategory": "yoghurt",
+        "mainIngredients": [
+            "almond milk"
+        ],
+        "optionalIngredients": [],
+        "isSpecialMeal": false,
+        "isColdDish": false,
+        "intolerances": [],
+        "isLight": false,
+        "season": [
+            "Spring",
+            "Summer",
+            "Autum",
+            "Winter"
+        ],
+        "recipeLink": "",
+        "imageLink": ""
     }
 ]

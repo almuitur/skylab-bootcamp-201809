@@ -122,8 +122,8 @@ const logic = {
                 // season: {$in: season }
             })
             
-            if (!meals) throw new NotFoundError(`no meals`)
-            if(!meals.length) meals[0]= { name: "No meals found with the parameters entered" }
+            if (!meals) throw new NotFoundError('no meals')
+            if(!meals.length) meals[0]= { name: 'Not found' }
 
         //     //TO CONSIDER
         //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
@@ -132,6 +132,8 @@ const logic = {
         //     //name != null && (user.name = name)
 
             const meal = meals[Math.floor(Math.random() * meals.length)]
+            delete meal.__v
+            delete meal._id
             
             return meal
         })()

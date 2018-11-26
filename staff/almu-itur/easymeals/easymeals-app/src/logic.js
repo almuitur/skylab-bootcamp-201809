@@ -4,6 +4,8 @@ const logic = {
     _userId: sessionStorage.getItem('userId') || null,
     _token: sessionStorage.getItem('token') || null,
     _mealPlan: sessionStorage.getItem('mealplan') || null,
+    _diet: sessionStorage.getItem('diet') || null,
+    _intolerances: sessionStorage.getItem('intolerances') || null,
 
     url: 'NO-URL',
 
@@ -64,12 +66,17 @@ const logic = {
     },
 
     logout() {
-        this._mealPlan = []
+        this._mealPlan = null
         this._userId = null
         this._token = null
+        this._diet = null
+        this._intolerances = null
 
+        sessionStorage.removeItem('mealPlan')
         sessionStorage.removeItem('userId')
         sessionStorage.removeItem('token')
+        sessionStorage.removeItem('diet')
+        sessionStorage.removeItem('intolerances')
     },
 
     updateUser(name, surname, username, newPassword, password, confirmNewPassword) {
@@ -264,8 +271,14 @@ const logic = {
                     })
                     return _day
                 })
-                const mealPlan = JSON.stringify(_mealPlan);
+                const mealPlan = JSON.stringify(_mealPlan)
                 sessionStorage.setItem('mealPlan', mealPlan)
+
+                diet = JSON.stringify(diet);
+                sessionStorage.setItem('diet', diet)
+
+                intolerances = JSON.stringify(intolerances);
+                sessionStorage.setItem('intolerances', intolerances)
             })
         }
         else {
