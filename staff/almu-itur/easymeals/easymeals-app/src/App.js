@@ -1,62 +1,56 @@
 import React, { Component } from 'react'
+import Error from './components/Error/Error'
+// import Success from './components/Success/Success'
 import Landing from './components/Landing/Landing'
 import Register from './components/Register/Register'
 import Login from './components/Login/Login'
 import Home from './components/Home/Home'
-import MyMeals from './components/MyMeals/MyMeals'
-import Settings from './components/Settings/Settings'
 import NavbarLogged from './components/NavbarLogged'
 import FooterPage from './components/FooterPage'
 import MealPlan from './components/MealPlan/MealPlan'
-import Meal from './components/Meal/Meal'
-// import CustomPlan from './components/CustomPlan'
-import Error from './components/Error'
+import MyMeals from './components/MyMeals/MyMeals'
+import Settings from './components/Settings/Settings'
+// import CustomPlan from './components/CustomPlan/CustomPlan'
 import logic from './logic'
+import swal from 'sweetalert'
 import { Route, withRouter, Redirect } from 'react-router-dom'
-// import AlertPage from './components/AlertPage'
 
 logic.url = 'http://localhost:5000/api'
 
 class App extends Component {
-    state = { error: null, alert: null }
+    state = {}
 
-    handleRegisterClick = (event) => {
+    handleRegisterClick = event => {
         event.preventDefault()
         this.props.history.push('/register')
     }
 
-    handleLoginClick = (event) => {
+    handleLoginClick = event => {
         event.preventDefault()
         this.props.history.push('/login')
     }
 
-    handleRegister = (name, surname, username, password) => {
+    handleRegister = (name, surname, username, password, repeatPassword) => {
         try {
-            logic.registerUser(name, surname, username, password)
-                .then(() => {
-                    this.setState({ error: null }, () => this.props.history.push('/login'))
+            logic.registerUser(name, surname, username, password, repeatPassword)
+                .then((res) => {
+                    swal("User successfully registered!")
+                    this.props.history.push('/login')
                 })
-                .catch(err => this.setState({ error: err.message }))
-        } catch (err) {
-            this.setState({ error: err.message })
-        }
+                .catch(err => Error(err))
+        } catch (err) { Error(err) }
     }
 
     handleLogin = (username, password) => {
         try {
             logic.login(username, password)
-                .then(() => {
-                    this.setState({ error: null }, () => this.props.history.push('/home'))
-                })
-                .catch(err => this.setState({ error: err.message }))
-        } catch (err) {
-            this.setState({ error: err.message })
-        }
+                .then(() => { this.props.history.push('/home') })
+                .catch(err => Error(err))
+        } catch (err) { Error(err) }
     }
 
     handleLogoutClick = () => {
         logic.logout()
-
         this.props.history.push('/')
     }
 
@@ -85,32 +79,26 @@ class App extends Component {
     handleUpdateProfile = (name, surname, username, newPassword, password, confirmNewPassword) => {
         try {
             logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
-                .then(() => {
-                    this.setState({ error: null }, () => this.props.history.push('/home'))
-                })
-                .catch(err => this.setState({ error: err.message }))
-        } catch (err) {
-            this.setState({ error: err.message })
-        }
+                .then(() => { this.props.history.push('/home') })
+                .catch(err => Error(err))
+        } catch (err) { Error(err) }
     }
 
     handleCreateMealPlan = (diet, plan, intolerances) => {
-        try {
-            logic.createMealPlan(diet, plan, intolerances)
-                .then(() => {
-                    this.props.history.push('/mealplan')
-                })
-                .catch(err => this.setState({ error: err.message }))
-        } catch (err) {
-            this.setState({ error: err.message })
-        }
+        // try {
+            logic.createMealPlan(diet, plan, intolerances, () => this.props.history.push('/mealplan'))
+            
+                // .then(() => {
+                    
+        //         })
+        //         .catch(err => Error(err))
+        // } catch (err) { Error(err) }
     }
 
     render() {
-        const { error } = this.state
 
         return <div>
-            {error && <Error message={error} />}
+
             {logic.loggedIn && <NavbarLogged onHomeClick={this.handleHomeClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
 
             <Route exact path="/" render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to="/home" />} />

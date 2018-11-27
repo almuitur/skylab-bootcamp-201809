@@ -26,8 +26,8 @@ class Home extends Component {
         if (checked) {
             let intolerances = this.state.intolerances
             intolerances.push(intoleranceUser)
-            this.setState({ intolerances })
 
+            this.setState({ intolerances })
         }
         else {
             let intolerances = this.state.intolerances

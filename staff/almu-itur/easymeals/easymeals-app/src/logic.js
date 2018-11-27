@@ -1,4 +1,5 @@
-
+import Error from './components/Error/Error'
+import data from './data'
 
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
@@ -9,17 +10,21 @@ const logic = {
 
     url: 'NO-URL',
 
-    registerUser(name, surname, username, password) {
+    registerUser(name, surname, username, password, repeatPassword) {
         if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
         if (typeof surname !== 'string') throw TypeError(`${surname} is not a string`)
         if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
         if (typeof password !== 'string') throw TypeError(`${password} is not a string`)
+        if (typeof repeatPassword !== 'string') throw TypeError(`${repeatPassword} is not a string`)
 
         if (!name.trim()) throw Error('name is empty or blank')
         if (!surname.trim()) throw Error('surname is empty or blank')
         if (!username.trim()) throw Error('username is empty or blank')
         if (!password.trim()) throw Error('password is empty or blank')
+        if (!repeatPassword.trim()) throw Error('password is empty or blank')
 
+        if(password!=repeatPassword) throw Error('passwords do not match')
+        
         return fetch(`${this.url}/users`, {
             method: 'POST',
             headers: {
@@ -108,83 +113,7 @@ const logic = {
             })
     },
 
-    selectPlan(plan) {
-
-        const season = 'autum' //Create function getSeason() with Date.now()
-        const mealPlan = []
-
-        switch (plan) {
-            case 'balanced':
-                const monday = [
-                    { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
-                    { day: 'monday', mealTime: 'breakfast', search: { category: 'milk', isSpecial: false } },
-                    { day: 'monday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'monday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'panini', isCold: true, isSpecial: false } },
-                    { day: 'monday', mealTime: 'lunch', search: { category: 'vegetable', isSpecial: false } },
-                    { day: 'monday', mealTime: 'afternoon', search: { category: 'snack', subcategory: 'nut', isSpecial: false } },
-                    { day: 'monday', mealTime: 'dinner', search: { category: 'salad', isSpecial: false } },
-                    { day: 'monday', mealTime: 'dinner', search: { category: 'protein', subcategory: 'meat', isSpecial: false } }]
-                const tuesday = [
-                    { day: 'tuesday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'toast', isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'juice', isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'breakfast', search: { category: 'dairy', subcategory: 'yoghurt', isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'panini', isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'lunch', search: { category: 'legume', isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'afternoon', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'dinner', search: { category: 'soup', season: season, isCold: false, isSpecial: false } },
-                    { day: 'tuesday', mealTime: 'dinner', search: { category: 'protein', subcategory: 'fish', isSpecial: false } }]
-                const wednesday = [
-                    { day: 'wednesday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'breakfast', search: { category: 'dairy', subcategory: 'yoghurt', isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'pastisserie', isCold: true, isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'lunch', search: { category: 'vegetable', isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'afternoon', search: { category: 'snack', subcategory: 'panini', isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'dinner', search: { category: 'salad', isSpecial: false } },
-                    { day: 'wednesday', mealTime: 'dinner', search: { category: 'protein', subcategory: 'meat', isSpecial: false } }]
-                const thursday = [
-                    { day: 'thursday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'toast', isSpecial: false } },
-                    { day: 'thursday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'fruit', isSpecial: false } },
-                    { day: 'thursday', mealTime: 'breakfast', search: { category: 'milk', isSpecial: false } },
-                    { day: 'thursday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'yoghurt', isSpecial: false } },
-                    { day: 'thursday', mealTime: 'lunch', search: { category: 'legume', isSpecial: false } },
-                    { day: 'thursday', mealTime: 'afternoon', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'thursday', mealTime: 'dinner', search: { category: 'soup', season: season, isCold: false, isSpecial: false } },
-                    { day: 'thursday', mealTime: 'dinner', search: { category: 'protein', subcategory: 'fish', isSpecial: false } }]
-                const friday = [
-                    { day: 'friday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
-                    { day: 'friday', mealTime: 'breakfast', search: { category: 'milk', isSpecial: false } },
-                    { day: 'friday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'friday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'panini', isCold: true, isSpecial: false } },
-                    { day: 'friday', mealTime: 'lunch', search: { category: 'vegetable', isSpecial: false } },
-                    { day: 'friday', mealTime: 'afternoon', search: { category: 'snack', subcategory: 'nut', isSpecial: false } },
-                    { day: 'friday', mealTime: 'dinner', search: { category: 'carb', subcategory: 'pizza', isSpecial: false } }]
-                const saturday = [
-                    { day: 'saturday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'pancake' } },
-                    { day: 'saturday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'milkshake', isSpecial: false } },
-                    { day: 'saturday', mealTime: 'lunch', search: { category: 'carb', isSpecial: true } },
-                    { day: 'saturday', mealTime: 'lunch', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false } },
-                    { day: 'saturday', mealTime: 'dinner', search: { category: 'protein', subcategory: 'egg', isSpecial: false } }]
-                const sunday = [
-                    { day: 'sunday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'toast', isSpecial: true } },
-                    { day: 'sunday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'juice', isSpecial: false } },
-                    { day: 'sunday', mealTime: 'lunch', search: { category: 'protein', isSpecial: true } },
-                    { day: 'sunday', mealTime: 'lunch', search: { category: 'pastisserie', isSpecial: true } },
-                    { day: 'sunday', mealTime: 'dinner', search: { category: 'salad', isSpecial: false } },
-                    { day: 'sunday', mealTime: 'dinner', search: { category: 'dairy', subcategory: 'yoghurt', isSpecial: false } }]
-
-                mealPlan.push(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-                break
-            case 'diet':
-                break
-            case 'custom':
-                break
-            default: throw Error('plan not found')
-        }
-        return mealPlan
-    },
-
-    createMealPlan(diet, _plan, intolerances) {
+    createMealPlan(diet, _plan, intolerances, callback) {
         // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
         // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
         // if (typeof intolerances !== 'array') throw TypeError(`${intolerances} is not a string`)
@@ -193,14 +122,14 @@ const logic = {
         // if (!plan.trim()) throw Error('plan is empty or blank')
         // if (!intolerances.trim()) throw Error('intolerances is empty or blank')
 
-        const season = 'autum' //Create function getSeason() with Date.now()
-        const plan = this.selectPlan(_plan)
+        const plan = data.selectPlan(_plan)
 
         if (plan) {
-
+            
             let mealsWeek = plan.map(day => {
-
+                
                 return new Promise((resolve, reject) => {
+                    
                     try {
                         let mealsDay = day.map(meal => {
                             const category = meal.search.category
@@ -218,16 +147,19 @@ const logic = {
                                 // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
                                 body: JSON.stringify({ category, subcategory })
                             })
+                            
                                 .then(res => res.json())
-
+                                
                                 .then(res => {
 
                                     if (res.error) throw Error(res.error)
                                     let resObject = {}
                                     resObject.day = meal.day
                                     resObject[meal.mealTime] = res.data
-                                    resObject[meal.mealTime].id = res.data._id
+                                    if (res.data.id !=='none') resObject[meal.mealTime].id = res.data._id
+                                    
                                     delete resObject[meal.mealTime]._id
+                                    delete resObject[meal.mealTime].__v
 
                                     return resObject
                                 })
@@ -242,6 +174,7 @@ const logic = {
                 })
             })
             Promise.all(mealsWeek).then((res) => {
+                
                 const _mealPlan = {}
                 _mealPlan.date = Date.now()
                 _mealPlan.name = _plan
@@ -279,12 +212,14 @@ const logic = {
 
                 intolerances = JSON.stringify(intolerances);
                 sessionStorage.setItem('intolerances', intolerances)
+                callback()
+
             })
         }
         else {
-            throw Error('No meal plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
+            throw Error('You need to choose a plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
         }
-
+        
     },
 
     // addPostit(text) {
@@ -382,7 +317,7 @@ const logic = {
             if (meal.id === id) return meal
         })
 
-        //DELETE OLD STATE
+        //DELETE MEAL FROM OLD STATE
         mealPlan.days[dayIndex][mealTime] = mealPlan.days[dayIndex][mealTime].filter(meal => {
             if (meal.id !== id) return meal
         })
@@ -391,13 +326,13 @@ const logic = {
         index = status.indexOf('y')
         mealDay = status.slice(0, index + 1)
         mealTime = status.slice(index + 1)
+        meal[0].status = status
 
         days.forEach((day, index) => mealDay === day ? dayIndex = index : null)
-        // mealPlan.days[dayIndex][mealTime].push(meal[0])
-
-        mealPlan.days[dayIndex][mealTime].push(meal[mealPlan.days[dayIndex][mealTime].length])
-
-        // mealPlan.days[dayIndex][mealTime][mealPlan.days[dayIndex][mealTime].length] = meal
+        
+        //ADD MEAL TO NEW STATE
+        mealPlan.days[dayIndex][mealTime][mealPlan.days[dayIndex][mealTime].length] = meal[0]
+        
         mealPlan = JSON.stringify(mealPlan);
         sessionStorage.setItem('mealPlan', mealPlan)
         _mealPlan = sessionStorage.getItem('mealPlan')
@@ -407,7 +342,7 @@ const logic = {
     },
 
     generateShoppingList() {
-
+        
         let _mealPlan = sessionStorage.getItem('mealPlan')
         let mealPlan = JSON.parse(_mealPlan)
 
@@ -418,17 +353,17 @@ const logic = {
         mealsDay.map(mealTime => {
 
             mealPlan.days.map((day, dayIndex) => {
+                
+                day[mealTime] && day[mealTime].length > 0 && day[mealTime].map(meal => {
 
-                day[dayIndex][mealTime].length > 0 && day[dayIndex][mealTime].map(meal => {
-
-                    if (meal.mainIngredients.length > 0) {
+                    if (meal.mainIngredients && meal.mainIngredients.length > 0) {
                         meal.mainIngredients.map(mainIngredient => {
                             if (!mainIngredients.includes(mainIngredient)) mainIngredients.push(mainIngredient)
                         })
                     }
-                    if (meal.optionalIngredients.length > 0) {
+                    if (meal.mainIngredients && meal.optionalIngredients.length > 0) {
                         meal.optionalIngredients.map(optionalIngredient => {
-                            if (!optionalIngredients.includes(optionalIngredient)) optionalIngredients.push(optionalIngredient)
+                            if (!optionalIngredients.includes(optionalIngredient) && !mainIngredients.includes(optionalIngredient)) optionalIngredients.push(optionalIngredient)
                         })
                     }
                 })

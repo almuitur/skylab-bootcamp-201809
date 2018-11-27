@@ -3,6 +3,17 @@
   margin: 1%;
 }
 
+.register-left-container {
+  display: none;
+}
+
+.register-right-container {
+  width: 90%;
+  margin: auto;
+  text-align: center;
+  justify-content: center;
+}
+
 .register-right-logo {
   margin: auto;
   width: 100px;
@@ -29,6 +40,8 @@
 
 .register-right-form-container form {
   width: 80%;
+  justify-content: center;
+  margin: auto;
 }
 
 .register-right-title {
@@ -38,42 +51,46 @@
   color: black;
 }
 
-@media screen and (max-device-width: 568px) {
+@media screen and (min-width: 500px) and (max-width: 700px) {
 
-  .register-general-container {
-    flex-direction: column;  
+  .register-left-container {
+    display: block;
+    background-image: url("../../images/register-image.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    width: 40%;
+    height: 99vh;
+    margin: 1%;
   }
 
-  .register-right-title {
-    font-size: 1.3em;
+  .register-right-container {
+    width: 60%;  
+    text-align: center;
   }
 
-  .register-form-container {
+  .register-right-form-container {
     display: flex;
     justify-content: center;
   }
 }
 
-@media screen and (min-width: 569px) {
+@media screen and (min-width: 700px) {
 
   .register-left-container {
+    display: block;
     background-image: url("../../images/register-image.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     width: 50%;
-    text-align: center;
-    text-justify: center;
+    height: 99vh;
+    margin: 1%;
   }
 
   .register-right-container {
     width: 50%;  
     text-align: center;
-  }
-
-  .register-right-title {
-    font-size: 2em;
-
   }
 
   .register-right-form-container {

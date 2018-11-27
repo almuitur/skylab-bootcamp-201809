@@ -123,7 +123,7 @@ const logic = {
             })
             
             if (!meals) throw new NotFoundError('no meals')
-            if(!meals.length) meals[0]= { name: 'Not found' }
+            if(!meals.length) meals[0]= { name: 'Not found', id: 'none' }
 
         //     //TO CONSIDER
         //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()

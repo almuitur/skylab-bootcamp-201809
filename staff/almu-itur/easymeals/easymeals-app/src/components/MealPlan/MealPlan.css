@@ -38,3 +38,12 @@
     border-radius: 10px;
 }
 
+.moddalShoppingList {
+    width: 70%;
+    height: 70%;
+    margin: 0 auto;
+    background-color: grey;
+    z-index: 500;
+}
+
+

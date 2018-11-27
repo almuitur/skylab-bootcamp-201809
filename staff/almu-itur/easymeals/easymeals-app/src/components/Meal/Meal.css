@@ -1,0 +1,26 @@
+.options-meal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #E4717A;
+    border-radius: 10px;
+}
+
+.meal {
+    background-color: white;
+    width: 100%;
+    height: 120px;
+    margin-bottom: 10%;
+    border-radius: 8px;
+}
+
+.meal textarea {
+    background: transparent;
+    border: none;
+    outline: none;
+    width: 100px;
+    height: 100px;
+    font-family: "Roboto", sans-serif;
+    resize: none;
+    cursor: pointer
+}

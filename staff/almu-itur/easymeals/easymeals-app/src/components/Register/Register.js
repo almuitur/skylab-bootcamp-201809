@@ -3,7 +3,7 @@ import { Input } from 'mdbreact';
 import './Register.css'
 
 class Register extends Component {
-    state = { name: '', surname: '', username: '', password: '' }
+    state = { name: '', surname: '', username: '', password: '', repeatPassword: '' }
 
     handleNameChange = event => {
         const name = event.target.value
@@ -30,17 +30,17 @@ class Register extends Component {
     }
 
     handleRepeatPasswordChange = event => {
-        const password = event.target.value
+        const repeatPassword = event.target.value
 
-        this.setState({ password })
+        this.setState({ repeatPassword })
     }
 
     handleSubmit = event => {
         event.preventDefault()
 
-        const { name, surname, username, password } = this.state
+        const { name, surname, username, password, repeatPassword } = this.state
 
-        this.props.onRegister(name, surname, username, password)
+        this.props.onRegister(name, surname, username, password, repeatPassword)
     }
 
     render() {
@@ -54,8 +54,8 @@ class Register extends Component {
             <form onSubmit={this.handleSubmit}>
                 <Input type='text' label='Name' onChange={this.handleNameChange} />
                 <Input type='text' label='Surname' onChange={this.handleSurnameChange} />
-                <Input type='text' label='Username' onChange={this.handleSurnameChange} />
-                <Input type='password' label='Password' onChange={this.handleUsernameChange} />
+                <Input type='text' label='Username' onChange={this.handleUsernameChange} />
+                <Input type='password' label='Password' onChange={this.handlePasswordChange} />
                 <Input type='password' label='Repeat Password' onChange={this.handleRepeatPasswordChange}/>
                 <button className='btn btn-unique' type='submit'>Register</button>
             </form>

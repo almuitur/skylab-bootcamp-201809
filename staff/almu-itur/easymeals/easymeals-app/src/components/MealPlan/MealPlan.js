@@ -9,30 +9,22 @@ class MealPlan extends Component {
     state = { mealPlan: {}, shoppingList: null }
 
     componentDidMount() {
-
+        
         let _mealPlan = sessionStorage.getItem('mealPlan')
         let mealPlan = JSON.parse(_mealPlan)
         
         { this.setState({ mealPlan }) }
     }
 
-    // handleSubmit = name => {
+    // findMeal = text => {
     // try {
-    //     logic.addPostit(name)
+    //     logic.findMeal(text)
     //         .then(() => logic.listPostits())
     //         .then(postits => this.setState({ postits }))
     // } catch ({ message }) {
     //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
     // }
     // }
-
-    // TODO error handling!
-
-    handleRemoveMeal = (id, status) => {
-        let mealPlan = logic.removeMeal(id, status)
-        
-        { this.setState({ mealPlan }) }
-    }
 
     handleModifyMeal = (id, name, status) => {
         // logic.modifyPostit(id, name, status)
@@ -43,7 +35,13 @@ class MealPlan extends Component {
 
     handleMoveMeal = (id, name, status, previousState) => {
         let mealPlan = logic.moveMeal(id, name, status, previousState)
-        debugger
+
+        { this.setState({ mealPlan }) }
+    }
+
+    handleRemoveMeal = (id, status) => {
+        let mealPlan = logic.removeMeal(id, status)
+        
         { this.setState({ mealPlan }) }
     }
 
@@ -64,10 +62,14 @@ class MealPlan extends Component {
     }
 
     handleShoppingList = () => {
-        
+
         let shoppingList = logic.generateShoppingList()
-        debugger
+        
         { this.setState({ shoppingList }) }
+    }
+
+    closeShoppingList = () => {
+        { this.setState({ shoppingList: null }) }
     }
 
     handlePrint = () => {
@@ -93,11 +95,11 @@ class MealPlan extends Component {
     }
 
     onDrop = (event, status) => {
-        
+
         const idMeal = event.dataTransfer.getData('id')
         const nameMeal = event.dataTransfer.getData('name')
         const previousState = event.dataTransfer.getData('state')
-        
+
         this.handleMoveMeal(idMeal, nameMeal, status, previousState)
     }
 
@@ -117,14 +119,14 @@ class MealPlan extends Component {
                 {days.map(day => <h4 className="meal-plan-day">{day}</h4>)}
             </div>
 
-            { mealsDay.map(mealTime=> {
+            {mealsDay.map(mealTime => {
                 return <div className="meal-plan-meals-container">
-                {this.state.mealPlan.days && this.state.mealPlan.days.map((day, dayIndex) => {
-                    return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `${day.day}${mealTime}`)}>
+                    {this.state.mealPlan.days && this.state.mealPlan.days.map((day, dayIndex) => {
+                        return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `${day.day}${mealTime}`)}>
                             <h2 className="day-meal">{mealTime.toUpperCase()}</h2>
-                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length>0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
                         </div>
-                })}
+                    })}
                 </div>
             })}
             <div>
@@ -133,6 +135,13 @@ class MealPlan extends Component {
                 <Button onClick={this.handleSave}>SAVE</Button>
                 <Button onClick={this.handleShare}>SHARE</Button>
             </div>
+            
+            {this.state.shoppingList &&
+                <div>
+                    {/* <ShoppingList closeShoppingList={this.handleCloseShoppingList}/> */}
+                </div>
+            }
+
         </div >
     }
 }
