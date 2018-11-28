@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import logic from '../../logic'
 import InputForm from '../InputForm'
 import Meal from '../Meal/Meal'
+import MealDetail from '../MealDetail/MealDetail'
 import { Button } from "mdbreact"
 import './MealPlan.css'
 
 class MealPlan extends Component {
-    state = { mealPlan: {}, shoppingList: null }
+    state = { mealPlan: {}, shoppingList: null, mealDetail: null }
 
     componentDidMount() {
         
@@ -26,12 +27,21 @@ class MealPlan extends Component {
     // }
     // }
 
-    handleModifyMeal = (id, name, status) => {
+    // handleModifyMeal = (id, name, status) => {
         // logic.modifyPostit(id, name, status)
         //     .then(() => logic.listPostits())
         //     .then(postits => this.setState({ postits }))
         // TODO error handling!
+    // }
+
+    handleMealDetail = id => {
+        
+        const meal = logic.findMeal(id)
+        
+        { this.setState ({ mealDetail: meal }) }
     }
+
+    handleCloseMealDetail = () => this.setState ({ mealDetail: null })
 
     handleMoveMeal = (id, name, status, previousState) => {
         let mealPlan = logic.moveMeal(id, name, status, previousState)
@@ -49,9 +59,9 @@ class MealPlan extends Component {
         console.log('NewMeal')
     }
 
-    handleFindMeal = (id) => {
-        console.log('FindMeal')
-    }
+    // handleFindMeal = (id) => {
+    //     console.log('FindMeal')
+    // }
 
     handleLikeMeal = (id) => {
         console.log('LikeMeal')
@@ -109,6 +119,11 @@ class MealPlan extends Component {
 
         return <div className="meal-plan">
 
+              {this.state.mealDetail && <div>
+                <MealDetail onCloseMealDetailClick = { this.handleCloseMealDetail } />
+            </div>
+            }
+            
             <h1>Meal Plan</h1>
 
             <p>{this.state.mealPlan.name}</p>
@@ -124,7 +139,7 @@ class MealPlan extends Component {
                     {this.state.mealPlan.days && this.state.mealPlan.days.map((day, dayIndex) => {
                         return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `${day.day}${mealTime}`)}>
                             <h2 className="day-meal">{mealTime.toUpperCase()}</h2>
-                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} />)}
+                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} onMealDetailClick={this.handleMealDetail} />)}
                         </div>
                     })}
                 </div>
@@ -141,6 +156,8 @@ class MealPlan extends Component {
                     {/* <ShoppingList closeShoppingList={this.handleCloseShoppingList}/> */}
                 </div>
             }
+
+          
 
         </div >
     }

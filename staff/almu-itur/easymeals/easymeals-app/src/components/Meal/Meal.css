@@ -8,10 +8,11 @@
 
 .meal {
     background-color: white;
+    font-size: 0.9em;
     width: 100%;
-    height: 120px;
     margin-bottom: 10%;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .meal textarea {
@@ -22,5 +23,5 @@
     height: 100px;
     font-family: "Roboto", sans-serif;
     resize: none;
-    cursor: pointer
+    cursor: pointer;
 }

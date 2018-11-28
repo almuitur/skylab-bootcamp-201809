@@ -1,49 +1,51 @@
 
-.meal-plan {
-    background: white;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    width: 95%;
-    margin: 0 auto;
-}
+/* @media screen and (min-width: 700px) { */
+    .meal-plan {
+        background: white;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin: 0 auto;
+    }
 
-.meal-plan-days-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    border-bottom: 1px solid #ef9a9a;
-}
+    .meal-plan-days-container {
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+        border-bottom: 1px solid #ef9a9a;
+    }
 
-.meal-plan-day {
-    font-size: 1.2em;
-}   
+    .meal-plan-day {
+        font-size: 1.2em;
+    }   
 
-.meal-plan-meals-container{
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-}
+    .meal-plan-meals-container{
+        width: 95%;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-around;
+    }
 
-.day-meal {
-    margin: 10px;
-    font-size: 1em;
-}
+    .day-meal {
+        margin: 10px;
+        font-size: 1em;
+    }
 
-.column {
-    width: 14%;
-    padding: 5px;
-    margin: 20px 5px;
-    background-color: #FDEDEC;
-    border-radius: 10px;
-}
+    .column {
+        width: 14%;
+        padding: 5px;
+        margin: 20px 5px;
+        background-color: #FDEDEC;
+        border-radius: 10px;
+    }
 
-.moddalShoppingList {
-    width: 70%;
-    height: 70%;
-    margin: 0 auto;
-    background-color: grey;
-    z-index: 500;
-}
-
-
+    .moddalShoppingList {
+        width: 70%;
+        height: 70%;
+        margin: 0 auto;
+        background-color: grey;
+        z-index: 500;
+    }
+/* } */

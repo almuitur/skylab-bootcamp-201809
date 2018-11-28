@@ -1,0 +1,103 @@
+.meal-detail-whole-page-container{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 50, 0.9);
+    position: fixed;
+    overflow: hidden;
+    z-index: 49;
+}
+.meal-detail-container{
+    z-index: 50;
+    margin-top: 10%;
+    margin-left: 15%;
+    margin-bottom: 10%;
+    width: 70%;
+    height: 60%;
+    display: flex;
+    flex-direction: column; 
+    background-color: rgb(241, 238, 238);
+    position: fixed;
+}
+.meal-detail-left-container {
+    width: 100%;
+    height: 30%;
+    margin: 1% 1% 0 1%;
+}
+.meal-detail-right-container {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    height: 60%;
+}
+.meal-detail-right-container-container {
+    display: flex;
+    flex-direction: column;
+}
+.meal-detail-right-container-container-title {
+    justify-content: center;
+    font-size: 1.2em;
+    color: #E4717A;
+}
+.meal-detail-right-container-container-diet {
+    color: green;
+}
+.meal-detail-right-container-container-ingredients {
+    display: flex;
+    flex-direction: column;
+}
+.meal-detail-right-container-container-ingredients-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgba(231, 230, 230, 0.544);
+}
+.meal-detail-right-container-container-ingredients-optional {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    background-color: rgb(231, 230, 230);
+}
+li {
+    font-size: 0.7em;
+    list-style-type: none;
+}
+.meal-detail-right-container-container-intolerances {
+    display: flex;
+    flex-direction: row;
+}
+.meal-detail-right-container-container-link {
+    background-color: rgb(255, 115, 185);
+    font-size: 0.8em;
+    padding: 0.1em;
+    margin: 0.1em;
+}
+.meal-detail-right-container-button {
+    justify-content: right;
+    margin-right: 2%;
+}
+
+@media screen and (min-width: 700px) {
+    .meal-detail-container{
+        display: flex;
+        flex-direction: column;
+        flex-direction: row;
+    }
+    .meal-detail-left-container {
+      width: 50%;
+      height: 100%;
+    }
+    .meal-detail-right-container {
+      width: 50%;  
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .meal-detail-form-container {
+      display: flex;
+      justify-content: center;
+    }
+    .meal-detail-right-container-container-ingredients {
+        flex-direction: row;
+    }
+
+  }

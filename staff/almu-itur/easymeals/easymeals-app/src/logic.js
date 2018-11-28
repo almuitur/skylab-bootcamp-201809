@@ -11,6 +11,7 @@ const logic = {
     url: 'NO-URL',
 
     registerUser(name, surname, username, password, repeatPassword) {
+        debugger
         if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
         if (typeof surname !== 'string') throw TypeError(`${surname} is not a string`)
         if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
@@ -23,8 +24,8 @@ const logic = {
         if (!password.trim()) throw Error('password is empty or blank')
         if (!repeatPassword.trim()) throw Error('password is empty or blank')
 
-        if(password!=repeatPassword) throw Error('passwords do not match')
-        
+        if (password != repeatPassword) throw Error('passwords do not match')
+
         return fetch(`${this.url}/users`, {
             method: 'POST',
             headers: {
@@ -39,6 +40,7 @@ const logic = {
     },
 
     login(username, password) {
+
         if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
         if (typeof password !== 'string') throw TypeError(`${password} is not a string`)
 
@@ -84,20 +86,21 @@ const logic = {
         sessionStorage.removeItem('intolerances')
     },
 
-    updateUser(name, surname, username, newPassword, password, confirmNewPassword) {
-        if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
-        if (typeof surname !== 'string') throw TypeError(`${surname} is not a string`)
-        if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
-        if (typeof password !== 'string') throw TypeError(`${password} is not a string`)
-        if (typeof newPassword !== 'string') throw TypeError(`${newPassword} is not a string`)
-        if (typeof confirmNewPassword !== 'string') throw TypeError(`${confirmNewPassword} is not a string`)
+    updateUser(name, surname, username, oldPassword, newPassword, confirmNewPassword) {
+
+        if (typeof name !== 'string') throw TypeError(`${name} is not a string (name)`)
+        if (typeof surname !== 'string') throw TypeError(`${surname} is not a string (surname)`)
+        if (typeof username !== 'string') throw TypeError(`${username} is not a string (username)`)
+        if (typeof oldPassword !== 'string') throw TypeError(`${oldPassword} is not a string (current password)`)
+        if (typeof newPassword !== 'string') throw TypeError(`${newPassword} is not a string (new password)`)
+        if (typeof confirmNewPassword !== 'string') throw TypeError(`${confirmNewPassword} is not a string (new password confirmation)`)
 
         if (!name.trim()) throw Error('name is empty or blank')
         if (!surname.trim()) throw Error('surname is empty or blank')
         if (!username.trim()) throw Error('username is empty or blank')
-        if (!password.trim()) throw Error('password is empty or blank')
-        if (!newPassword.trim()) throw Error('new password is empty or blank')
-        if (!confirmNewPassword.trim()) throw Error('confirm new password is empty or blank')
+        if (!oldPassword.trim()) throw Error('oldPassword is empty or blank')
+        if (!newPassword.trim()) throw Error('newPassword is empty or blank')
+        if (!confirmNewPassword.trim()) throw Error('confirmNewPassword is empty or blank')
 
         return fetch(`${this.url}/users/${this._userId}`, {
             method: 'PATCH',
@@ -105,7 +108,7 @@ const logic = {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Bearer ${this._token}`
             },
-            body: JSON.stringify({ name, surname, username, password, newPassword, confirmNewPassword })
+            body: JSON.stringify({ name, surname, username, oldPassword, newPassword, confirmNewPassword })
         })
             .then(res => res.json())
             .then(res => {
@@ -125,101 +128,110 @@ const logic = {
         const plan = data.selectPlan(_plan)
 
         if (plan) {
-            
+
             let mealsWeek = plan.map(day => {
-                
-                return new Promise((resolve, reject) => {
-                    
-                    try {
-                        let mealsDay = day.map(meal => {
-                            const category = meal.search.category
-                            const subcategory = meal.search.subcategory
-                            // const isSpecial =  meal.isSpecial
-                            // const isCold = meal.isCold
-                            // const isLight = meal.isLight
+                let mealsDay = day.map(meal => {
+                    const category = meal.search.category
+                    const subcategory = meal.search.subcategory
+                    // const isSpecial =  meal.isSpecial
+                    // const isCold = meal.isCold
+                    // const isLight = meal.isLight
 
-                            return fetch(`${this.url}/meals/find`, {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json; charset=utf-8',
-                                    'Authorization': `Bearer ${this._token}`
-                                },
-                                // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
-                                body: JSON.stringify({ category, subcategory })
-                            })
-                            
-                                .then(res => res.json())
-                                
-                                .then(res => {
-
-                                    if (res.error) throw Error(res.error)
-                                    let resObject = {}
-                                    resObject.day = meal.day
-                                    resObject[meal.mealTime] = res.data
-                                    if (res.data.id !=='none') resObject[meal.mealTime].id = res.data._id
-                                    
-                                    delete resObject[meal.mealTime]._id
-                                    delete resObject[meal.mealTime].__v
-
-                                    return resObject
-                                })
-                        })
-                        Promise.all(mealsDay).then((res) => {
-                            resolve(res)
-                        })
-
-                    } catch (err) {
-                        reject(err)
-                    }
-                })
-            })
-            Promise.all(mealsWeek).then((res) => {
-                
-                const _mealPlan = {}
-                _mealPlan.date = Date.now()
-                _mealPlan.name = _plan
-                _mealPlan.days = [[]]
-
-                _mealPlan.days = res.map(day => {
-                    let _day = {}
-                    _day.day = day[0].day
-                    _day.breakfast = []
-                    _day.midMorning = []
-                    _day.lunch = []
-                    _day.afternoon = []
-                    _day.dinner = []
-
-                    day.forEach(meal => {
-                        meal.breakfast && (meal.breakfast.status = `${_day.day}breakfast`)
-                        meal.midMorning && (meal.midMorning.status = `${_day.day}midMorning`)
-                        meal.lunch && (meal.lunch.status = `${_day.day}lunch`)
-                        meal.afternoon && (meal.afternoon.status = `${_day.day}afternoon`)
-                        meal.dinner && (meal.dinner.status = `${_day.day}dinner`)
-
-                        meal.breakfast && _day.breakfast.push(meal.breakfast)
-                        meal.midMorning && _day.midMorning.push(meal.midMorning)
-                        meal.lunch && _day.lunch.push(meal.lunch)
-                        meal.afternoon && _day.afternoon.push(meal.afternoon)
-                        meal.dinner && _day.dinner.push(meal.dinner)
+                    return fetch(`${this.url}/meals/find`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json; charset=utf-8',
+                            'Authorization': `Bearer ${this._token}`
+                        },
+                        // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
+                        body: JSON.stringify({ category, subcategory })
                     })
-                    return _day
+
+                        .then(res => res.json())
+
+                        .then(res => {
+
+                            if (res.error) throw Error(res.error)
+                            let resObject = {}
+                            resObject.day = meal.day
+                            resObject[meal.mealTime] = res.data
+                            if (res.data.id !== 'none') resObject[meal.mealTime].id = res.data._id
+
+                            delete resObject[meal.mealTime]._id
+                            delete resObject[meal.mealTime].__v
+
+                            return resObject
+                        })
                 })
-                const mealPlan = JSON.stringify(_mealPlan)
-                sessionStorage.setItem('mealPlan', mealPlan)
 
-                diet = JSON.stringify(diet);
-                sessionStorage.setItem('diet', diet)
-
-                intolerances = JSON.stringify(intolerances);
-                sessionStorage.setItem('intolerances', intolerances)
-                callback()
-
+                return Promise.all(mealsDay)
             })
+
+
+            return Promise.all(mealsWeek)
+                .then((res) => {
+
+                    const _mealPlan = {}
+                    _mealPlan.date = Date.now()
+                    _mealPlan.name = _plan
+                    _mealPlan.days = [[]]
+
+                    _mealPlan.days = res.map(day => {
+                        let _day = {}
+                        _day.day = day[0].day
+                        _day.breakfast = []
+                        _day.midMorning = []
+                        _day.lunch = []
+                        _day.afternoon = []
+                        _day.dinner = []
+
+                        day.forEach(meal => {
+                            meal.breakfast && (meal.breakfast.status = `${_day.day}breakfast`)
+                            meal.midMorning && (meal.midMorning.status = `${_day.day}midMorning`)
+                            meal.lunch && (meal.lunch.status = `${_day.day}lunch`)
+                            meal.afternoon && (meal.afternoon.status = `${_day.day}afternoon`)
+                            meal.dinner && (meal.dinner.status = `${_day.day}dinner`)
+
+                            meal.breakfast && _day.breakfast.push(meal.breakfast)
+                            meal.midMorning && _day.midMorning.push(meal.midMorning)
+                            meal.lunch && _day.lunch.push(meal.lunch)
+                            meal.afternoon && _day.afternoon.push(meal.afternoon)
+                            meal.dinner && _day.dinner.push(meal.dinner)
+                        })
+                        return _day
+                    })
+
+                    const mealPlan = JSON.stringify(_mealPlan)
+                    sessionStorage.setItem('mealPlan', mealPlan)
+
+                    diet = JSON.stringify(diet);
+                    sessionStorage.setItem('diet', diet)
+
+                    intolerances = JSON.stringify(intolerances);
+                    sessionStorage.setItem('intolerances', intolerances)
+                })
         }
         else {
             throw Error('You need to choose a plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
         }
-        
+
+    },
+    findMeal(id) {
+
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
+
+        const mealsDay = ['breakfast', 'midMorning', 'lunch', 'afternoon', 'dinner']
+        let _meal = {}
+
+        mealsDay.map(mealTime => {
+            mealPlan.days.map(day => {
+                day[mealTime] && day[mealTime].filter(meal => {
+                    if (meal.id === id) _meal = meal
+                })
+            })
+        })
+        return _meal
     },
 
     // addPostit(text) {
@@ -329,10 +341,10 @@ const logic = {
         meal[0].status = status
 
         days.forEach((day, index) => mealDay === day ? dayIndex = index : null)
-        
+
         //ADD MEAL TO NEW STATE
         mealPlan.days[dayIndex][mealTime][mealPlan.days[dayIndex][mealTime].length] = meal[0]
-        
+
         mealPlan = JSON.stringify(mealPlan);
         sessionStorage.setItem('mealPlan', mealPlan)
         _mealPlan = sessionStorage.getItem('mealPlan')
@@ -342,7 +354,7 @@ const logic = {
     },
 
     generateShoppingList() {
-        
+
         let _mealPlan = sessionStorage.getItem('mealPlan')
         let mealPlan = JSON.parse(_mealPlan)
 
@@ -353,7 +365,7 @@ const logic = {
         mealsDay.map(mealTime => {
 
             mealPlan.days.map((day, dayIndex) => {
-                
+
                 day[mealTime] && day[mealTime].length > 0 && day[mealTime].map(meal => {
 
                     if (meal.mainIngredients && meal.mainIngredients.length > 0) {

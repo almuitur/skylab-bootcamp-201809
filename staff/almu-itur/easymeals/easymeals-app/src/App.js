@@ -31,14 +31,15 @@ class App extends Component {
     }
 
     handleRegister = (name, surname, username, password, repeatPassword) => {
-        try {
+        debugger
+        // try {
             logic.registerUser(name, surname, username, password, repeatPassword)
-                .then((res) => {
+                .then(() => {
                     swal("User successfully registered!")
                     this.props.history.push('/login')
                 })
                 .catch(err => Error(err))
-        } catch (err) { Error(err) }
+        // } catch (err) { Error(err) }
     }
 
     handleLogin = (username, password) => {
@@ -79,20 +80,22 @@ class App extends Component {
     handleUpdateProfile = (name, surname, username, newPassword, password, confirmNewPassword) => {
         try {
             logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
-                .then(() => { this.props.history.push('/home') })
+                .then(() => { 
+                    swal("User updated registered!")
+                    this.props.history.push('/home') })
                 .catch(err => Error(err))
         } catch (err) { Error(err) }
     }
 
     handleCreateMealPlan = (diet, plan, intolerances) => {
-        // try {
-            logic.createMealPlan(diet, plan, intolerances, () => this.props.history.push('/mealplan'))
-            
-                // .then(() => {
-                    
-        //         })
-        //         .catch(err => Error(err))
-        // } catch (err) { Error(err) }
+        
+        try {
+            logic.createMealPlan(diet, plan, intolerances)
+                .then(() => {
+                    this.props.history.push('/mealplan')
+                })
+                .catch(err => Error(err))
+        } catch (err) { Error(err) }
     }
 
     render() {

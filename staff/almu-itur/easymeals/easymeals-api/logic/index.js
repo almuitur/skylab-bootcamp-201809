@@ -45,48 +45,37 @@ const logic = {
         })()
     },
 
-    updateUser(id, name, surname, username, password, newPassword, confirmNewPassword) {
+    updateUser(id, name, surname, username, oldPassword, newPassword, confirmNewPassword) {
         validate([
             { key: 'id', value: id, type: String },
             { key: 'name', value: name, type: String, optional: true },
             { key: 'surname', value: surname, type: String, optional: true },
             { key: 'username', value: username, type: String, optional: true },
-            { key: 'password', value: password, type: String },
+            { key: 'oldPassword', value: oldPassword, type: String },
             { key: 'newPassword', value: newPassword, type: String, optional: true },
-            { key: 'confirmNewPassword', value: confirmNewPassword, type: String, optional: true },
+            { key: 'confirmNewPassword', value: confirmNewPassword, type: String, optional: true }
         ])
 
         return (async () => {
             
             const user = await User.findById(id)
-
+            
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            if (user.password !== password) throw new AuthError('invalid password')
+            if (user.password !== oldPassword) throw new AuthError('invalid password')
             
             if (username) {
                 const _user = await User.findOne({ username })
 
                 if (_user) throw new AlreadyExistsError(`username ${username} already exists`)
-               //Llega aqui, los datos llegan bien
 
                 name != null && (user.name = name)
                 surname != null && (user.surname = surname)
                 user.username = username
-                // if (newPassword!=null) {
-                //     newPassword === confirmNewPassword ? user.password = newPassword : function () { throw new ValueError('new passwords do not match') }
-                // }
                 
-                if (newPassword!=null) {
-                    console.log('newpassword is not null')
-                    if(newPassword === confirmNewPassword) {
-                        console.log('compara passwords')
-                        user.password = newPassword
-                    }
-                    else {
-                        console.log('Not same pass!')
-                    }
-                }
+                if (newPassword != null && newPassword !== confirmNewPassword) throw new ValueError('new passwords provided do not match')
+                user.password = newPassword
+                
                 await user.save()
             } else {
                 name != null && (user.name = name)

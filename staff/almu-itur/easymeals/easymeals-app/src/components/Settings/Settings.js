@@ -29,10 +29,10 @@ class Settings extends Component {
         this.setState({ newPassword })
     }
 
-    handlePasswordChange = event => {
-        const password = event.target.value
+    handleOldPasswordChange = event => {
+        const oldPassword = event.target.value
 
-        this.setState({ password })
+        this.setState({ oldPassword })
     }
 
     handleConfirmNewPasswordChange = event => {
@@ -45,11 +45,10 @@ class Settings extends Component {
 
         event.preventDefault()
 
-        const { name, surname, username, newPassword, password, confirmNewPassword } = this.state
+        const { name, surname, username, oldPassword, newPassword, confirmNewPassword } = this.state
 
-        this.props.onUpdateProfileClick(name, surname, username, newPassword, password, confirmNewPassword)
+        this.props.onUpdateProfileClick(name, surname, username, oldPassword, newPassword, confirmNewPassword)
         
-        // this.setState({ name: '', surname: '', username: '', newPassword: '', password: '', confirmNewPassword: '' })
     }
     
     render() {
@@ -76,7 +75,7 @@ class Settings extends Component {
                         <Input type="text" onChange={this.handleNameChange} />
                         <Input type="text" onChange={this.handleSurnameChange} />
                         <Input type="text" onChange={this.handleUsernameChange} />
-                        <Input type="password" onChange={this.handlePasswordChange} />
+                        <Input type="password" onChange={this.handleOldPasswordChange} />
                         <Input type="password" onChange={this.handleNewPasswordChange} />
                         <Input type="password" onChange={this.handleConfirmNewPasswordChange} />
                         <button className="btn btn-unique" type="submit">Update</button>
