@@ -258,8 +258,10 @@ const logic = {
         //     //name != null && (user.name = name)
 
             //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
-            const user = retrieveUser(id)
-            const counter = 0
+            const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
+            debugger
+            
+            let counter = 0
             let meal
             do {
                 meal = meals[Math.floor(Math.random() * meals.length)]

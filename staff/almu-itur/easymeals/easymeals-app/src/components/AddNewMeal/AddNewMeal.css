@@ -1,0 +1,82 @@
+.add-new-meal-container {
+    margin: 3% auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.add-new-meal-name{
+    display: flex;
+    flex-direction: row;
+    margin: 3% 0;
+}
+.add-new-meal-name-input {
+    margin-left: 15px;
+    background: transparent;
+    font-family: "Roboto", sans-serif;
+    resize: none;
+    cursor: pointer;
+    outline: none;
+    border: 1px solid #F77B72;
+    border-radius: 5px;
+    width: 300px;
+}
+.add-new-meal-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 2%;
+    text-align: left;
+}
+.add-new-meal-diet {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.add-new-meal-ingredients-container {
+    display: flex;
+    flex-direction: row;
+    margin: 3% 1%;
+    text-align: left;
+}
+.add-new-meal-ingredients-container p {
+    margin-left: 2%;
+}
+.add-new-meal-ingredients-container-left {
+    width: 50%;
+    border-right: 1px solid #F77B72;
+}
+.add-new-meal-ingredients-container-right {
+    width: 50%;
+    border-left: 1px solid #F77B72;
+}
+.ingredients-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.add-new-meal-form {
+    width: 50%;
+    margin-left: 2%;
+    display: flex;
+    flex-direction: row;
+}
+.ingredient {
+    padding: 5px 10px;
+    background-color: #F77B72;
+    border-radius: 8px;
+}
+.add-new-meal-season-select {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; 
+}
+.add-new-meal-season-img {
+    width: 90%;
+    height: 100%;
+    cursor: pointer; 
+}
+.add-new-meal-intolerance-container {
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+}

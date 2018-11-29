@@ -9,6 +9,7 @@ import FooterPage from './components/FooterPage'
 import MealPlan from './components/MealPlan/MealPlan'
 import MyMeals from './components/MyMeals/MyMeals'
 import Settings from './components/Settings/Settings'
+import AddNewMeal from './components/AddNewMeal/AddNewMeal'
 // import CustomPlan from './components/CustomPlan/CustomPlan'
 import logic from './logic'
 import swal from 'sweetalert'
@@ -30,14 +31,10 @@ class App extends Component {
     }
 
     handleRegister = (name, surname, username, password, repeatPassword) => {
-        // try {
-            logic.registerUser(name, surname, username, password, repeatPassword)
-                .then(() => {
-                    // swal("User successfully registered!")
-                    this.props.history.push('/login')
-                })
-                .catch(err => Error(err))
-        // } catch (err) { Error(err) }
+        logic.registerUser(name, surname, username, password, repeatPassword)
+            .then(() => swal("User successfully registered!"))
+            .then(() => this.props.history.push('/login'))
+            .catch(err => Error(err))
     }
 
     handleLogin = (username, password) => {
@@ -54,6 +51,14 @@ class App extends Component {
     }
 
     handleGoBack = () => this.props.history.push('/')
+
+    handleAddNewMeal = () => {
+
+    }
+    handleAddNewMealClick = event => {
+        event.preventDefault()
+        this.props.history.push('/addnewmeal')
+    }
 
     handleMyMealsClick = event => {
         event.preventDefault()
@@ -78,9 +83,10 @@ class App extends Component {
     handleUpdateProfile = (name, surname, username, newPassword, password, confirmNewPassword) => {
         try {
             logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
-                .then(() => { 
+                .then(() => {
                     swal("User updated registered!")
-                    this.props.history.push('/home') })
+                    this.props.history.push('/home')
+                })
                 .catch(err => Error(err))
         } catch (err) { Error(err) }
     }
@@ -99,19 +105,14 @@ class App extends Component {
 
         return <div>
 
-            {logic.loggedIn && <NavbarLogged onHomeClick={this.handleHomeClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
+            {logic.loggedIn && <NavbarLogged onHomeClick={this.handleHomeClick} onAddNewMealClick={this.handleAddNewMealClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
 
             <Route exact path="/" render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to="/home" />} />
             <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/login" render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
             <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" />} />
             <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to="/" />} />
-
-            {/* <Route path="/customplan" render={() => logic.loggedIn ? <div> 
-                <div className="logout-button-section"><a className="logout-button" onClick={this.handleLogoutClick}>Logout</a></div>
-                <CustomPlan />
-            </div> : <Redirect to="/" />} /> */}
-
+            <Route path="/addnewmeal" render={() => logic.loggedIn ? <AddNewMeal onAddNewMeal={this.handleAddNewMeal} /> : <Redirect to="/" />} />
             <Route path="/mealplan" render={() => logic.loggedIn ? <MealPlan /> : <Redirect to="/" />} />
             <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
             {logic.loggedIn && <FooterPage />}

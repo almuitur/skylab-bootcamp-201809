@@ -116,6 +116,12 @@ const logic = {
             })
     },
 
+    findNewRandomMeal() {
+        // monday = [
+        //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
+        //retrieve status, retrieve search params, random search different than current id, remove old, add new, save to session storage
+    },
+
     createMealPlan(diet, _plan, intolerances) {
         // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
         // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
@@ -136,8 +142,8 @@ const logic = {
                     // const isSpecial =  meal.isSpecial
                     // const isCold = meal.isCold
                     // const isLight = meal.isLight
-
-                    return fetch(`${this.url}/meals/find`, {
+                    
+                    return fetch(`${this.url}/meals/find/${this._userId}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json; charset=utf-8',
@@ -156,14 +162,15 @@ const logic = {
                             resObject.day = meal.day
                             resObject[meal.mealTime] = res.data
                             if (res.data.id !== 'none') resObject[meal.mealTime].id = res.data._id
-
+                            
+                            // resObject.searchParams =
                             delete resObject[meal.mealTime]._id
                             delete resObject[meal.mealTime].__v
 
                             return resObject
                         })
                 })
-
+                
                 return Promise.all(mealsDay)
             })
 
@@ -200,7 +207,7 @@ const logic = {
                         })
                         return _day
                     })
-
+                    
                     const mealPlan = JSON.stringify(_mealPlan)
                     sessionStorage.setItem('mealPlan', mealPlan)
 
@@ -330,8 +337,6 @@ const logic = {
                 return res.data
             })
     },
-
-
 
     removeMealFromMealPlan(id, status) {
         // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)

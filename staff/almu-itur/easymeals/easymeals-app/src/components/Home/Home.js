@@ -64,7 +64,7 @@ class Home extends Component {
                             <input type='radio' name='diet' id='pescatarian' value='pescatarian' onChange={this.handleDietChange} />
                             <img className='selectDiet-img' src={require('../../images/pescatarian.png')} alt='pescatarian' />
                         </label>
-                        <label for='flexible'>
+                        <label for='flexitarian'>
                             <input type='radio' name='diet' id='flexitarian' value='flexitarian' onChange={this.handleDietChange} />
                             <img className='selectDiet-img' src={require('../../images/flexitarian.png')} alt='flexitarian' />
                         </label>
