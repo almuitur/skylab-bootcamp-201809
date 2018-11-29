@@ -15,24 +15,7 @@ class MealPlan extends Component {
         let mealPlan = JSON.parse(_mealPlan)
         
         { this.setState({ mealPlan }) }
-    }
-
-    // findMeal = text => {
-    // try {
-    //     logic.findMeal(text)
-    //         .then(() => logic.listPostits())
-    //         .then(postits => this.setState({ postits }))
-    // } catch ({ message }) {
-    //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
-    // }
-    // }
-
-    // handleModifyMeal = (id, name, status) => {
-        // logic.modifyPostit(id, name, status)
-        //     .then(() => logic.listPostits())
-        //     .then(postits => this.setState({ postits }))
-        // TODO error handling!
-    // }
+    }  
 
     handleMealDetail = id => {
         
@@ -49,22 +32,24 @@ class MealPlan extends Component {
         { this.setState({ mealPlan }) }
     }
 
-    handleRemoveMeal = (id, status) => {
-        let mealPlan = logic.removeMeal(id, status)
+    handleRemoveMealFromMealPlan = (id, status) => {
+        let mealPlan = logic.removeMealFromMealPlan(id, status)
         
         { this.setState({ mealPlan }) }
     }
 
-    handleNewMeal = id => {
-        console.log('NewMeal')
-    }
+    handleFavouriteMealClick = id => {
+        // const checked = event.target.checked
 
-    // handleFindMeal = (id) => {
-    //     console.log('FindMeal')
-    // }
+        // if(checked)
+        logic.addMealToFavourites(id)
+        // else
+        // logic.removeMealFromFavourites(id)
+        
+        let _mealPlan = sessionStorage.getItem('mealPlan')
+        let mealPlan = JSON.parse(_mealPlan)
 
-    handleLikeMeal = (id) => {
-        console.log('LikeMeal')
+        { this.setState({ mealPlan }) }
     }
 
     handleAvoidMeal = (id) => {
@@ -74,7 +59,7 @@ class MealPlan extends Component {
     handleShoppingList = () => {
 
         let shoppingList = logic.generateShoppingList()
-        debugger
+        
         { this.setState({ shoppingList }) }
     }
 
@@ -82,17 +67,31 @@ class MealPlan extends Component {
         { this.setState({ shoppingList: null }) }
     }
 
-    handlePrint = () => {
+    // handlePrint = () => {
 
-    }
+    // }
 
-    handleSave = () => {
+    // handleSave = () => {
 
-    }
+    // }
 
-    handleShare = () => {
+    // handleShare = () => {
 
-    }
+    // }
+      // handleNewRandomMeal = id => {
+    //     console.log('NewMeal')
+    // }
+
+    // handleFindMeal = (id) => {
+    //     console.log('FindMeal')
+        // try {
+        //     logic.findMeal(text)
+        //         .then(() => logic.listPostits())
+        //         .then(postits => this.setState({ postits }))
+        // } catch ({ message }) {
+        //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
+        // }
+    // }
 
     dragStart = (event, mealId, name, state) => {
         event.dataTransfer.setData('id', mealId)
@@ -121,7 +120,9 @@ class MealPlan extends Component {
 
             { this.state.mealDetail && <div> <MealDetail mealDetail={this.state.mealDetail} onCloseMealDetailClick = { this.handleCloseMealDetail } /></div> }
 
-            <h1>Meal Plan</h1>
+            {this.state.mealPlan && <div> 
+
+            <h1>Meal Plan</h1> 
 
             <p>{this.state.mealPlan.name}</p>
 
@@ -136,7 +137,7 @@ class MealPlan extends Component {
                     {this.state.mealPlan.days && this.state.mealPlan.days.map((day, dayIndex) => {
                         return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `${day.day}${mealTime}`)}>
                             <h2 className="day-meal">{mealTime.toUpperCase()}</h2>
-                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onLikeMeal={this.handleLikeMeal} onRemoveMeal={this.handleRemoveMeal} onAvoidMeal={this.handleAvoidMeal} onModifyMeal={this.handleModifyMeal} onMealDetailClick={this.handleMealDetail} />)}
+                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onFavouriteMealClick={this.handleFavouriteMealClick} onRemoveMealFromMealPlan={this.handleRemoveMealFromMealPlan} onAvoidMeal={this.handleAvoidMeal} onMealDetailClick={this.handleMealDetail} />)}
                         </div>
                     })}
                 </div>
@@ -148,6 +149,9 @@ class MealPlan extends Component {
                 <button className="btn btn-unique" onClick={this.handleShare}>SHARE</button>
             </div>
             
+            </div>
+            }
+            {!this.state.mealPlan && <div className="meal-plan-no"><h1 className>No mealplan created yet.</h1></div>}
             {this.state.shoppingList && <div><ShoppingList mealPlan = { this.state.mealPlan} shoppingList = {this.state.shoppingList} onCloseShoppingListClick={this.handleCloseShoppingList}/></div>}
 
         </div >

@@ -109,13 +109,12 @@ const User = new Schema({
         type: String,
         required: true
     },
-    savedMeals: [Meal],
 
     savedMealPlans: [MealPlan],
 
-    favouriteMeals: [Meal],
+    favouriteMeals: [{ type: String, required: false }],
 
-    mealsToAvoid: [Meal]
+    mealsToAvoid: [{ type: String, required: false }]
 })
 
 module.exports = {

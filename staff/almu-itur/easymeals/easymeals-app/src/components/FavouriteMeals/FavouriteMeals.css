@@ -1,0 +1,36 @@
+.favourite-meals-container{
+    width: 80%;
+    height: 10%;
+    display: flex;
+    flex-direction: column; 
+}
+.favourite-meals-left-container {
+    width: 20%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+}
+.favourite-meals-left-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+}
+.favourite-meals-center-container {
+    width: 70%;
+    height: 20%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding: 1%;
+}
+.favourite-meals-right-container {
+    width: 10%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+}

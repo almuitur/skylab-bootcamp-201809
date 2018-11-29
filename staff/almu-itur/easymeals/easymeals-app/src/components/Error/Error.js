@@ -2,7 +2,7 @@ import React from 'react'
 import swal from 'sweetalert'
 
 function Error(props) {
-    debugger
+    
     return <div>
         {swal({
             title: "Error",

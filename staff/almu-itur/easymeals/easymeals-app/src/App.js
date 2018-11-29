@@ -33,7 +33,7 @@ class App extends Component {
         // try {
             logic.registerUser(name, surname, username, password, repeatPassword)
                 .then(() => {
-                    swal("User successfully registered!")
+                    // swal("User successfully registered!")
                     this.props.history.push('/login')
                 })
                 .catch(err => Error(err))

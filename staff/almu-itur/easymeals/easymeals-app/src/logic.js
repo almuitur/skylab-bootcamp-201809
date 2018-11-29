@@ -11,7 +11,7 @@ const logic = {
     url: 'NO-URL',
 
     registerUser(name, surname, username, password, repeatPassword) {
-        debugger
+        
         if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
         if (typeof surname !== 'string') throw TypeError(`${surname} is not a string`)
         if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
@@ -234,6 +234,34 @@ const logic = {
         return _meal
     },
 
+    addMealToFavourites(id) {
+
+        if (id === undefined) throw Error(`${id} is undefined`)
+        if (id === '') throw Error(`${id} is empty`)
+        if (!id.trim()) throw Error(`${id} is blank`)
+        
+        return fetch(`${this.url}/users/${this._userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ id })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
+    },
+
+    removeMealFromFavourites(id) {
+    
+    },
+
+    retrieveFavouriteMeals() {
+
+    },
+
     // addPostit(text) {
     //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
 
@@ -268,7 +296,7 @@ const logic = {
     //         })
     // },
 
-    removeMeal(id, status) {
+    removeMealFromMealPlan(id, status) {
         // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
         // if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
 

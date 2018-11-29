@@ -64,4 +64,8 @@
         background-color: grey;
         z-index: 500;
     }
+    .meal-plan-no h1 {
+        font-size: 30px;
+        margin: 10% auto 40% auto;
+    }
 /* } */
