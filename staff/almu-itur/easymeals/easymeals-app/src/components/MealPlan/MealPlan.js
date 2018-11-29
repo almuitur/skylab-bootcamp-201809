@@ -3,7 +3,7 @@ import logic from '../../logic'
 import InputForm from '../InputForm'
 import Meal from '../Meal/Meal'
 import MealDetail from '../MealDetail/MealDetail'
-import { Button } from "mdbreact"
+import ShoppingList from '../ShoppingList/ShoppingList'
 import './MealPlan.css'
 
 class MealPlan extends Component {
@@ -74,11 +74,11 @@ class MealPlan extends Component {
     handleShoppingList = () => {
 
         let shoppingList = logic.generateShoppingList()
-        
+        debugger
         { this.setState({ shoppingList }) }
     }
 
-    closeShoppingList = () => {
+    handleCloseShoppingList = () => {
         { this.setState({ shoppingList: null }) }
     }
 
@@ -119,11 +119,8 @@ class MealPlan extends Component {
 
         return <div className="meal-plan">
 
-              {this.state.mealDetail && <div>
-                <MealDetail onCloseMealDetailClick = { this.handleCloseMealDetail } />
-            </div>
-            }
-            
+            { this.state.mealDetail && <div> <MealDetail mealDetail={this.state.mealDetail} onCloseMealDetailClick = { this.handleCloseMealDetail } /></div> }
+
             <h1>Meal Plan</h1>
 
             <p>{this.state.mealPlan.name}</p>
@@ -145,19 +142,13 @@ class MealPlan extends Component {
                 </div>
             })}
             <div>
-                <Button onClick={this.handlePrint}>PRINT</Button>
-                <Button onClick={this.handleShoppingList}>SHOPPING LIST</Button>
-                <Button onClick={this.handleSave}>SAVE</Button>
-                <Button onClick={this.handleShare}>SHARE</Button>
+                <button className="btn btn-unique" onClick={this.handlePrint}>PRINT</button>
+                <button className="btn btn-unique" onClick={this.handleShoppingList}>SHOPPING LIST</button>
+                <button className="btn btn-unique" onClick={this.handleSave}>SAVE</button>
+                <button className="btn btn-unique" onClick={this.handleShare}>SHARE</button>
             </div>
             
-            {this.state.shoppingList &&
-                <div>
-                    {/* <ShoppingList closeShoppingList={this.handleCloseShoppingList}/> */}
-                </div>
-            }
-
-          
+            {this.state.shoppingList && <div><ShoppingList mealPlan = { this.state.mealPlan} shoppingList = {this.state.shoppingList} onCloseShoppingListClick={this.handleCloseShoppingList}/></div>}
 
         </div >
     }

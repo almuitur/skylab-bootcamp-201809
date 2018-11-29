@@ -1,66 +1,53 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
-/* .landing-page{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-image: url("./images/typewriter-801921_1920.jpg");
-} */
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
 
 body {
   font-family: "Roboto", sans-serif;
   margin: 0;
 }
-
-/* .login-container {
-    margin: 0 auto;
-    text-align: center;
-    width: 30%;
-    margin-top: 8%;
-}
-
-.register-container {
-    margin: 0 auto;
-    text-align: center;
-    width: 30%;
-    margin-top: 8%;
-} */
-
-.input-bar {
-    display: flex;
-    width: 90%;
-    justify-content: center;
-    margin: 0 auto;
-}
-
-#button-add {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    margin: 5px;
-}
-
-/* .logout-button-section {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-content: flex-end;    
-} */
-
-/* .logout-button {
-    border-radius: 10%;
-    padding: 10px;
-    margin: 10px;
-    color:White;
-    font-size:14px;
-    background-color: grey;
-    text-align: right;
-    text-justify: center;
-} */
 
 a:link {
   text-decoration: none;

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Error from './components/Error/Error'
-// import Success from './components/Success/Success'
 import Landing from './components/Landing/Landing'
 import Register from './components/Register/Register'
 import Login from './components/Login/Login'
@@ -31,7 +30,6 @@ class App extends Component {
     }
 
     handleRegister = (name, surname, username, password, repeatPassword) => {
-        debugger
         // try {
             logic.registerUser(name, surname, username, password, repeatPassword)
                 .then(() => {
@@ -88,7 +86,6 @@ class App extends Component {
     }
 
     handleCreateMealPlan = (diet, plan, intolerances) => {
-        
         try {
             logic.createMealPlan(diet, plan, intolerances)
                 .then(() => {
@@ -118,7 +115,6 @@ class App extends Component {
             <Route path="/mealplan" render={() => logic.loggedIn ? <MealPlan /> : <Redirect to="/" />} />
             <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
             {logic.loggedIn && <FooterPage />}
-
 
         </div>
     }

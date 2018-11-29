@@ -8,58 +8,88 @@
 }
 .meal-detail-container{
     z-index: 50;
-    margin-top: 10%;
-    margin-left: 15%;
+    margin-top: 8%;
+    margin-left: 10%;
     margin-bottom: 10%;
-    width: 70%;
+    width: 80%;
     height: 60%;
     display: flex;
     flex-direction: column; 
     background-color: rgb(241, 238, 238);
     position: fixed;
+    border-radius: 5px;
+    overflow: scroll;
 }
 .meal-detail-left-container {
     width: 100%;
-    height: 30%;
-    margin: 1% 1% 0 1%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1%;
+}
+.meal-detail-left-container img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
 }
 .meal-detail-right-container {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    height: 60%;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
 }
 .meal-detail-right-container-container {
     display: flex;
     flex-direction: column;
 }
 .meal-detail-right-container-container-title {
+    text-transform: uppercase;
     justify-content: center;
-    font-size: 1.2em;
-    color: #E4717A;
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #F77B72;
+    padding: 5px;
+    border-bottom: 1px solid #F77B72;
 }
 .meal-detail-right-container-container-diet {
     color: green;
+    background-color: yellow;
 }
 .meal-detail-right-container-container-ingredients {
+    width: 100%;
     display: flex;
     flex-direction: column;
 }
+.meal-detail-right-container-container-ingredients-keyword {
+    font-weight: bold;
+}
 .meal-detail-right-container-container-ingredients-main {
+    width: 50%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     background-color: rgba(231, 230, 230, 0.544);
 }
+.meal-detail-right-container-container-ingredients-main li {
+    list-style-type: none;
+    /* font-size: 1em; */
+    padding: 5px;
+    text-transform: capitalize;
+}
 .meal-detail-right-container-container-ingredients-optional {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 50%;
     background-color: rgb(231, 230, 230);
 }
-li {
-    font-size: 0.7em;
+.meal-detail-right-container-container-ingredients-optional li {
     list-style-type: none;
+    font-size: 1em;
 }
 .meal-detail-right-container-container-intolerances {
     display: flex;
@@ -75,6 +105,10 @@ li {
     justify-content: right;
     margin-right: 2%;
 }
+#meal-detail-button {
+    padding: 5px 20px;
+    background-color: #F77B72;
+}
 
 @media screen and (min-width: 700px) {
     .meal-detail-container{
@@ -83,11 +117,11 @@ li {
         flex-direction: row;
     }
     .meal-detail-left-container {
-      width: 50%;
+      width: 40%;
       height: 100%;
     }
     .meal-detail-right-container {
-      width: 50%;  
+      width: 60%;  
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -99,5 +133,4 @@ li {
     .meal-detail-right-container-container-ingredients {
         flex-direction: row;
     }
-
-  }
+}

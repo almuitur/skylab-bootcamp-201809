@@ -1,5 +1,4 @@
 import React from 'react'
-// import { Button } from "mdbreact";
 import './Landing.css'
 
 function Landing(props) {

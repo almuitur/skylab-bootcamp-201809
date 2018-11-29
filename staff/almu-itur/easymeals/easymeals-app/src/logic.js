@@ -116,7 +116,7 @@ const logic = {
             })
     },
 
-    createMealPlan(diet, _plan, intolerances, callback) {
+    createMealPlan(diet, _plan, intolerances) {
         // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
         // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
         // if (typeof intolerances !== 'array') throw TypeError(`${intolerances} is not a string`)

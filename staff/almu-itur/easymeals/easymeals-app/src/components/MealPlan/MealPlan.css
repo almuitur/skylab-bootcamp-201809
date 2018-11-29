@@ -9,6 +9,22 @@
         margin: 0 auto;
     }
 
+    .input-bar {
+        display: flex;
+        width: 90%;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    #button-add {
+        border: none;
+        background: transparent;
+        cursor: pointer;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin: 5px;
+    }
+    
     .meal-plan-days-container {
         width: 95%;
         margin: 0 auto;

@@ -27,7 +27,7 @@ class Meal extends Component {
             <div className="options-meal">
                 <a onClick={() => this.props.onNewMeal(this.props.id)}><i className="fas fa-random"></i></a>
                 {/* <a onClick={() => this.props.onFindMeal(this.props.id)}><i className="fas fa-search"></i></a> */}
-                {/* <a onClick={() => this.props.onLikeMeal(this.props.id)}><i className="fas fa-heart"></i></a> */}
+                <a onClick={() => this.props.onLikeMeal(this.props.id)}><i className="fas fa-heart"></i></a>
                 <a onClick={() => this.props.onRemoveMeal(this.props.id, this.props.status)}><i className="fas fa-times"></i></a>
                 {/* <a onClick={() => this.props.onAvoidMeal(this.props.id)}><i className="fas fa-ban"></i></a> */}
             </div>
