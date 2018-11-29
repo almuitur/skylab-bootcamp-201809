@@ -109,8 +109,6 @@ router.delete('/users/:id/fav/:favouriteMealId', [bearerTokenParser, jwtVerifier
     }, res)
 })
 
-
-
 router.post('/users/:id/avoid', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
     
     routeHandler(() => {
@@ -138,6 +136,21 @@ router.delete('/users/:id/avoid/:avoidMealId', [bearerTokenParser, jwtVerifier, 
             .then(() =>
                 res.json({
                     message: 'meal removed from avoid meals list'
+                })
+            )
+    }, res)
+})
+
+router.get('/users/:id/meal/:mealId', [bearerTokenParser, jwtVerifier], (req, res) => {
+    routeHandler(() => {
+        const { params: { id, mealId }, sub } = req
+
+        if (id !== sub) throw Error('token sub does not match user id')
+
+        return logic.retrieveMeal(id, mealId)
+            .then(meal =>
+                res.json({
+                    data: meal
                 })
             )
     }, res)
@@ -175,15 +188,15 @@ router.delete('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonB
     }, res)
 })
 
-router.post('/meals/find', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
+router.post('/meals/find/:id', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
     
     routeHandler(() => {
-        const { sub, body: { category, subcategory, diet, isSpecial, isCold, intolerances, season } } = req
+        const { params: { id }, sub, body: { category, subcategory, diet, isSpecial, isCold, intolerances, isLight, season } } = req
         
-        // if (id !== sub) throw Error('token sub does not match user id')
+        if (id !== sub) throw Error('token sub does not match user id')
         
-        // return logic.searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season)
-        return logic.searchRandomMeal(category, subcategory)
+        // return logic.searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, isLight, season)
+        return logic.searchRandomMeal(id, category, subcategory)
             .then(meal =>
                 res.json({
                     data: meal

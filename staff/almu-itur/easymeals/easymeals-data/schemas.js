@@ -42,11 +42,12 @@ const Meal = new Schema({
     intolerances: [{
         type: String,
         enum: ['Gluten', 'Lactose'],
+        required: true
     }],
-    // isLight: {
-    //     type: Boolean,
-    //     required: true
-    // },
+    isLight: {
+        type: Boolean,
+        required: true
+    },
     season: [{
         type: String,
         enum: ['Spring', 'Summer', 'Autum', 'Winter'],

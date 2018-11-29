@@ -52,8 +52,8 @@ class MealPlan extends Component {
         { this.setState({ mealPlan }) }
     }
 
-    handleAvoidMeal = (id) => {
-        console.log('AvoidMeal')
+    handleAvoidMeal = id => {
+        logic.addMealToAvoidList(id)
     }
 
     handleShoppingList = () => {

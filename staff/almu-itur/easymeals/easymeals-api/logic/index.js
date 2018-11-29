@@ -169,6 +169,20 @@ const logic = {
         })()
     },
 
+    retrieveMeal(id, mealId) {
+        validate([{ key: 'mealId', value: mealId, type: String }])
+
+        return (async () => {
+            const meal = await Meal.findById(mealId, { '_id': 0, __v: 0 }).lean()
+            
+            if (!meal) throw new NotFoundError(`meal with id ${mealId} not found`)
+
+            meal.id = id
+
+            return meal
+        })()
+    },
+
     addMealplan(id, mealplan) {
         
         validate([
@@ -210,7 +224,7 @@ const logic = {
     },
 
     // searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season) {
-    searchRandomMeal(category, subcategory) {
+    searchRandomMeal(id, category, subcategory) {
         // validate([
             // { key: 'category', value: category, type: String },
             // { key: 'subcategory', value: subcategory, type: String, optional: true },
@@ -244,17 +258,15 @@ const logic = {
         //     //name != null && (user.name = name)
 
             //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
-            // const user = retrieveUser(id)
-            // do{
-            const meal = meals[Math.floor(Math.random() * meals.length)]
-            
-            // // }
-            // // while()
-            
-            // user.mealsToAvoid.includes(id)
+            const user = retrieveUser(id)
+            const counter = 0
+            let meal
+            do {
+                meal = meals[Math.floor(Math.random() * meals.length)]
+                counter++
+            }
+            while(user.mealsToAvoid.includes(meal.id) && counter < 10)
         
-        
-           
             delete meal.__v
             delete meal._id
             

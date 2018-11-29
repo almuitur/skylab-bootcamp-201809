@@ -234,19 +234,19 @@ const logic = {
         return _meal
     },
 
-    addMealToFavourites(id) {
+    addMealToFavourites(favouriteMealId) {
 
-        if (id === undefined) throw Error(`${id} is undefined`)
-        if (id === '') throw Error(`${id} is empty`)
-        if (!id.trim()) throw Error(`${id} is blank`)
+        if (favouriteMealId === undefined) throw Error(`favouriteMealId is undefined`)
+        if (favouriteMealId === '') throw Error(`favouriteMealId is empty`)
+        if (!favouriteMealId.trim()) throw Error(`favouriteMealId is blank`)
         
-        return fetch(`${this.url}/users/${this._userId}`, {
+        return fetch(`${this.url}/users/${this._userId}/fav`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Bearer ${this._token}`
             },
-            body: JSON.stringify({ id })
+            body: JSON.stringify({ favouriteMealId })
         })
             .then(res => res.json())
             .then(res => {
@@ -254,47 +254,84 @@ const logic = {
             })
     },
 
-    removeMealFromFavourites(id) {
-    
+    removeMealFromFavourites(favouriteMealId) {
+        if (favouriteMealId === undefined) throw Error(`favouriteMealId is undefined`)
+        if (favouriteMealId === '') throw Error(`favouriteMealId is empty`)
+        if (!favouriteMealId.trim()) throw Error(`favouriteMealId is blank`)
+
+        return fetch(`${this.url}/users/${this._userId}/fav/${favouriteMealId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ favouriteMealId })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
     },
 
-    retrieveFavouriteMeals() {
+    addMealToAvoidList(avoidMealId) {
 
+        if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
+        if (avoidMealId === '') throw Error(`avoidMealId is empty`)
+        if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
+        
+        return fetch(`${this.url}/users/${this._userId}/avoid`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ avoidMealId })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
     },
 
-    // addPostit(text) {
-    //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
+    removeMealFromAvoidList(avoidMealId) {
+        if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
+        if (avoidMealId === '') throw Error(`avoidMealId is empty`)
+        if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
 
-    //     if (!text.trim()) throw Error('text is empty or blank')
+        return fetch(`${this.url}/users/${this._userId}/fav/${avoidMealId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ avoidMealId })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
+    },
 
-    //     return fetch(`${this.url}/users/${this._userId}/postits`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json; charset=utf-8',
-    //             'Authorization': `Bearer ${this._token}`
-    //         },
-    //         body: JSON.stringify({ text })
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => {
-    //             if (res.error) throw Error(res.error)
-    //         })
-    // },
+    retrieveMeal(mealId) {
+        if (mealId === undefined) throw Error(`mealId is undefined`)
+        if (mealId === '') throw Error(`mealId is empty`)
+        if (!mealId.trim()) throw Error(`mealId is blank`)
 
-    // listPostits() {
-    //     return fetch(`${this.url}/users/${this._userId}/postits`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Authorization': `Bearer ${this._token}`
-    //         }
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => {
-    //             if (res.error) throw Error(res.error)
+        return fetch(`${this.url}/users/${this._userId}/meal/${mealId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this._token}`
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
 
-    //             return res.data
-    //         })
-    // },
+                return res.data
+            })
+    },
+
+
 
     removeMealFromMealPlan(id, status) {
         // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
@@ -373,6 +410,7 @@ const logic = {
         //ADD MEAL TO NEW STATE
         mealPlan.days[dayIndex][mealTime][mealPlan.days[dayIndex][mealTime].length] = meal[0]
 
+        //SAVE IN SESSION STORAGE
         mealPlan = JSON.stringify(mealPlan);
         sessionStorage.setItem('mealPlan', mealPlan)
         _mealPlan = sessionStorage.getItem('mealPlan')
@@ -415,34 +453,6 @@ const logic = {
         }
         return shoppingList
     }
-
-    // modifyPostit(id, text, status) {
-
-    // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
-
-    // if (!id.trim().length) throw Error('id is empty or blank')
-
-    // if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
-
-    // if (!text.trim()) throw Error('text is empty or blank')
-
-    // if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
-
-    // if (!status.trim()) throw Error('text is empty or blank')
-
-    //     return fetch(`${this.url}/users/${this._userId}/postits/${id}`, {
-    //         method: 'PUT',
-    //         headers: {
-    //             'Content-Type': 'application/json; charset=utf-8',
-    //             'Authorization': `Bearer ${this._token}`
-    //         },
-    //         body: JSON.stringify({ text, status })
-    //     })
-    //         .then(res => res.json())
-    //         .then(res => {
-    //             if (res.error) throw Error(res.error)
-    //         })
-    // }
 }
 
 export default logic
