@@ -22,6 +22,9 @@ class NavbarLogged extends React.Component {
                                 <a className="nav-link waves-effect waves-light" onClick={this.props.onMealsPlanClick}>Meal Plan</a>
                             </NavItem>
                             <NavItem>
+                                <a className="nav-link waves-effect waves-light" onClick={this.props.onCustomMealPlanClick}>Custom Meal Plan</a>
+                            </NavItem>
+                            <NavItem>
                                 <a className="nav-link waves-effect waves-light" onClick={this.props.onAddNewMealClick}>Add New Meal</a>
                             </NavItem>
                             {/* <NavItem>
@@ -31,7 +34,7 @@ class NavbarLogged extends React.Component {
                                 <Dropdown>
                                     <DropdownToggle nav caret>Profile</DropdownToggle>
                                     <DropdownMenu>
-                                        <DropdownItem href="#" onClick={this.props.onMyMealsClick}>My meals</DropdownItem>
+                                        <DropdownItem href="#" onClick={this.props.onMyMealsClick}>My Meals</DropdownItem>
                                         <DropdownItem href="#" onClick={this.props.onSettingsClick}>Settings</DropdownItem>
                                         <DropdownItem href="#" onClick={this.props.onLogoutClick}>Logout</DropdownItem>
                                     </DropdownMenu>

@@ -1,96 +1,83 @@
 .home {
-    width: 90%;
+    width: 100%;
     margin: 2% auto;
     font-family: 'Roboto', sans-serif;
 }
-
 .home-title {
     font-weight: bold;
-    margin: 3% 0 2% 0;
+    margin: 1% 0 0 0;
     text-align: center;
+    font-size: 27px;
 }
-
-.selectDiet {
+.select-option {
+    margin: 1%;
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-between;
-}
-
-.selectDiet-img {
-    width: 90%;
-    height: 100%;
-    cursor: pointer;  
-}
-
-.selectPlan {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: center;
 }
-
-.selectPlan-img {
-    margin-right: 1%;
-    width: 90%;
-    height: 100%; 
-    cursor: pointer; 
+.select-option-center {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
 }
-
+.select-option label {
+    margin-right: 10px;
+    background-color: white;
+}
+.select-option-center label {
+    margin-right: 10px;
+}
+.home-image-container:hover .select-option-img {
+    opacity: 0.3;
+}
+.select-option-img {
+    width: 250px;
+    height: 100%;
+    cursor: pointer;  
+    opacity: 1;
+    transition: .5s ease;
+    backface-visibility: hidden;
+    background-color: #E4717A;
+}
+.select-option-img-active {
+    opacity: 0.3;
+    width: 260px;
+    height: 100%;
+    cursor: pointer;  
+    transition: .5s ease;
+    backface-visibility: hidden;
+    background-color: transparent;
+}
+.form-section-color {
+    padding-top: 0.5px;
+    padding-bottom: 20px;
+    margin-top: 1%;
+    background-color: rgb(241, 239, 239);
+}
 .selectIntolerance {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
 }
-
-.selectIntolerance-img {
-    margin-right: 1%;
-    width: 90%;
-    height: 100%;
-    cursor: pointer;
-}
-
 .home-create-button-container{
     display: flex;
     justify-content: center;
 }
-
 .home-create-button {
     color: white;
-    background-color: #E4717A;
+    background-color: #F77B72;
     width: 30%;
     height: 5%;
     padding: 1em;
     border-radius: 10px;
     border: none;
-    margin: 5%;
+    margin: 3%;
 }
-
 select, input {
     -webkit-appearance: none;
-    -moz-appearance: none;
+     -moz-appearance: none;
     appearance: none;
 }
-
-/* .overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    width: 100%;
-    opacity: 0;
-    transition: .5s ease;
-    background-color: #008CBA;
-  }
-
-  .image {
-      width: 25%;
-      height: 100%;
-  }
-
-  .image-container:hover .overlay {
-    opacity: 1;
-  } */

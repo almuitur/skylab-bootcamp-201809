@@ -1,9 +1,9 @@
 
 const data = {
 
-    selectPlan(plan) {
-        
-        const mealPlan = []
+    selectPlan(plan, diet) {
+
+        let mealPlan = []
         const season = 'autum'
 
         switch (plan) {
@@ -67,14 +67,34 @@ const data = {
                     { day: 'sunday', mealTime: 'dinner', search: { category: 'salad', isSpecial: false } },
                     { day: 'sunday', mealTime: 'dinner', search: { category: 'dairy', subcategory: 'yoghurt', isSpecial: false } }]
 
-                mealPlan.push(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                switch (diet) {
+                    case 'vegan':
+                        delete monday[7].search.subcategory
+                        delete tuesday[7].search.subcategory
+                        delete wednesday[7].search.subcategory
+                        delete thursday[7].search.subcategory
+                        delete saturday[4].search.subcategory
 
+                        break
+                    case 'vegetarian':
+                        delete monday[7].search.subcategory
+                        tuesday[7].search.subcategory = 'egg'
+                        delete wednesday[7].search.subcategory
+                        break
+                    case 'pescatarian':
+                        delete monday[7].search.subcategory
+                        wednesday[7].search.subcategory = 'egg'
+                        break
+                }
+
+                mealPlan.push(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
+                debugger
                 break
 
             case 'diet':
 
                 monday = [
-                    { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false, isLight: true} },
+                    { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false, isLight: true } },
                     { day: 'monday', mealTime: 'breakfast', search: { category: 'milk', isSpecial: false, isLight: true } },
                     { day: 'monday', mealTime: 'breakfast', search: { category: 'fruit', subcategory: 'fruit', season: season, isSpecial: false, isLight: true } },
                     { day: 'monday', mealTime: 'midMorning', search: { category: 'snack', subcategory: 'panini', isCold: true, isSpecial: false, isLight: true } },
@@ -132,8 +152,33 @@ const data = {
                     { day: 'sunday', mealTime: 'dinner', search: { category: 'dairy', subcategory: 'yoghurt', isSpecial: false, isLight: true } }]
 
                 mealPlan.push(monday, tuesday, wednesday, thursday, friday, saturday, sunday)
-                    
+                
+                switch (diet) {
+                    case 'vegan':
+                        delete monday[7].search.subcategory
+                        delete tuesday[7].search.subcategory
+                        delete wednesday[7].search.subcategory
+                        delete thursday[7].search.subcategory
+                        delete saturday[4].search.subcategory
+
+                        break
+                    case 'vegetarian':
+                        delete monday[7].search.subcategory
+                        tuesday[7].search.subcategory = 'egg'
+                        delete wednesday[7].search.subcategory
+                        delete thursday[7].search.subcategory
+                        break
+                    case 'pescatarian':
+                        delete monday[7].search.subcategory
+                        wednesday[7].search.subcategory = 'egg'
+                        break
+                }
                 break
+                default:
+                    mealPlan =  plan
+                    debugger
+                break
+
         }
         return mealPlan
     }

@@ -116,6 +116,21 @@ const logic = {
             })
     },
 
+    retrieveUser() {
+        return fetch(`${this.url}/users/${this._userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${this._token}`
+            }
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+                
+                return res.data
+            })
+    },
+
     findNewRandomMeal() {
         // monday = [
         //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
@@ -123,15 +138,15 @@ const logic = {
     },
 
     createMealPlan(diet, _plan, intolerances) {
-        // if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
-        // if (typeof plan !== 'string') throw TypeError(`${plan} is not a string`)
-        // if (typeof intolerances !== 'array') throw TypeError(`${intolerances} is not a string`)
+        debugger
+        if (typeof diet !== 'string') throw Error(`You need to select a diet`)
+        if (typeof _plan !== 'string') throw Error(`You need to select a plan`)
+        if (!intolerances instanceof Array) throw Error(`intolerances is not array`)
 
-        // if (!diet.trim()) throw Error('diet is empty or blank')
-        // if (!plan.trim()) throw Error('plan is empty or blank')
-        // if (!intolerances.trim()) throw Error('intolerances is empty or blank')
+        if (!diet.trim()) throw Error('diet is empty or blank')
+        if (!_plan.trim()) throw Error('plan is empty or blank')
 
-        const plan = data.selectPlan(_plan)
+        const plan = data.selectPlan(_plan, diet)
 
         if (plan) {
 

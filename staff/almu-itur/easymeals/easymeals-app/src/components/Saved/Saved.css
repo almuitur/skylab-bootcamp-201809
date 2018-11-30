@@ -1,0 +1,22 @@
+.my-meals-item-saved{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    background-color: pink; 
+    border-radius: 8px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.saved-name {
+    
+}
+
+.saved-delete-icon {
+
+}
+
+.saved-date {
+
+}

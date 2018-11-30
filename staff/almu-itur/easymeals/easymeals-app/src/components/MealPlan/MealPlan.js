@@ -75,22 +75,12 @@ class MealPlan extends Component {
 
     // }
 
-    // handleShare = () => {
-
-    // }
-      // handleNewRandomMeal = id => {
+    // handleNewRandomMeal = id => {
     //     console.log('NewMeal')
     // }
 
     // handleFindMeal = (id) => {
-    //     console.log('FindMeal')
-        // try {
-        //     logic.findMeal(text)
-        //         .then(() => logic.listPostits())
-        //         .then(postits => this.setState({ postits }))
-        // } catch ({ message }) {
-        //     alert(message) // HORROR! FORBIDDEN! ACHTUNG!
-        // }
+      
     // }
 
     dragStart = (event, mealId, name, state) => {
@@ -151,7 +141,7 @@ class MealPlan extends Component {
             
             </div>
             }
-            {!this.state.mealPlan && <div className="meal-plan-no"><h1 className>No mealplan created yet.</h1></div>}
+            {!this.state.mealPlan && <div className="meal-plan-no"><h4 className>No mealplan created yet.</h4></div>}
             {this.state.shoppingList && <div><ShoppingList mealPlan = { this.state.mealPlan} shoppingList = {this.state.shoppingList} onCloseShoppingListClick={this.handleCloseShoppingList}/></div>}
 
         </div >

@@ -20,7 +20,7 @@ const Meal = new Schema({
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
         'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
-         'egg', 'vegetable', 'none'],
+         'egg', 'none'],
         required: true
     },
     mainIngredients: [{
@@ -112,6 +112,8 @@ const User = new Schema({
     },
 
     savedMealPlans: [MealPlan],
+
+    savedCustomMealPlan: [{ type: String, required: false }],
 
     favouriteMeals: [{ type: String, required: false }],
 

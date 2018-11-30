@@ -7,10 +7,10 @@ import Home from './components/Home/Home'
 import NavbarLogged from './components/NavbarLogged'
 import FooterPage from './components/FooterPage'
 import MealPlan from './components/MealPlan/MealPlan'
+import CustomMealPlan from './components/CustomMealPlan/CustomMealPlan'
 import MyMeals from './components/MyMeals/MyMeals'
 import Settings from './components/Settings/Settings'
 import AddNewMeal from './components/AddNewMeal/AddNewMeal'
-// import CustomPlan from './components/CustomPlan/CustomPlan'
 import logic from './logic'
 import swal from 'sweetalert'
 import { Route, withRouter, Redirect } from 'react-router-dom'
@@ -32,17 +32,15 @@ class App extends Component {
 
     handleRegister = (name, surname, username, password, repeatPassword) => {
         logic.registerUser(name, surname, username, password, repeatPassword)
-            .then(() => swal("User successfully registered!"))
+            .then(() => swal('User successfully registered!'))
             .then(() => this.props.history.push('/login'))
             .catch(err => Error(err))
     }
 
     handleLogin = (username, password) => {
-        try {
-            logic.login(username, password)
-                .then(() => { this.props.history.push('/home') })
-                .catch(err => Error(err))
-        } catch (err) { Error(err) }
+        logic.login(username, password)
+            .then(() => this.props.history.push('/home'))
+            .catch(err => Error(err))
     }
 
     handleLogoutClick = () => {
@@ -53,8 +51,14 @@ class App extends Component {
     handleGoBack = () => this.props.history.push('/')
 
     handleAddNewMeal = () => {
-
+        debugger
     }
+
+    handleCustomMealPlanClick = event => {
+        event.preventDefault()
+        this.props.history.push('/custommealplan')
+    }
+
     handleAddNewMealClick = event => {
         event.preventDefault()
         this.props.history.push('/addnewmeal')
@@ -81,40 +85,35 @@ class App extends Component {
     }
 
     handleUpdateProfile = (name, surname, username, newPassword, password, confirmNewPassword) => {
-        try {
-            logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
-                .then(() => {
-                    swal("User updated registered!")
-                    this.props.history.push('/home')
-                })
-                .catch(err => Error(err))
-        } catch (err) { Error(err) }
+        logic.updateUser(name, surname, username, newPassword, password, confirmNewPassword)
+            .then(() => swal('User successfully updated!'))
+            .then(() => this.props.history.push('/home'))
+            .catch(err => Error(err))
     }
 
     handleCreateMealPlan = (diet, plan, intolerances) => {
-        try {
-            logic.createMealPlan(diet, plan, intolerances)
-                .then(() => {
-                    this.props.history.push('/mealplan')
-                })
-                .catch(err => Error(err))
-        } catch (err) { Error(err) }
+        logic.createMealPlan(diet, plan, intolerances)
+            .then(() => {
+                this.props.history.push('/mealplan')
+            })
+            .catch(err => Error(err))
     }
 
     render() {
 
         return <div>
 
-            {logic.loggedIn && <NavbarLogged onHomeClick={this.handleHomeClick} onAddNewMealClick={this.handleAddNewMealClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
+            {logic.loggedIn && <NavbarLogged onCustomMealPlanClick={this.handleCustomMealPlanClick} onHomeClick={this.handleHomeClick} onAddNewMealClick={this.handleAddNewMealClick} onMealsPlanClick={this.handleMealsPlanClick} onLogoutClick={this.handleLogoutClick} onMyMealsClick={this.handleMyMealsClick} onSettingsClick={this.handleSettingsClick} />}
 
-            <Route exact path="/" render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to="/home" />} />
-            <Route path="/register" render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
-            <Route path="/login" render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to="/home" />} />
-            <Route path="/mymeals" render={() => logic.loggedIn ? <MyMeals /> : <Redirect to="/" />} />
-            <Route path="/home" render={() => logic.loggedIn ? <Home onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to="/" />} />
-            <Route path="/addnewmeal" render={() => logic.loggedIn ? <AddNewMeal onAddNewMeal={this.handleAddNewMeal} /> : <Redirect to="/" />} />
-            <Route path="/mealplan" render={() => logic.loggedIn ? <MealPlan /> : <Redirect to="/" />} />
-            <Route path="/settings" render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
+            <Route exact path='/' render={() => !logic.loggedIn ? <Landing onRegisterClick={this.handleRegisterClick} onLoginClick={this.handleLoginClick} /> : <Redirect to='/home' />} />
+            <Route path='/register' render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to='/home' />} />
+            <Route path='/login' render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to='/home' />} />
+            <Route path='/home' render={() => logic.loggedIn ? <Home onCustomMealPlanClick={this.handleCustomMealPlanClick} onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to='/' />} />
+            <Route path='/mealplan' render={() => logic.loggedIn ? <MealPlan /> : <Redirect to='/' />} />
+            <Route path='/custommealplan' render={() => logic.loggedIn ? <CustomMealPlan /> : <Redirect to='/' />} />
+            <Route path='/addnewmeal' render={() => logic.loggedIn ? <AddNewMeal onAddNewMeal={this.handleAddNewMeal} /> : <Redirect to='/' />} />
+            <Route path='/settings' render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
+            <Route path='/mymeals' render={() => logic.loggedIn ? <MyMeals /> : <Redirect to='/' />} />
             {logic.loggedIn && <FooterPage />}
 
         </div>
