@@ -4,7 +4,7 @@ import './AddNewMeal.css'
 
 class AddNewMeal extends Component {
 
-    state = { name: '', diet: '', mainIngredients: ['guest', 'list'], optionalIngredients: ['dark', 'camila'], intolerances: [], linkRecipe: '', linkImage: '', season: '' }
+    state = { name: '', diet: '', mainIngredients: [], optionalIngredients: [], intolerances: [], linkRecipe: '', linkImage: '', season: '', mainIngredient:'', optionalIngredient: '' }
 
     handleNameChange = event => {
         const name = event.target.value
@@ -16,24 +16,47 @@ class AddNewMeal extends Component {
         this.setState({ diet })
     }
 
+    handleMainIngredientChange = event => {
+        const ingredient = event.target.value
+        this.setState({ mainIngredient: ingredient})
+    }
+
     handleAddMainIngredient = event => {
         event.preventDefault()
-        const mainIngredients = event.target.value
-        this.setState({ mainIngredients })
+        const ingredient = this.state.mainIngredient
+        const arrayIngredients = this.state.mainIngredients
+        arrayIngredients.push(ingredient)
+        
+        this.setState({ mainIngredients: arrayIngredients })
     }
 
     handleRemoveMainIngredient = event => {
+        event.preventDefault()
+        debugger
+        const ingredient = event.target.value
+        const mainIngredients = this.state.mainIngredients
+        mainIngredients.filter(_ingredient => _ingredient!==ingredient)
 
+        this.setState({ mainIngredients })
     }
 
+    handleOptionalIngredientChange = event => {
+        const ingredient = event.target.value
+        this.setState({ optionalIngredient: ingredient })
+    }
     handleAddOptionalIngredient = event => {
         event.preventDefault()
-        const optionalIngredients = event.target.value
-        this.setState({ optionalIngredients })
+        debugger
+        const ingredient = this.state.optionalIngredient
+        const arrayIngredients = this.state.optionalIngredients
+        arrayIngredients.push(ingredient)
+        
+        this.setState({ optionalIngredients: arrayIngredients })
     }
 
     handleRemoveOptionalIngredient = event => {
-
+        event.preventDefault()
+        const optionalIngredients = event.target.value
     }
 
     handleIntolerancesChange = event => {
@@ -85,42 +108,42 @@ class AddNewMeal extends Component {
                 </div>
 
                 <h2 className='add-new-meal-title'>Choose the type of diet it belongs to:</h2>
-                <div className='add-new-meal-diet'>
+                <div className='add-new-meal-option'>
                     <label for='vegan'>
                         <input type='radio' name='diet' id='vegan' value='vegan' onChange={this.handleDietChange} />
-                        <img className='selectDiet-img' src={require('../../images/vegan.png')} alt='vegan' />
+                        <div className='add-meal-image-container'><img className={(this.state.diet === 'vegan') ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/vegan.png')} alt='vegan' /></div>
                     </label>
                     <label for='vegetarian'>
                         <input type='radio' name='diet' id='vegetarian' value='vegetarian' onChange={this.handleDietChange} />
-                        <img className='selectDiet-img' src={require('../../images/vegetarian.png')} alt='vegetarian' />
+                        <div className='add-meal-image-container'><img className={(this.state.diet === 'vegetarian') ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/vegetarian.png')} alt='vegetarian' /></div>
                     </label>
                     <label for='pescatarian'>
                         <input type='radio' name='diet' id='pescatarian' value='pescatarian' onChange={this.handleDietChange} />
-                        <img className='selectDiet-img' src={require('../../images/pescatarian.png')} alt='pescatarian' />
+                        <div className='add-meal-image-container'><img className={(this.state.diet === 'pescatarian') ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/pescatarian.png')} alt='pescatarian' /></div>
                     </label>
                     <label for='flexitarian'>
                         <input type='radio' name='diet' id='flexitarian' value='flexitarian' onChange={this.handleDietChange} />
-                        <img className='selectDiet-img' src={require('../../images/flexitarian.png')} alt='flexitarian' />
+                        <div className='add-meal-image-container'><img className={(this.state.diet === 'flexitarian') ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/flexitarian.png')} alt='flexitarian' /></div>
                     </label>
                 </div>
 
                 <div className="add-new-meal-ingredients-container">
                     <div className="add-new-meal-ingredients-container-left">
                         <h2 className='add-new-meal-title'>Add the main ingredients of your recipe</h2>
-                        <p>(those without whom the meal would not make sense...)</p>
-                        <div className="add-new-meal-form"><Input onSubmit={this.handleAddMainIngredient} />
-                        <button id="button-add" type="submit"><i className="fas fa-plus"></i></button>
+                        <p>(those without whom the meal would not make sense...):</p>
+                        <div className="add-new-meal-form"><Input onChange={this.handleMainIngredientChange}/>
+                            <button id="button-add" type="submit" onClick={this.handleAddMainIngredient}><i className="fas fa-plus"></i></button>
                         </div>
-                        
+
                         <div className="ingredients-container">
-                            {this.state.mainIngredients && this.state.mainIngredients.map(ingredient => <p className="ingredient">{ingredient}<a onClick={this.handleRemoveOptionalIngredient}><i className="fas fa-times"></i></a></p>)}
+                            {this.state.mainIngredients && this.state.mainIngredients.map(ingredient => <p className="ingredient">{ingredient}<a onClick={this.handleRemoveMainIngredient}><i className="fas fa-times"></i></a></p>)}
                         </div>
                     </div>
                     <div className="add-new-meal-ingredients-container-right">
                         <h2 className='add-new-meal-title'>Add the optional ingredients of your recipe</h2>
-                        <p>(those avoidable in case of intolerances or allergies...)</p>
-                        <div className="add-new-meal-form"><Input onSubmit={this.handleAddOptionalIngredient} />
-                        <button id="button-add" type="submit"><i className="fas fa-plus"></i></button>
+                        <p>(those avoidable in case of intolerances or allergies...):</p>
+                        <div className="add-new-meal-form"><Input onChange={this.handleOptionalIngredientChange}/>
+                            <button id="button-add" type="submit" onClick={this.handleAddOptionalIngredient}><i className="fas fa-plus"></i></button>
                         </div>
                         <div className="ingredients-container">
                             {this.state.optionalIngredients && this.state.optionalIngredients.map(ingredient => <p className="ingredient">{ingredient}<a onClick={this.handleRemoveOptionalIngredient}><i className="fas fa-times"></i></a></p>)}
@@ -128,45 +151,45 @@ class AddNewMeal extends Component {
                     </div>
                 </div>
 
-                <h2 className='add-new-meal-title'>Select intolerance</h2>
-                <div className='add-new-meal-intolerance-container'>
+                <h2 className='add-new-meal-title'>Select intolerance:</h2>
+                <div className='add-new-meal-option'>
                     <label for='lactose'>
                         <input type='checkbox' name='intolerances' id='lactose' value='lactose' onChange={this.handleIntolerancesChange} />
-                        <img className='selectIntolerance-img' src={require('../../images/lactose.png')} alt='lactose' />
+                        <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('lactose')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/lactose.png')} alt='lactose' /></div>
                     </label>
                     <label for='gluten'>
                         <input type='checkbox' name='intolerances' id='gluten' value='gluten' onChange={this.handleIntolerancesChange} />
-                        <img className='selectIntolerance-img' src={require('../../images/gluten.png')} alt='gluten' />
+                        <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('gluten')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/gluten.png')} alt='gluten' /></div>
                     </label>
                 </div>
 
                 <div className="add-new-meal-name">
-                    <h2 className='add-new-meal-title'>Add a link to the recipe of your meal</h2>
+                    <h2 className='add-new-meal-title'>Add a link to the recipe of your meal:</h2>
                     <input className="add-new-meal-name-input" type="text" onChange={this.handlehandleLinkRecipeChange}></input>
                 </div>
-    
+
                 <div className="add-new-meal-name">
                     <h2 className='add-new-meal-title'>Add a link to the image of the meal</h2>
                     <input className="add-new-meal-name-input" type="text" onChange={this.handleLinkImageChange}></input>
                 </div>
 
-                <h2 className='add-new-meal-title'>Select which seasons you can eat this meal</h2>
-                <div className='add-new-meal-season-select'>
+                <h2 className='add-new-meal-title'>Select which seasons you can eat this meal:</h2>
+                <div className='add-new-meal-option'>
                     <label for='winter'>
                         <input type='checkbox' name='seasons' id='winter' value='winter' onChange={this.handleSeasonChange} />
-                        <img className='add-new-meal-season-img' src={require('../../images/winter.jpg')} alt='winter' />
+                        <div className='add-meal-image-container'><img className={(this.state.season.includes('winter')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/winter.jpg')} alt='winter' /></div>
                     </label>
                     <label for='spring'>
                         <input type='checkbox' name='seasons' id='spring' value='spring' onChange={this.handleSeasonChange} />
-                        <img className='add-new-meal-season-img' src={require('../../images/spring.jpg')} alt='spring' />
+                        <div className='add-meal-image-container'><img className={(this.state.season.includes('spring')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/spring.jpg')} alt='spring' /></div>
                     </label>
                     <label for='summer'>
                         <input type='checkbox' name='seasons' id='summer' value='summer' onChange={this.handleSeasonChange} />
-                        <img className='add-new-meal-season-img' src={require('../../images/summer.jpg')} alt='summer' />
+                        <div className='add-meal-image-container'><img className={(this.state.season.includes('summer')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/summer.png')} alt='summer' /></div>
                     </label>
                     <label for='autum'>
                         <input type='checkbox' name='seasons' id='autum' value='autum' onChange={this.handleSeasonChange} />
-                        <img className='add-new-meal-season-img' src={require('../../images/autum.jpg')} alt='autum' />
+                        <div className='add-meal-image-container'><img className={(this.state.season.includes('autum')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/autum.jpg')} alt='autum' /></div>
                     </label>
                 </div>
 
