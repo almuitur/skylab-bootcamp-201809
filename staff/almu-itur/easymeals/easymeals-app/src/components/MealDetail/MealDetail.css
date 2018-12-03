@@ -22,10 +22,8 @@
 }
 .meal-detail-left-container {
     width: 100%;
-    height: 100%;
+    height: 40%;
     display: flex;
-    justify-content: center;
-    align-items: center;
     padding: 1%;
 }
 .meal-detail-left-container img {
@@ -37,84 +35,71 @@
 .meal-detail-right-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 90%;
     height: 100%;
-    justify-content: center;
-    align-items: center;
+    font-size: 12px;
 }
-.meal-detail-right-container-container {
-    display: flex;
-    flex-direction: column;
-}
-.meal-detail-right-container-container-title {
+.meal-detail-right-container-title {
     text-transform: uppercase;
-    justify-content: center;
-    font-size: 1.4em;
     font-weight: bold;
     color: #F77B72;
-    padding: 5px;
-    border-bottom: 1px solid #F77B72;
 }
-.meal-detail-right-container-container-diet {
-    color: green;
-    background-color: yellow;
+.meal-detail-right-container-title p {
+    text-justify: center;
+    margin: 0;
 }
-.meal-detail-right-container-container-ingredients {
+.meal-detail-right-container-ingredients-title p {
+    /* justify-content: center; */
+    /* margin-top: 10px auto; */
+    font-weight: bold;
+}
+.meal-detail-right-container-ingredients {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.meal-detail-right-container-container-ingredients-keyword {
-    font-weight: bold;
+.meal-detail-right-container-ingredients-title {
+    /* font-size: 14px; */
 }
-.meal-detail-right-container-container-ingredients-main {
-    width: 50%;
+.meal-detail-right-container-ingredients-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    background-color: rgba(231, 230, 230, 0.544);
-}
-.meal-detail-right-container-container-ingredients-main li {
-    list-style-type: none;
-    /* font-size: 1em; */
-    padding: 5px;
+    justify-items: flex-start;
     text-transform: capitalize;
 }
-.meal-detail-right-container-container-ingredients-optional {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    width: 50%;
-    background-color: rgb(231, 230, 230);
-}
-.meal-detail-right-container-container-ingredients-optional li {
-    list-style-type: none;
-    font-size: 1em;
-}
-.meal-detail-right-container-container-intolerances {
+.meal-detail-right-container-intolerances {
     display: flex;
     flex-direction: row;
 }
 .meal-detail-right-container-container-link {
-    background-color: rgb(255, 115, 185);
-    font-size: 0.8em;
+    /* font-size: 0.8em; */
+    font-weight: bold;
     padding: 0.1em;
     margin: 0.1em;
+    cursor: pointer;
 }
 .meal-detail-right-container-button {
     justify-content: right;
     margin-right: 2%;
 }
-#meal-detail-button {
-    padding: 5px 20px;
-    background-color: #F77B72;
+.meal-detail-button {
+    color: white;
+    /* padding: 0.8em 2em; */
+    border-radius: 10px;
+    border: none;
+    margin: 3%;
+    /* font-size: 14px; */
 }
+/* @media screen and (min-width: 500px) and (max-width: 699px) {
+
+} */
 
 @media screen and (min-width: 700px) {
     .meal-detail-container{
         display: flex;
-        flex-direction: column;
         flex-direction: row;
+        overflow: visible;
     }
     .meal-detail-left-container {
       width: 40%;
@@ -126,9 +111,13 @@
       display: flex;
       flex-direction: column;
     }
+    .meal-detail-right-container-container-title {
+        font-size: 1em;
+        width: 100%;
+    }
     .meal-detail-form-container {
       display: flex;
-      justify-content: center;
+      /* justify-content: center; */
     }
     .meal-detail-right-container-container-ingredients {
         flex-direction: row;

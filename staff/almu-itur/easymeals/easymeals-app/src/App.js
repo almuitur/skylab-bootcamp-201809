@@ -50,8 +50,11 @@ class App extends Component {
 
     handleGoBack = () => this.props.history.push('/')
 
-    handleAddNewMeal = () => {
-        debugger
+    handleAddNewMeal = (name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) => {
+        logic.addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons)
+            .then(() => swal('Meal successfully added!'))
+            .then(() => this.props.history.push('/home'))
+            .catch(err => Error(err))
     }
 
     handleCustomMealPlanClick = event => {
@@ -98,6 +101,12 @@ class App extends Component {
             })
             .catch(err => Error(err))
     }
+    handleSaveMealPlan = mealPlan => {
+        
+        logic.saveMealPlan(mealPlan)
+            .then(() => swal('Meal Plan successfully saved!'))
+            .catch(err => Error(err))
+    }
 
     render() {
 
@@ -109,7 +118,7 @@ class App extends Component {
             <Route path='/register' render={() => !logic.loggedIn ? <Register onRegister={this.handleRegister} onLoginClick={this.handleLoginClick} onGoBack={this.handleGoBack} /> : <Redirect to='/home' />} />
             <Route path='/login' render={() => !logic.loggedIn ? <Login onLogin={this.handleLogin} onRegisterClick={this.handleRegisterClick} onGoBack={this.handleGoBack} /> : <Redirect to='/home' />} />
             <Route path='/home' render={() => logic.loggedIn ? <Home onCustomMealPlanClick={this.handleCustomMealPlanClick} onCreateMealPlan={this.handleCreateMealPlan} /> : <Redirect to='/' />} />
-            <Route path='/mealplan' render={() => logic.loggedIn ? <MealPlan /> : <Redirect to='/' />} />
+            <Route path='/mealplan' render={() => logic.loggedIn ? <MealPlan onSaveMealPlanClick={this.handleSaveMealPlan}/> : <Redirect to='/' />} />
             <Route path='/custommealplan' render={() => logic.loggedIn ? <CustomMealPlan /> : <Redirect to='/' />} />
             <Route path='/addnewmeal' render={() => logic.loggedIn ? <AddNewMeal onAddNewMeal={this.handleAddNewMeal} /> : <Redirect to='/' />} />
             <Route path='/settings' render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />

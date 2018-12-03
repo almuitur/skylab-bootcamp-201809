@@ -191,17 +191,33 @@ router.delete('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonB
 router.post('/meals/find/:id', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
     
     routeHandler(() => {
-        const { params: { id }, sub, body: { category, subcategory, diet, isSpecial, isCold, intolerances, isLight, season } } = req
-        
+        const { params: { id }, sub, body: { category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season } } = req
+        // const { params: { id }, sub, body: { category, subcategory } } = req
+
         if (id !== sub) throw Error('token sub does not match user id')
         
-        // return logic.searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, isLight, season)
-        return logic.searchRandomMeal(id, category, subcategory)
+        // return logic.searchRandomMeal(category, subcategory)
+        return logic.searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season)
             .then(meal =>
                 res.json({
                     data: meal
                 })
             )
+    }, res)
+})
+
+router.post('/meals/addmeal', jsonBodyParser, (req, res) => {
+    routeHandler(() => {
+        const { name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons } = req.body
+
+        return logic.addNewMeal(name, diet, mainIngredients, optionalIngredients ? optionalIngredients : null, intolerances ? intolerances : null, linkRecipe ? linkRecipe : null, linkImage ? linkImage : null, seasons)
+            .then(() => {
+                res.status(201)
+                
+                res.json({
+                    message: `meal successfully added to database`
+                })
+            })
     }, res)
 })
 

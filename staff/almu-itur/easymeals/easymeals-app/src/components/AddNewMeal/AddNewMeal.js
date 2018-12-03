@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { Input } from 'mdbreact'
+import Ingredient from '../Ingredient/Ingredient'
+import Error from '../Error/Error'
 import './AddNewMeal.css'
 
 class AddNewMeal extends Component {
 
-    state = { name: '', diet: '', mainIngredients: [], optionalIngredients: [], intolerances: [], linkRecipe: '', linkImage: '', season: '', mainIngredient:'', optionalIngredient: '' }
+    state = { name: '', diet: '', mainIngredients: [], optionalIngredients: [], intolerances: [], linkRecipe: '', linkImage: '', seasons: [], mainIngredient: '', optionalIngredient: '' }
 
     handleNameChange = event => {
         const name = event.target.value
@@ -18,45 +20,58 @@ class AddNewMeal extends Component {
 
     handleMainIngredientChange = event => {
         const ingredient = event.target.value
-        this.setState({ mainIngredient: ingredient})
+        this.setState({ mainIngredient: ingredient })
     }
 
     handleAddMainIngredient = event => {
         event.preventDefault()
+
+        if (!this.state.mainIngredient) throw Error('You need to name a main ingredient first')
+
         const ingredient = this.state.mainIngredient
         const arrayIngredients = this.state.mainIngredients
+
         arrayIngredients.push(ingredient)
-        
+
         this.setState({ mainIngredients: arrayIngredients })
     }
 
-    handleRemoveMainIngredient = event => {
-        event.preventDefault()
-        debugger
-        const ingredient = event.target.value
-        const mainIngredients = this.state.mainIngredients
-        mainIngredients.filter(_ingredient => _ingredient!==ingredient)
+    handleRemoveMainIngredient = ingredient => {
+        if (!ingredient) throw Error('There are no ingredients to remove')
+
+        let mainIngredients = this.state.mainIngredients
+
+        mainIngredients = mainIngredients.filter(_ingredient => _ingredient !== ingredient)
 
         this.setState({ mainIngredients })
     }
 
     handleOptionalIngredientChange = event => {
         const ingredient = event.target.value
+
         this.setState({ optionalIngredient: ingredient })
     }
     handleAddOptionalIngredient = event => {
         event.preventDefault()
-        debugger
+
+        if (!this.state.optionalIngredient) throw Error('You need to name an optional ingredient first')
+
         const ingredient = this.state.optionalIngredient
         const arrayIngredients = this.state.optionalIngredients
+
         arrayIngredients.push(ingredient)
-        
+
         this.setState({ optionalIngredients: arrayIngredients })
     }
 
-    handleRemoveOptionalIngredient = event => {
-        event.preventDefault()
-        const optionalIngredients = event.target.value
+    handleRemoveOptionalIngredient = ingredient => {
+        if (!ingredient) throw Error('There are no ingredients to remove')
+
+        let optionalIngredients = this.state.optionalIngredients
+
+        optionalIngredients = optionalIngredients.filter(_ingredient => _ingredient !== ingredient)
+
+        this.setState({ optionalIngredients })
     }
 
     handleIntolerancesChange = event => {
@@ -88,13 +103,29 @@ class AddNewMeal extends Component {
     }
     handleSeasonChange = event => {
         const season = event.target.value
-        this.setState({ season })
+        const checked = event.target.checked
+
+        if (checked) {
+            let seasons = this.state.seasons
+            seasons.push(season)
+
+            this.setState({ seasons })
+        }
+        else {
+            let seasons = this.state.seasons
+            const index = seasons.findIndex(item => item === season)
+            seasons.splice(index, 1)
+
+            this.setState({ seasons })
+        }
     }
 
     handleSubmit = event => {
         event.preventDefault()
-        const { name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, season } = this.state
-        this.props.onAddNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, season)
+
+        const { name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons } = this.state
+
+        this.props.onAddNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons)
     }
 
     render() {
@@ -131,27 +162,27 @@ class AddNewMeal extends Component {
                     <div className="add-new-meal-ingredients-container-left">
                         <h2 className='add-new-meal-title'>Add the main ingredients of your recipe</h2>
                         <p>(those without whom the meal would not make sense...):</p>
-                        <div className="add-new-meal-form"><Input onChange={this.handleMainIngredientChange}/>
+                        <div className="add-new-meal-form"><Input onChange={this.handleMainIngredientChange} />
                             <button id="button-add" type="submit" onClick={this.handleAddMainIngredient}><i className="fas fa-plus"></i></button>
                         </div>
-
-                        <div className="ingredients-container">
-                            {this.state.mainIngredients && this.state.mainIngredients.map(ingredient => <p className="ingredient">{ingredient}<a onClick={this.handleRemoveMainIngredient}><i className="fas fa-times"></i></a></p>)}
+                        <div className="add-new-meal-ingredients-container">
+                            {this.state.mainIngredients && this.state.mainIngredients.map(ingredient => <Ingredient key={ingredient} name={ingredient} onRemoveIngredient={this.handleRemoveMainIngredient} />)}
                         </div>
                     </div>
                     <div className="add-new-meal-ingredients-container-right">
                         <h2 className='add-new-meal-title'>Add the optional ingredients of your recipe</h2>
                         <p>(those avoidable in case of intolerances or allergies...):</p>
-                        <div className="add-new-meal-form"><Input onChange={this.handleOptionalIngredientChange}/>
+                        <div className="add-new-meal-form"><Input onChange={this.handleOptionalIngredientChange} />
                             <button id="button-add" type="submit" onClick={this.handleAddOptionalIngredient}><i className="fas fa-plus"></i></button>
                         </div>
-                        <div className="ingredients-container">
-                            {this.state.optionalIngredients && this.state.optionalIngredients.map(ingredient => <p className="ingredient">{ingredient}<a onClick={this.handleRemoveOptionalIngredient}><i className="fas fa-times"></i></a></p>)}
+                        <div className="add-new-meal-ingredients-container">
+                            {this.state.optionalIngredients && this.state.optionalIngredients.map(ingredient => <Ingredient key={ingredient} name={ingredient} onRemoveIngredient={this.handleRemoveOptionalIngredient} />)}
                         </div>
                     </div>
                 </div>
 
-                <h2 className='add-new-meal-title'>Select intolerance:</h2>
+                <h2 className='add-new-meal-title'>Select intolerance of the meal:</h2>
+                <p className='add-new-meal-subtitle'>(based on its main ingredients only...):</p>
                 <div className='add-new-meal-option'>
                     <label for='lactose'>
                         <input type='checkbox' name='intolerances' id='lactose' value='lactose' onChange={this.handleIntolerancesChange} />
@@ -177,19 +208,19 @@ class AddNewMeal extends Component {
                 <div className='add-new-meal-option'>
                     <label for='winter'>
                         <input type='checkbox' name='seasons' id='winter' value='winter' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('winter')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/winter.jpg')} alt='winter' /></div>
+                        <div className='add-meal-image-container'><img className={(this.state.seasons.includes('winter')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/winter.jpg')} alt='winter' /></div>
                     </label>
                     <label for='spring'>
                         <input type='checkbox' name='seasons' id='spring' value='spring' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('spring')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/spring.jpg')} alt='spring' /></div>
+                        <div className='add-meal-image-container'><img className={(this.state.seasons.includes('spring')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/spring.jpg')} alt='spring' /></div>
                     </label>
                     <label for='summer'>
                         <input type='checkbox' name='seasons' id='summer' value='summer' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('summer')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/summer.png')} alt='summer' /></div>
+                        <div className='add-meal-image-container'><img className={(this.state.seasons.includes('summer')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/summer.png')} alt='summer' /></div>
                     </label>
                     <label for='autum'>
                         <input type='checkbox' name='seasons' id='autum' value='autum' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('autum')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/autum.jpg')} alt='autum' /></div>
+                        <div className='add-meal-image-container'><img className={(this.state.seasons.includes('autum')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/autum.png')} alt='autum' /></div>
                     </label>
                 </div>
 

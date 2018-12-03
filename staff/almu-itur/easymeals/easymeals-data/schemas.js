@@ -19,7 +19,7 @@ const Meal = new Schema({
     subCategory: {
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
-        'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
+        'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nuts', 'meat', 'fish', 'seafood',
          'egg', 'none'],
         required: true
     },

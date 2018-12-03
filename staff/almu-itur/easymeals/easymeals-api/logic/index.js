@@ -223,8 +223,8 @@ const logic = {
         })()
     },
 
-    // searchRandomMeal(category, subcategory, diet, isSpecial, isCold, intolerances, season) {
-    searchRandomMeal(id, category, subcategory) {
+    // searchRandomMeal(category, subcategory) {
+    searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
         // validate([
             // { key: 'category', value: category, type: String },
             // { key: 'subcategory', value: subcategory, type: String, optional: true },
@@ -239,12 +239,12 @@ const logic = {
         return (async () => {
             const meals = await Meal.find({
                 category: category,
-                subcategory: (subcategory) ? subcategory : /.*/
-                // diet: {$gte: diet},
-                // isSpecial: (isSpecial)? isSpecial: /.*/,
-                // isCold: (isCold)? isCold : /.*/,
-                // intolerances: {$nin: intolerances},
-                // isLight: (isLight)? isLight : /.*/,
+                subcategory: (subcategory) ? subcategory : /.*/,
+                diet: { $lte: diet},
+                isSpecialMeal: (!!isSpecialMeal),
+                // isCold: (!!isCold),
+                intolerances: { $nin: intolerances },
+                isLight: (!!isLight)
                 // season: {$in: season }
             })
             
@@ -258,21 +258,32 @@ const logic = {
         //     //name != null && (user.name = name)
 
             //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
-            const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
-            debugger
+            // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
             
-            let counter = 0
-            let meal
-            do {
+            
+            // let counter = 0
+            // let meal
+            // do {
                 meal = meals[Math.floor(Math.random() * meals.length)]
-                counter++
-            }
-            while(user.mealsToAvoid.includes(meal.id) && counter < 10)
+            //     counter++
+            // }
+            // while(user.mealsToAvoid.includes(meal.id) && counter < 10)
         
             delete meal.__v
             delete meal._id
             
             return meal
+        })()
+    },
+
+    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
+        validate([{ key: 'name', value: name, type: String }, { key: 'surname', value: surname, type: String }, { key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
+
+        return (async () => {
+
+            meal = new Meal({ name, diet, category, subcategory, mainIngredients, optionalIngredients, isSpecialMeal, isColdDish, intolerances, isLight, season, recipeLink, imageLink, status  })
+
+            await meal.save()
         })()
     }
 

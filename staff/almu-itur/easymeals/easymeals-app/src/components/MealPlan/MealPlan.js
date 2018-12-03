@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import InputForm from '../InputForm'
+import { Input } from 'mdbreact'
 import Meal from '../Meal/Meal'
 import MealDetail from '../MealDetail/MealDetail'
 import ShoppingList from '../ShoppingList/ShoppingList'
 import './MealPlan.css'
 
 class MealPlan extends Component {
-    state = { mealPlan: {}, shoppingList: null, mealDetail: null }
+    state = { mealPlan: {}, shoppingList: null, mealDetail: null, searchByKeyword: null }
 
     componentDidMount() {
         
@@ -16,6 +16,17 @@ class MealPlan extends Component {
         
         { this.setState({ mealPlan }) }
     }  
+
+    handleSearchbyKeywordChange = event => {
+        const keyword = event.target.value
+
+        this.setState ({ searchByKeyword: keyword })
+    }
+
+    handleSearchByKeyword = event => {
+        event.preventDefault()
+        debugger
+    }
 
     handleMealDetail = id => {
         
@@ -67,13 +78,10 @@ class MealPlan extends Component {
         { this.setState({ shoppingList: null }) }
     }
 
-    // handlePrint = () => {
-
-    // }
-
-    // handleSave = () => {
-
-    // }
+    handleSaveMealPlan = () => {
+        const mealPlan = this.state.mealPlan
+        this.props.onSaveMealPlanClick(mealPlan)
+    }
 
     // handleNewRandomMeal = id => {
     //     console.log('NewMeal')
@@ -112,11 +120,14 @@ class MealPlan extends Component {
 
             {this.state.mealPlan && <div> 
 
-            <h1>Meal Plan</h1> 
+            <h1 className="meal-plan-title">Meal Plan</h1> 
 
-            <p>{this.state.mealPlan.name}</p>
+            {this.state.mealPlan.name && <p className="meal-plan-name">{this.state.mealPlan.name.toUpperCase()}</p> }
 
-            <InputForm onSubmit={this.handleSubmit} />
+        {/* <div className="meal-plan-input">
+            <Input label="Search by keyword..." type="text" onChange={this.handleSearchbyKeywordChange} />
+            <button id="button-add" type="submit" onClick={this.handleSearchByKeyword}><i className="fas fa-plus"></i></button>
+        </div>  */}
 
             <div className="meal-plan-days-container">
                 {days.map(day => <h4 className="meal-plan-day">{day}</h4>)}
@@ -133,10 +144,8 @@ class MealPlan extends Component {
                 </div>
             })}
             <div>
-                <button className="btn btn-unique" onClick={this.handlePrint}>PRINT</button>
-                <button className="btn btn-unique" onClick={this.handleShoppingList}>SHOPPING LIST</button>
-                <button className="btn btn-unique" onClick={this.handleSave}>SAVE</button>
-                <button className="btn btn-unique" onClick={this.handleShare}>SHARE</button>
+                <button className="meal-plan-button" onClick={this.handleShoppingList}>SHOPPING LIST</button>
+                <button className="meal-plan-button" onClick={this.handleSaveMealPlan}>SAVE</button>
             </div>
             
             </div>

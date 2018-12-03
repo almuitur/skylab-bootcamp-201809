@@ -1,5 +1,6 @@
 import Error from './components/Error/Error'
 import data from './data'
+import { debug } from 'util';
 
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
@@ -133,30 +134,46 @@ const logic = {
 
     findNewRandomMeal() {
         // monday = [
-        //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecial: false } },
+        //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecialMeal: false } },
         //retrieve status, retrieve search params, random search different than current id, remove old, add new, save to session storage
     },
 
     createMealPlan(diet, _plan, intolerances) {
-        debugger
-        if (typeof diet !== 'string') throw Error(`You need to select a diet`)
-        if (typeof _plan !== 'string') throw Error(`You need to select a plan`)
+        
+        if (typeof diet !== 'string') throw Error(`diet is not a string`)
+        if (typeof _plan !== 'string') throw Error(`plan is not a string`)
         if (!intolerances instanceof Array) throw Error(`intolerances is not array`)
 
-        if (!diet.trim()) throw Error('diet is empty or blank')
-        if (!_plan.trim()) throw Error('plan is empty or blank')
+        if (!diet.trim()) throw Error('You need to select a diet')
+        if (!_plan.trim()) throw Error('You need to select a plan')
 
         const plan = data.selectPlan(_plan, diet)
+        const season = 'autum'
 
+        switch (diet) {
+            case 'vegan':
+                diet = 0
+                break
+            case 'vegetarian':
+                diet = 1
+                break
+            case 'pescatarian':
+                diet = 2
+                break
+            default :
+            diet = 3
+            break
+        }
+        
         if (plan) {
 
             let mealsWeek = plan.map(day => {
                 let mealsDay = day.map(meal => {
                     const category = meal.search.category
                     const subcategory = meal.search.subcategory
-                    // const isSpecial =  meal.isSpecial
-                    // const isCold = meal.isCold
-                    // const isLight = meal.isLight
+                    const isSpecialMeal =  meal.isSpecialMeal
+                    const isCold = meal.isCold
+                    const isLight = meal.isLight
                     
                     return fetch(`${this.url}/meals/find/${this._userId}`, {
                         method: 'POST',
@@ -164,15 +181,16 @@ const logic = {
                             'Content-Type': 'application/json; charset=utf-8',
                             'Authorization': `Bearer ${this._token}`
                         },
-                        // body: JSON.stringify({ category, subcategory, diet, isSpecial, isCold, intolerances, season })
-                        body: JSON.stringify({ category, subcategory })
+                        // body: JSON.stringify({ category, subcategory })
+                        body: JSON.stringify({ category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season })
                     })
 
                         .then(res => res.json())
 
                         .then(res => {
-
+                            
                             if (res.error) throw Error(res.error)
+                            
                             let resObject = {}
                             resObject.day = meal.day
                             resObject[meal.mealTime] = res.data
@@ -238,6 +256,24 @@ const logic = {
         }
 
     },
+
+    saveMealPlan(mealPlan) {
+        if (mealPlan === undefined) throw Error(`mealPlan is undefined`)
+        
+        return fetch(`${this.url}/users/${this._userId}/savedmealplan`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ mealPlan })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
+    },
+
     findMeal(id) {
 
         let _mealPlan = sessionStorage.getItem('mealPlan')
@@ -472,6 +508,40 @@ const logic = {
             optionalIngredients: optionalIngredients
         }
         return shoppingList
+    },
+    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
+        if (!name) throw Error('You need to name your recipe')
+        if(!diet) throw Error('You need to specidy a diet')
+        if(!mainIngredients) throw Error('At least one main ingredient should be added')
+        if (!seasons.length) throw Error('You need to select at least one season')
+
+        if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
+        if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
+        // if (instanceof mainIngredients !== 'Array') throw TypeError(`${mainIngredients} is not an array`)
+        // if (instanceof optionalIngredients !== 'Array') throw TypeError(`${optionalIngredients} is not an array`)
+        // if (instanceof intolerances !== 'Array') throw TypeError(`${intolerances} is not an array`)
+        if (typeof linkRecipe !== 'string') throw TypeError(`${linkRecipe} is not a string`)
+        if (typeof linkImage !== 'string') throw TypeError(`${linkImage} is not a string`)
+        // if (instanceof seasons !== 'Array') throw TypeError(`${seasons} is not an array`)
+
+        if (!name.trim()) throw Error('name is empty or blank')
+        if (!diet.trim()) throw Error('diet is empty or blank')
+        if (!linkRecipe.trim()) throw Error('linkRecipe is empty or blank')
+        if (!linkImage.trim()) throw Error('linkImage is empty or blank')
+
+        return fetch(`${this.url}/meals/addmeal`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
+
     }
 }
 

@@ -8,8 +8,8 @@ class Ingredient extends Component {
 
     render() {
 
-        return <div >
-                <a onClick={() => this.props.onRemoveIngredient(this.props.id)}><i className="fas fa-times"></i></a>
+        return <div className="ingredient-container">
+                <p className="ingredient">{this.props.name}<a onClick={() => this.props.onRemoveIngredient(this.props.name)}><i id ='ingredient-remove' className="fas fa-times"></i></a></p>
             </div>
     }
 }
