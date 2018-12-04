@@ -13,28 +13,29 @@ class MyMeals extends Component {
             .catch(err => Error(err))
     }
 
-    handleDeleteSaved = id => {
-        // logic.deleteFavouriteMeal(id)
-        //  .then(res => this.setState({ favouriteMeals: res }))
-        //  .catch(err => this.setState({error: err}))    
+    handleDeleteSavedMealPlan = id => {
+        debugger
+        logic.deleteSavedMealPlan(id)
+         .then(res => this.setState({ savedMealPlans: res }))
+         .catch(err => Error(err))    
     }
 
-    handleDeleteMealPlan = id => {
-         // logic.removeMealFromAvoidList(id)
-        //  .then(res => this.setState({ mealsToAvoid: res }))
-        //  .catch(err => this.setState({error: err}))    
+    handleDeleteSavedCustomPlan = id => {
+         // logic.deleteSavedCustomPlan(id)
+        //  .then(res => this.setState({ savedCustomPlans: res }))
+        //  .catch(err => Error(err))    
     }
 
-    handleDeleteSavedCustomMealPlan = id => {
-         // logic.removeMealFromAvoidList(id)
-        //  .then(res => this.setState({ mealsToAvoid: res }))
-        //  .catch(err => this.setState({error: err}))    
+    handleRemoveFavouriteMeal = id => {
+        // logic.removeFavouriteMeal(id)
+       //  .then(res => this.setState({ favouriteMeals: res }))
+       //  .catch(err => Error(err))    
     }
 
-    handleDeleteMealToAvoid = id => {
-        // logic.removeMealFromAvoidList(id)
+    handleRemoveMealToAvoid = id => {
+        // logic.removeAvoidMeal(id)
         //  .then(res => this.setState({ mealsToAvoid: res }))
-        //  .catch(err => this.setState({error: err}))    
+        //  .catch(err => Error(err))    
     }
 
     render() {
@@ -44,8 +45,8 @@ class MyMeals extends Component {
 
             <h3 className="my-meals-title">My Meal Plans</h3>
             <div>
-                {!this.state.savedMealPlans.length ? <div><h1 className="my-meals-nothing-found">No meal plans added yet.</h1></div> 
-                : <div className="my-meals-item-saved">{this.state.savedMealPlans.map(mealPlan => <Saved key={mealPlan.id} id={mealPlan.id} name={mealPlan.name} date={mealPlan.date} deleteSaved={this.handleDeleteSaved} />)}</div> }
+                {(!this.state.savedMealPlans || !this.state.savedMealPlans.length) ? <div><h1 className="my-meals-nothing-found">No meal plans added yet.</h1></div> 
+                : <div className="my-meals-item-saved">{this.state.savedMealPlans.map(mealPlan => <Saved key={mealPlan.date} id={mealPlan.date} name={mealPlan.name} date={mealPlan.date} deleteSaved={this.handleDeleteSavedMealPlan} />)}</div> }
             </div>
 
             {/* <h3 className="my-meals-title">My Custom Plans</h3>

@@ -1,56 +1,173 @@
-const { mongoose, models: { Meal, Day, MealPlan, User} } = require('easymeals-data')
+const { mongoose, models: { Meal, Day, MealPlan, User } } = require('easymeals-data')
 const logic = require('.')
 const { AlreadyExistsError, ValueError } = require('../errors')
+const { expect } = require('chai')
 const fs = require('fs-extra')
 const path = require('path')
 const hasha = require('hasha')
 const streamToArray = require('stream-to-array')
 const text2png = require('text2png')
 
-const { expect } = require('chai')
 
 const MONGO_URL = 'mongodb://localhost:27017/easymeals-test'
 
 describe('logic', () => {
     before(() => mongoose.connect(MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }))
 
-    describe('search meal', () => {
+    describe('meals', () => {
 
-        it('should succeed on correct data', async () => {
-            const res = await logic.searchRandomMeal('carb', 'pizza', null, null, null, ['gluten'], null, null)
+        describe('search random meal', () => {
 
-            expect(res).not.to.be.undefined
-            // expect(res).to.be.instanceOf(Meal)
-            expect(res.category).to.equal('carb')
-            subcategory != null && expect(res.subcategory).to.equal('pizza')
-            diet != null && expect(res.diet).to.equal(null)
-            isSpecial != null && expect(res.isSpecial).to.equal(null)
-            isCold != null && expect(res.isCold).to.equal(null)
-            if (intolerances !=null) {
-                res.intolerances.forEach(intoleranceRes => {
-                    intolerances.forEach(intoleranceUser => {
-                        res_ = intoleranceRes.includes(intoleranceUser)
-                        expect(res_).not.to.be(true)
-                    })
-                })
-            }
-            isLight != null && expect(res.isLight).to.equal(null)
-            if (seasons !=null) {
-                res.seasons.forEach(seasonRes => {
-                    seasons.forEach(seasonUser => {
-                        res_ = seasonRes.includes(seasonUser)
-                        expect(res_).not.to.be(true)
-                    })
-                })
-            }
+            it('should succeed on correct data', async () => {
+                const res = await logic.searchRandomMeal('carb', 'pizza', 3, false, null, ['gluten'], false, 'autum')
+
+                expect(res).not.to.be.undefined
+                expect(res).not.to.be.instanceOf(Meal)
+                expect(res.category).to.equal('carb')
+                expect(res.subcategory).to.equal('pizza')
+                expect(res.diet).to.equal(3)
+                expect(res.isSpecialMeal).to.equal(false)
+                expect(res.intolerances).not.to.contain('gluten')
+                expect(res.isLight).to.be(false)
+
+            })
+
+            it("should return item with name 'not found' and id 'none' if there are no results for the search", async () => {
+                const res = await logic.searchRandomMeal('carb', 'pizza', null, null, null, ['gluten'], null, null)
+
+                expect(res).not.to.be.undefined
+                expect(res).not.to.be.instanceOf(Meal)
+                expect(res.name).to.be('Not found')
+                expect(res.id).to.be('none')
+
+            })
         })
     })
 
+    describe('mealplans', () => {
 
+        describe('add mealplan', () => {
+            let user, mealplan
 
-    false && beforeEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+            beforeEach(async () => {
+                name = `name-${Math.random()}`
+                surname = `surname-${Math.random()}`
+                username = `username-${Math.random()}`
+                password = `password-${Math.random()}`
 
-    false && describe('user', () => {
+                (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+            })
+
+            it('should succeed on correct data', async () => {
+            mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+            
+            const res = await logic.addMealplan(user.id, mealplan)
+            
+            const _user = await User.findOne({ username })
+            
+            expect(res).to.be.undefined
+            expect(_user.savedMealPlans.length).to.equal(1)
+            expect(_user.savedMealPlan[0]).name.to.equal('balanced')
+            expect(_user.savedMealPlan[0]).date.to.equal('1543838559813')
+
+            })
+
+            it('should failed on incorrect user id', async () => {
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                
+                try {
+                    await logic.addMealplan(Math.random(), mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`user with id ${id} not found`)
+                }
+            })
+            
+            it('should failed on undefined user id', async () => {
+                
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                
+                try {
+                    await logic.addMealplan(undefined, mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`user with id ${id} not found`)
+                }
+    
+            })
+            it('should failed on empty user id', async () => {
+                
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                
+                try {
+                    await logic.addMealplan('', mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`user with id ${id} not found`)
+                }
+    
+            })
+
+            it('should failed on blank user id', async () => {
+                
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                
+                try {
+                    await logic.addMealplan('  /t/n', mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`user with id ${id} not found`)
+                }
+    
+            })            
+
+        })
+
+        describe('remove mealplan', () => {
+            let user, mealplan            
+
+            beforeEach(async () => {
+                name = `name-${Math.random()}`
+                surname = `surname-${Math.random()}`
+                username = `username-${Math.random()}`
+                password = `password-${Math.random()}`
+
+                (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+
+                user.savedMealPlans.push(mealplan)
+
+                await user.save()
+            })
+
+            it('should succeed on correct data', async () => {
+                const res = await logic.removeMealplan(user.id, mealplan.date)
+
+                expect(res).to.be.a('array')             
+
+                expect(postits.length).to.equal(0)
+            })
+
+            it('should fail on incorrect data', async () => {
+                try {
+                    await logic.removeMealplan(user.id, 'wrong-mealplan-id')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`mealplan not found in saved meal plan list`)
+                }
+            })
+        })
+    })
+
+    !false && beforeEach(() => Promise.all([User.deleteMany()]))
+
+    !false && describe('user', () => {
         describe('register', () => {
             let name, surname, username, password
 
@@ -73,6 +190,11 @@ describe('logic', () => {
                 const [user] = users
 
                 expect(user.id).to.be.a('string')
+                expect(user.name).to.be.a('string')
+                expect(user.surname).to.be.a('string')
+                expect(user.username).to.be.a('string')
+                expect(user.password).to.be.a('string')
+
                 expect(user.name).to.equal(name)
                 expect(user.surname).to.equal(surname)
                 expect(user.username).to.equal(username)
@@ -91,50 +213,125 @@ describe('logic', () => {
                 expect(() => logic.registerUser('   \t\n', surname, username, password)).to.throw(ValueError, 'name is empty or blank')
             })
 
-            // TODO other test cases
+            it('should fail on undefined surname', () => {
+                expect(() => logic.registerUser(name, undefined, username, password)).to.throw(TypeError, 'undefined is not a string')
+            })
+
+            it('should fail on empty surname', () => {
+                expect(() => logic.registerUser(name, '', username, password)).to.throw(ValueError, 'surname is empty or blank')
+            })
+
+            it('should fail on blank surname', () => {
+                expect(() => logic.registerUser(name, '   \t\n', username, password)).to.throw(ValueError, 'surname is empty or blank')
+            })
+            it('should fail on undefined username', () => {
+                expect(() => logic.registerUser(name, surname, undefined, password)).to.throw(TypeError, 'undefined is not a string')
+            })
+
+            it('should fail on empty username', () => {
+                expect(() => logic.registerUser(name, surname, '', password)).to.throw(ValueError, 'username is empty or blank')
+            })
+
+            it('should fail on blank username', () => {
+                expect(() => logic.registerUser(name, surname, '   \t\n', password)).to.throw(ValueError, 'username is empty or blank')
+            })
+            it('should fail on undefined password', () => {
+                expect(() => logic.registerUser(name, surname, username, undefined)).to.throw(TypeError, 'undefined is not a string')
+            })
+
+            it('should fail on empty password', () => {
+                expect(() => logic.registerUser(name, surname, username, '')).to.throw(ValueError, 'password is empty or blank')
+            })
+
+            it('should fail on blank password', () => {
+                expect(() => logic.registerUser(name, surname, username, '   \t\n')).to.throw(ValueError, 'password is empty or blank')
+            })
+
+            it('should fail on already registered username', () => {
+                expect(() => logic.registerUser(name, surname, username, password)).to.throw(AlreadyExistsError, `username ${username} already registered`)
+            })
         })
 
         describe('authenticate', () => {
             let user
 
-            // beforeEach(() => {
-            //     user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
+            beforeEach(() => {
+                name = `name-${Math.random()}`
+                surname = `surname-${Math.random()}`
+                username = `username-${Math.random()}`
+                password = `password-${Math.random()}`
 
-            //     return user.save()
-            // })
-
-            // ALT
-            beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
+                    (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+            })
 
             it('should authenticate on correct credentials', async () => {
                 const { username, password } = user
 
                 const id = await logic.authenticateUser(username, password)
 
+                const _user = await User.findOne({ username })
+
                 expect(id).to.exist
                 expect(id).to.be.a('string')
-
-                const users = await User.find()
-
-                const [_user] = users
-
-                expect(_user.id).to.equal(id)
+                expect(id).to.equal(_user.id)
             })
 
             it('should fail on undefined username', () => {
                 expect(() => logic.authenticateUser(undefined, user.password)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            // TODO other test cases
+            it('should fail on empty username', () => {
+                expect(() => logic.authenticateUser('', user.password)).to.throw(ValueError, 'username is empty or blank')
+            })
+
+            it('should fail on blank username', () => {
+                expect(() => logic.authenticateUser('   \t\n', user.password)).to.throw(ValueError, 'username is empty or blank')
+            })
+
+            it('should fail on undefined password', () => {
+                expect(() => logic.authenticateUser(user.username, undefined)).to.throw(TypeError, 'undefined is not a string')
+            })
+
+            it('should fail on empty password', () => {
+                expect(() => logic.authenticateUser(user.username, '')).to.throw(ValueError, 'password is empty or blank')
+            })
+
+            it('should fail on blank password', () => {
+                expect(() => logic.authenticateUser(user.username, '   \t\n')).to.throw(ValueError, 'password is empty or blank')
+            })
+
+            it('should fail on incorrect username', async () => {
+                try {
+                    await logic.authenticateUser('wrong-username', password)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(AuthError)
+                    expect(err.message).to.equal(`invalid username or password`)
+                }
+            })
+
+            it('should fail on incorrect password', async () => {
+                try {
+                    await logic.authenticateUser(username, 'wrong-password')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(AuthError)
+                    expect(err.message).to.equal(`invalid username or password`)
+                }
+            })
+
         })
 
         describe('retrieve', () => {
             let user
 
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
+            beforeEach(() => {
+                name = `name-${Math.random()}`
+                surname = `surname-${Math.random()}`
+                username = `username-${Math.random()}`
+                password = `password-${Math.random()}`
 
-                await user.save()
+                    (user = new User({ name: name, surname: surname, username: username, password: password })).save()
             })
 
             it('should succeed on valid id', async () => {
@@ -142,7 +339,7 @@ describe('logic', () => {
 
                 expect(_user).not.to.be.instanceof(User)
 
-                const { id, name, surname, username, password, postits } = _user
+                const { id, name, surname, username, password, savedMealPlans, savedCustomMealPlan, favouriteMeals, mealsToAvoid } = _user
 
                 expect(id).to.exist
                 expect(id).to.be.a('string')
@@ -151,466 +348,146 @@ describe('logic', () => {
                 expect(surname).to.equal(user.surname)
                 expect(username).to.equal(user.username)
                 expect(password).to.be.undefined
-                expect(postits).not.to.exist
+                expect(savedMealPlans).length.to.be(0)
+                expect(savedCustomMealPlan).length.to.be(0)
+                expect(favouriteMeals).length.to.be(0)
+                expect(mealsToAvoid).length.to.be(0)
+            })
+
+            it('should fail on incorrect id', async () => {
+                try {
+                    await logic.retrieveUser(`id-${Math.random()}`)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`user with id ${id} not found`)
+                }
             })
         })
 
-        describe('update', () => {
-            let user
+        // describe('update', () => {
+        //     let user
 
-            beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
+        //     beforeEach(() => {
+        //         name = `name-${Math.random()}`
+        //         surname = `surname-${Math.random()}`
+        //         username = `username-${Math.random()}`
+        //         password = `password-${Math.random()}`
 
-            it('should update on correct data and password', async () => {
-                const { id, name, surname, username, password } = user
+        //         (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+        //     })
 
-                const newName = `${name}-${Math.random()}`
-                const newSurname = `${surname}-${Math.random()}`
-                const newUsername = `${username}-${Math.random()}`
-                const newPassword = `${password}-${Math.random()}`
+        //     it('should update on correct data and password', async () => {
+        //         const { id, name, surname, username, password } = user
 
-                const res = await logic.updateUser(id, newName, newSurname, newUsername, newPassword, password)
+        //         const newName = `${name}-${Math.random()}`
+        //         const newSurname = `${surname}-${Math.random()}`
+        //         const newUsername = `${username}-${Math.random()}`
+        //         const newPassword = `${password}-${Math.random()}`
 
-                expect(res).to.be.undefined
+        //         const res = await logic.updateUser(id, newName, newSurname, newUsername, newPassword, password)
 
-                const _users = await User.find()
+        //         expect(res).to.be.undefined
 
-                const [_user] = _users
+        //         const _users = await User.find()
 
-                expect(_user.id).to.equal(id)
+        //         const [_user] = _users
 
-                expect(_user.name).to.equal(newName)
-                expect(_user.surname).to.equal(newSurname)
-                expect(_user.username).to.equal(newUsername)
-                expect(_user.password).to.equal(newPassword)
-            })
+        //         expect(_user.id).to.equal(id)
 
-            it('should update on correct id, name and password (other fields null)', async () => {
-                const { id, name, surname, username, password } = user
+        //         expect(_user.name).to.equal(newName)
+        //         expect(_user.surname).to.equal(newSurname)
+        //         expect(_user.username).to.equal(newUsername)
+        //         expect(_user.password).to.equal(newPassword)
+        //     })
 
-                const newName = `${name}-${Math.random()}`
+        //     it('should update on correct id, name and password (other fields null)', async () => {
+        //         const { id, name, surname, username, password } = user
 
-                const res = await logic.updateUser(id, newName, null, null, null, password)
+        //         const newName = `${name}-${Math.random()}`
 
-                expect(res).to.be.undefined
+        //         const res = await logic.updateUser(id, newName, null, null, null, password)
 
-                const _users = await User.find()
+        //         expect(res).to.be.undefined
 
-                const [_user] = _users
+        //         const _users = await User.find()
 
-                expect(_user.id).to.equal(id)
+        //         const [_user] = _users
 
-                expect(_user.name).to.equal(newName)
-                expect(_user.surname).to.equal(surname)
-                expect(_user.username).to.equal(username)
-                expect(_user.password).to.equal(password)
-            })
+        //         expect(_user.id).to.equal(id)
 
-            it('should update on correct id, surname and password (other fields null)', async () => {
-                const { id, name, surname, username, password } = user
+        //         expect(_user.name).to.equal(newName)
+        //         expect(_user.surname).to.equal(surname)
+        //         expect(_user.username).to.equal(username)
+        //         expect(_user.password).to.equal(password)
+        //     })
 
-                const newSurname = `${surname}-${Math.random()}`
+        //     it('should update on correct id, surname and password (other fields null)', async () => {
+        //         const { id, name, surname, username, password } = user
 
-                const res = await logic.updateUser(id, null, newSurname, null, null, password)
+        //         const newSurname = `${surname}-${Math.random()}`
 
-                expect(res).to.be.undefined
+        //         const res = await logic.updateUser(id, null, newSurname, null, null, password)
 
-                const _users = await User.find()
+        //         expect(res).to.be.undefined
 
-                const [_user] = _users
+        //         const _users = await User.find()
 
-                expect(_user.id).to.equal(id)
+        //         const [_user] = _users
 
-                expect(_user.name).to.equal(name)
-                expect(_user.surname).to.equal(newSurname)
-                expect(_user.username).to.equal(username)
-                expect(_user.password).to.equal(password)
-            })
+        //         expect(_user.id).to.equal(id)
 
-            // TODO other combinations of valid updates
+        //         expect(_user.name).to.equal(name)
+        //         expect(_user.surname).to.equal(newSurname)
+        //         expect(_user.username).to.equal(username)
+        //         expect(_user.password).to.equal(password)
+        //     })
 
-            it('should fail on undefined id', () => {
-                const { id, name, surname, username, password } = user
+        //     // TODO other combinations of valid updates
 
-                expect(() => logic.updateUser(undefined, name, surname, username, password, password)).to.throw(TypeError, 'undefined is not a string')
-            })
+        //     it('should fail on undefined id', () => {
+        //         const { id, name, surname, username, password } = user
 
-            // TODO other test cases
+        //         expect(() => logic.updateUser(undefined, name, surname, username, password, password)).to.throw(TypeError, 'undefined is not a string')
+        //     })
 
-            describe('with existing user', () => {
-                let user2
+        //     // TODO other test cases
 
-                beforeEach(async () => {
-                    user2 = new User({ name: 'John', surname: 'Doe', username: 'jd2', password: '123' })
+        //     describe('with existing user', () => {
+        //         let user2
 
-                    await user2.save()
-                })
+        //         beforeEach(async () => {
+        //             user2 = new User({ name: 'John', surname: 'Doe', username: 'jd2', password: '123' })
 
-                it('should update on correct data and password', async () => {
-                    const { id, name, surname, username, password } = user2
+        //             await user2.save()
+        //         })
 
-                    const newUsername = 'jd'
+        //         it('should update on correct data and password', async () => {
+        //             const { id, name, surname, username, password } = user2
 
-                    try {
-                        const res = await logic.updateUser(id, null, null, newUsername, null, password)
-
-                        expect(true).to.be.false
-                    } catch (err) {
-                        expect(err).to.be.instanceof(AlreadyExistsError)
-                    } finally {
-                        const _user = await User.findById(id)
-
-                        expect(_user.id).to.equal(id)
-
-                        expect(_user.name).to.equal(name)
-                        expect(_user.surname).to.equal(surname)
-                        expect(_user.username).to.equal(username)
-                        expect(_user.password).to.equal(password)
-                    }
-                })
-            })
-        })
-
-        false && describe('add collaborator', () => {
-            let user, user2
-
-            beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save()
-                .then(() => (user2 = new User({ name: 'Pepe', surname: 'Grillo', username: 'pg', password: '123' })).save()))
-
-            it('should update on correct data and password', async () => {
-                const res = await logic.addCollaborator(user.id, user2.username)
-
-                expect(res).to.be.undefined
-
-                const _user = await User.findById(user.id)
-
-                expect(_user.id).to.equal(user.id)
-
-                expect(_user.collaborators.length).to.equal(1)
-
-                const [collaboratorId] = _user.collaborators
-
-                expect(collaboratorId.toString()).to.equal(user2.id)
-            })
-        })
-
-        false && describe('list collaborators', () => {
-            let user, user2
-
-            beforeEach(() => (user2 = new User({ name: 'Pepe', surname: 'Grillo', username: 'pg', password: '123' })).save()
-                .then(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123', collaborators: [user2.id] })).save()))
-
-            it('should update on correct data and password', async () => {
-                const collaborators = await logic.listCollaborators(user.id)
-
-                expect(collaborators.length).to.equal(1)
-
-                const [collaborator] = collaborators
-
-                const { _id, id, username, name, surname, password } = collaborator
-
-                expect(_id).to.be.undefined
-                expect(id).to.equal(user2.id)
-                expect(username).to.equal(user2.username)
-                expect(name).to.be.undefined
-                expect(surname).to.be.undefined
-                expect(password).to.be.undefined
-            })
-        })
-
-        false && describe('save photo', () => {
-            let user
-
-            beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
-
-            it('should succeed on correct data', async () => {
-                const filename = 'profile.png'
-
-                const rs = fs.createReadStream(path.join(process.cwd(), `data/users/default/${filename}`))
-
-                await logic.saveUserPhoto(user.id, rs, filename)
-
-                expect(fs.existsSync(path.join(process.cwd(), `data/users/${user.id}/${filename}`))).to.be.true
-            })
-
-            afterEach(() => fs.removeSync(`data/users/${user.id}`))
-        })
-
-        false && describe('retrieve photo', () => {
-            let user
-
-            beforeEach(() => (user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })).save())
-
-            it('should succeed on correct data', async () => {
-                const userPhotoReadStream = await logic.retrieveUserPhoto(user.id)
-
-                const userPhotoHashReadStream = userPhotoReadStream.pipe(hasha.stream())
-
-                const defaultPhotoHashReadStream = fs.createReadStream('data/users/default/profile.png').pipe(hasha.stream())
-
-                const hashes = await Promise.all([
-                    streamToArray(userPhotoHashReadStream)
-                        .then(arr => arr[0]),
-                    streamToArray(defaultPhotoHashReadStream)
-                        .then(arr => arr[0])
-                ])
-
-                const [userPhotoHash, defaultPhotoHash] = hashes
-
-                expect(userPhotoHash).to.equal(defaultPhotoHash)
-            })
-
-            describe('when user already has a profile photo', () => {
-                let folder, file
-
-                beforeEach(() => {
-                    folder = `data/users/${user.id}`
-
-                    fs.mkdirSync(folder)
-
-                    file = 'photo.png'
-
-                    fs.writeFileSync(path.join(folder, file), text2png(':-)', { color: 'blue' }))
-                })
-
-                it('should succeed on correct data', async () => {
-                    const userPhotoReadStream = await logic.retrieveUserPhoto(user.id)
-
-                    const userPhotoHashReadStream = userPhotoReadStream.pipe(hasha.stream())
-
-                    const actualPhotoHashReadStream = fs.createReadStream(path.join(folder, file)).pipe(hasha.stream())
-
-                    const hashes = await Promise.all([
-                        streamToArray(userPhotoHashReadStream)
-                            .then(arr => arr[0]),
-                        streamToArray(actualPhotoHashReadStream)
-                            .then(arr => arr[0])
-                    ])
-
-                    const [userPhotoHash, actualPhotoHash] = hashes
-
-                    debugger
-
-                    expect(userPhotoHash).to.equal(actualPhotoHash)
-                })
-            })
-
-            afterEach(() => fs.removeSync(`data/users/${user.id}`))
-        })
+        //             const newUsername = 'jd'
+
+        //             try {
+        //                 const res = await logic.updateUser(id, null, null, newUsername, null, password)
+
+        //                 expect(true).to.be.false
+        //             } catch (err) {
+        //                 expect(err).to.be.instanceof(AlreadyExistsError)
+        //             } finally {
+        //                 const _user = await User.findById(id)
+
+        //                 expect(_user.id).to.equal(id)
+
+        //                 expect(_user.name).to.equal(name)
+        //                 expect(_user.surname).to.equal(surname)
+        //                 expect(_user.username).to.equal(username)
+        //                 expect(_user.password).to.equal(password)
+        //             }
+        //         })
+        //     })
     })
 
-
-    false && describe('postits', () => {
-        describe('add', () => {
-            let user, text
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-
-                text = `text-${Math.random()}`
-
-                await user.save()
-            })
-
-            it('should succeed on correct data', async () => {
-                const res = await logic.addPostit(user.id, text)
-
-                expect(res).to.be.undefined
-
-                const postits = await Postit.find()
-
-                const [postit] = postits
-
-                expect(postit.text).to.equal(text)
-
-                expect(postit.user.toString()).to.equal(user.id)
-            })
-
-            // TODO other test cases
-        })
-
-        describe('list', () => {
-            let user, postit, postit2
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-
-                postit = new Postit({ text: 'hello text', user: user.id })
-                postit2 = new Postit({ text: 'hello text 2', user: user.id })
-
-                await user.save()
-                await postit.save()
-                await postit2.save()
-            })
-
-            it('should succeed on correct data', async () => {
-                const postits = await logic.listPostits(user.id)
-
-                const _postits = await Postit.find()
-
-                expect(_postits.length).to.equal(2)
-
-                expect(postits.length).to.equal(_postits.length)
-
-                const [_postit, _postit2] = _postits
-
-                expect(_postit.id).to.equal(postit.id)
-                expect(_postit.text).to.equal(postit.text)
-
-                expect(_postit2.id).to.equal(postit2.id)
-                expect(_postit2.text).to.equal(postit2.text)
-
-                const [__postit, __postit2] = postits
-
-                expect(__postit).not.to.be.instanceof(Postit)
-                expect(__postit2).not.to.be.instanceof(Postit)
-
-                expect(_postit.id).to.equal(__postit.id)
-                expect(_postit.text).to.equal(__postit.text)
-
-                expect(_postit2.id).to.equal(__postit2.id)
-                expect(_postit2.text).to.equal(__postit2.text)
-            })
-
-            describe('when user has postit assigned', () => {
-                let user2, postit3
-
-                beforeEach(async () => {
-                    user2 = new User({ name: 'Pepe', surname: 'Grillo', username: 'pg', password: '123' })
-
-                    postit3 = new Postit({ text: 'hello text 3', user: user2.id, assignedTo: user.id })
-
-                    await user2.save()
-                    await postit3.save()
-                })
-
-                it('should succeed on correct data', async () => {
-                    const postits = await logic.listPostits(user.id)
-
-                    expect(postits.length).to.equal(3)
-
-                    postits.forEach(_postit => {
-                        if (_postit.id === postit.id) {
-                            expect(_postit.text).to.equal(postit.text)
-                        } else if (_postit.id === postit2.id) {
-                            expect(_postit.text).to.equal(postit2.text)
-                        } else if (_postit.id === postit3.id) {
-                            expect(_postit.text).to.equal(postit3.text)
-
-                            expect(_postit.assignedTo).to.equal(user.id)
-                        } else {
-                            throw Error('postit does not match any of the expected ones')
-                        }
-                    })
-                })
-            })
-        })
-
-        describe('remove', () => {
-            let user, postit
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-                postit = new Postit({ text: 'hello text', user: user.id })
-
-                await Promise.all([user.save(), postit.save()])
-            })
-
-            it('should succeed on correct data', async () => {
-                const res = await logic.removePostit(user.id, postit.id)
-
-                expect(res).to.be.undefined
-
-                const postits = await Postit.find()
-
-                expect(postits.length).to.equal(0)
-            })
-        })
-
-        describe('modify', () => {
-            let user, postit, newText
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-                postit = new Postit({ text: 'hello text', user: user.id })
-
-                newText = `new-text-${Math.random()}`
-
-                await Promise.all([user.save(), postit.save()])
-            })
-
-            it('should succeed on correct data', async () => {
-                const res = await logic.modifyPostit(user.id, postit.id, newText)
-
-                expect(res).to.be.undefined
-
-                const postits = await Postit.find()
-
-                expect(postits.length).to.equal(1)
-
-                const [_postit] = postits
-
-                expect(_postit.text).to.equal(newText)
-            })
-        })
-
-        describe('move', () => {
-            let user, postit, newStatus
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-                postit = new Postit({ text: 'hello text', user: user.id })
-
-                newStatus = 'DOING'
-
-                await Promise.all([user.save(), postit.save()])
-            })
-
-            it('should succeed on correct data', async () => {
-                const res = await logic.movePostit(user.id, postit.id, newStatus)
-
-                expect(res).to.be.undefined
-
-                const postits = await Postit.find()
-
-                expect(postits.length).to.equal(1)
-
-                const [_postit] = postits
-
-                expect(_postit.status).to.equal(newStatus)
-            })
-        })
-
-        describe('assign', () => {
-            let user, postit, user2
-
-            beforeEach(async () => {
-                user = new User({ name: 'John', surname: 'Doe', username: 'jd', password: '123' })
-                postit = new Postit({ text: 'hello text', user: user.id })
-                user2 = new User({ name: 'Pepito', surname: 'Grillo', username: 'pg', password: '123' })
-
-                await Promise.all([user.save(), postit.save(), user2.save()])
-            })
-
-            it('should succeed on correct data', async () => {
-                const res = await logic.assignPostit(user.id, postit.id, user2.id)
-
-                expect(res).to.be.undefined
-
-                const postits = await Postit.find()
-
-                expect(postits.length).to.equal(1)
-
-                const [_postit] = postits
-
-                expect(_postit.id).to.equal(postit.id)
-                expect(_postit.user.toString()).to.equal(user.id)
-                expect(_postit.text).to.equal(postit.text)
-                expect(_postit.assignedTo.toString()).to.equal(user2.id)
-            })
-        })
-    })
-
-    // afterEach(() => Promise.all([User.deleteMany(), Postit.deleteMany()]))
+    afterEach(() => Promise.all([User.deleteMany()]))
 
 
     after(() => mongoose.disconnect())

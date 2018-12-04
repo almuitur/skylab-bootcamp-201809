@@ -20,7 +20,7 @@
     text-align: left;
     margin-bottom: 2%;
 }
-.my-item-saved {
+.my-meals-item-saved {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

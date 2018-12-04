@@ -11,24 +11,33 @@ class ShoppingList extends Component {
         return <div className="shopping-list-container">
 
         <h1>Shopping List</h1>
+        {this.props.mealplan && 
+        
+            <p>{this.props.mealplan.name}</p> }  
 
             <div className="shopping-list-menu-summary">
-                <div className="shopping-list-day">
-                    <div className="day">
-                        <h3>MONDAY</h3>
+                <div className="shopping-list-day-container">
+                        <div className="day">
+                        
+                            {/* {this.props.mealplan && <p>{this.props.mealplan[index].day.toUpperCase()}</p>} */}
                     </div>
                     <div className="shopping-list-meal-time">
-                        <div className="mealTimeName"><h2>BREAKFAST</h2></div>
-                        <div className="mealTimeName"><h2>MIDMORNING</h2></div>
-                        <div className="mealTimeName"><h2>LUNCH</h2></div>
-                        <div className="mealTimeName"><h2>AFTERNOON</h2></div>
-                        <div className="mealTimeName"><h2>DINNER</h2></div>
+                        <div className="mealTimeName"><h4>BREAKFAST</h4></div>
+                        <div className="mealTimeName"><h4>MIDMORNING</h4></div>
+                        <div className="mealTimeName"><h4>LUNCH</h4></div>
+                        <div className="mealTimeName"><h4>AFTERNOON</h4></div>
+                        <div className="mealTimeName"><h4>DINNER</h4></div>
                     </div>
-                    <div className="shopping-list-meal"></div>
-                    <div className="shopping-list-ingredients"></div>
-                    <div className="meal-detail-right-container-button"><button className="btn btn-unique" id="shopping-list-button" onClick={this.props.onCloseShoppingListClick}>CLOSE</button></div>
+                    <div className="shopping-list-ingredients">
+                        <div className="shopping-list-meal"></div>
+                        <div className="shopping-list-main-ingredients"><h5>Main</h5></div>
+                        <div className="shopping-list-optional-ingredients"><h5>Optional</h5></div>                    
+                    </div>
+                    
+
                 </div>
             </div >
+            <div className="meal-detail-right-container-button"><button className="meal-plan-button" id="shopping-list-button" onClick={this.props.onCloseShoppingListClick}>CLOSE</button></div>
         </div>
     }
 }

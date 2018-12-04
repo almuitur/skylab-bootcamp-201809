@@ -101,9 +101,9 @@ class App extends Component {
             })
             .catch(err => Error(err))
     }
-    handleSaveMealPlan = mealPlan => {
+    handleSaveMealPlan = mealplan => {
         
-        logic.saveMealPlan(mealPlan)
+        logic.saveMealPlan(mealplan)
             .then(() => swal('Meal Plan successfully saved!'))
             .catch(err => Error(err))
     }

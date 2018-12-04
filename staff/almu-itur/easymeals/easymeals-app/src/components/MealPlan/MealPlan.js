@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import logic from '../../logic'
-import { Input } from 'mdbreact'
 import Meal from '../Meal/Meal'
 import MealDetail from '../MealDetail/MealDetail'
 import ShoppingList from '../ShoppingList/ShoppingList'
@@ -79,8 +78,8 @@ class MealPlan extends Component {
     }
 
     handleSaveMealPlan = () => {
-        const mealPlan = this.state.mealPlan
-        this.props.onSaveMealPlanClick(mealPlan)
+        const mealplan = this.state.mealPlan
+        this.props.onSaveMealPlanClick(mealplan)
     }
 
     // handleNewRandomMeal = id => {

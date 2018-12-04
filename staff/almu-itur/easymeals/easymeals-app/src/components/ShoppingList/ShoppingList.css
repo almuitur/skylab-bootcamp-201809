@@ -2,20 +2,38 @@
     width: 100%;
     height: 100%;
     background-color: rgba(51, 51, 50, 0.9);
-    position: fixed;
-    overflow: hidden;
-    z-index: 49;
+    position: absolute;
+    overflow-y: hidden;
+    z-index: 100;
 }
 .shopping-list-menu-summary {
-    z-index: 50;
-    margin-top: 8%;
+    z-index: 120;
+    margin-top: 5%;
     margin-left: 10%;
     margin-bottom: 10%;
     width: 80%;
-    height: 60%;
+    height: 80%;
     display: flex;
     flex-direction: column; 
     background-color: rgb(241, 238, 238);
-    position: fixed;
+    position: absolute;
     border-radius: 5px;
+    overflow: scroll;
+}
+.shopping-list-day-container {
+    display: flex;
+    flex-direction: row;
+    font-size: 2px;
+}
+.shopping-list-day-container h3 {
+    text-orientation: upright;
+    writing-mode: vertical-lr;
+}
+.shopping-list-meal-time {
+    display: flex;
+    flex-direction: column;
+}
+.mealTimeName {
+    text-orientation: upright;
+    writing-mode: vertical-lr;
 }

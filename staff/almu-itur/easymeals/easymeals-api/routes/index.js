@@ -48,6 +48,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/users/:id', [bearerTokenParser, jwtVerifier], (req, res) => {
+    debugger
     routeHandler(() => {
         const { params: { id }, sub } = req
 
@@ -157,12 +158,12 @@ router.get('/users/:id/meal/:mealId', [bearerTokenParser, jwtVerifier], (req, re
 })
 
 router.post('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    
+    debugger
     routeHandler(() => {
         const { params: { id }, sub, body: { mealplan } } = req
 
         if (id !== sub) throw Error('token sub does not match user id')
-        
+        debugger
         return logic.addMealplan(id, mealplan)
             .then(() =>
                 res.json({
@@ -175,11 +176,11 @@ router.post('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonBod
 router.delete('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
     
     routeHandler(() => {
-        const { params: { id }, sub, body: { mealplan } } = req
+        const { params: { id }, sub, body: { mealplanId } } = req
 
         if (id !== sub) throw Error('token sub does not match user id')
         
-        return logic.removeMealplan(id, mealplan)
+        return logic.removeMealplan(id, mealplanId)
             .then(() =>
                 res.json({
                     message: 'mealplan removed from saved meal plans list'

@@ -1,6 +1,6 @@
 import Error from './components/Error/Error'
 import data from './data'
-import { debug } from 'util';
+// import { debug } from 'util';
 
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
@@ -181,7 +181,7 @@ const logic = {
                             'Content-Type': 'application/json; charset=utf-8',
                             'Authorization': `Bearer ${this._token}`
                         },
-                        // body: JSON.stringify({ category, subcategory })
+                        
                         body: JSON.stringify({ category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season })
                     })
 
@@ -196,7 +196,6 @@ const logic = {
                             resObject[meal.mealTime] = res.data
                             if (res.data.id !== 'none') resObject[meal.mealTime].id = res.data._id
                             
-                            // resObject.searchParams =
                             delete resObject[meal.mealTime]._id
                             delete resObject[meal.mealTime].__v
 
@@ -212,7 +211,9 @@ const logic = {
                 .then((res) => {
 
                     const _mealPlan = {}
+                    // _mealPlan.date = this.getDate()
                     _mealPlan.date = Date.now()
+                    debugger
                     _mealPlan.name = _plan
                     _mealPlan.days = [[]]
 
@@ -257,8 +258,9 @@ const logic = {
 
     },
 
-    saveMealPlan(mealPlan) {
-        if (mealPlan === undefined) throw Error(`mealPlan is undefined`)
+    saveMealPlan(mealplan) {
+        debugger
+        if (mealplan === undefined) throw Error(`mealplan is undefined`)
         
         return fetch(`${this.url}/users/${this._userId}/savedmealplan`, {
             method: 'POST',
@@ -266,7 +268,26 @@ const logic = {
                 'Content-Type': 'application/json; charset=utf-8',
                 'Authorization': `Bearer ${this._token}`
             },
-            body: JSON.stringify({ mealPlan })
+            body: JSON.stringify({ mealplan })
+        })
+            .then(res => res.json())
+            .then(res => {
+                if (res.error) throw Error(res.error)
+            })
+    },
+
+    deleteSavedMealPlan(mealplanId) {
+        if (mealplanId === undefined) throw Error(`mealplanId is undefined`)
+        if (mealplanId === '') throw Error(`mealplanId is empty`)
+        if (!mealplanId.trim()) throw Error(`mealplanId is blank`)
+        debugger
+        return fetch(`${this.url}/users/${this._userId}/savedmealplan/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'Authorization': `Bearer ${this._token}`
+            },
+            body: JSON.stringify({ mealplanId })
         })
             .then(res => res.json())
             .then(res => {
@@ -542,6 +563,24 @@ const logic = {
                 if (res.error) throw Error(res.error)
             })
 
+    },
+    getDate() {
+
+    let today = new Date()
+    
+    let dd = today.getDate()
+    let mm = today.getMonth() + 1
+    
+    let yyyy = today.getFullYear()
+    if (dd < 10) {
+      dd = '0' + dd
+    } 
+    if (mm < 10) {
+      mm = '0' + mm
+    } 
+    today = dd + '/' + mm + '/' + yyyy
+    
+    return today
     }
 }
 
