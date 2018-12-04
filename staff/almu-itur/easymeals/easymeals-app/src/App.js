@@ -15,7 +15,7 @@ import logic from './logic'
 import swal from 'sweetalert'
 import { Route, withRouter, Redirect } from 'react-router-dom'
 
-logic.url = 'http://localhost:5000/api'
+logic.url = process.env.REACT_APP_API_URL
 
 class App extends Component {
     state = {}

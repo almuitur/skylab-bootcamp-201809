@@ -29,21 +29,21 @@
 .select-option-center label {
     margin-right: 10px;
 }
-.home-image-container:hover .select-option-img {
+.home-image-container:hover .home-select-option-img {
     opacity: 0.3;
 }
-.select-option-img {
+.home-select-option-img {
     width: 250px;
-    height: 100%;
+    height: auto;
     cursor: pointer;  
     opacity: 1;
     transition: .5s ease;
     background-color: #E4717A;
 }
-.select-option-img-active {
+.home-select-option-img-active {
     opacity: 0.3;
     width: 260px;
-    height: 100%;
+    height: auto;
     cursor: pointer;  
     transition: .5s ease;
     background-color: transparent;

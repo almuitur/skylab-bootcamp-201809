@@ -28,6 +28,7 @@
   ],
   "devDependencies": {
     "chai": "^4.2.0",
+    "dotenv": "^6.1.0",
     "easymeals-data": "file:../easymeals-data",
     "isomorphic-fetch": "^2.2.1",
     "sessionstorage": "^0.1.0"

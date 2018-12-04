@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 // import logic from './logic'
 const logic = require('./logic')
 const { mongoose, models: { Meal, Day, MealPlan, User } } = require('easymeals-data')
@@ -6,8 +8,7 @@ require('isomorphic-fetch')
 global.sessionStorage = require('sessionstorage')
 
 
-logic.url = 'http://localhost:5000/api'
-// logic.url = 'http://192.168.0.82:5000' // DEV server!
+logic.url = process.env.REACT_APP_API_URL
 
 const { expect } = require('chai')
 // const fs = require('fs-extra')
