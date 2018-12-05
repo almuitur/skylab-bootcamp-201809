@@ -26,12 +26,18 @@ function validate(params) {
             case Array: //Array of strings only
                 if(optional && value === null) break
 
-                if (typeof value != 'array') throw TypeError(`${value} is not an array`)
+                if (!(value instanceof Array)) throw TypeError(`${value} is not an array`)
 
                 value.forEach(item => {
                     if (item) 
-                        if (typeof item !='string') throw TypeError(`${item} is not a string`)
+                        if (typeof item !='string') throw TypeError(`${item} inside array is not a string`)
                 })
+                break
+            case Object: 
+                if(optional && value === null) break
+
+                if(value.constructor !== Object) throw TypeError(`${value} is not an object`)
+
                 break
         }
     })

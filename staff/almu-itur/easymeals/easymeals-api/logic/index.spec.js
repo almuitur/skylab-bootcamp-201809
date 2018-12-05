@@ -1,6 +1,6 @@
 const { mongoose, models: { Meal, Day, MealPlan, User } } = require('easymeals-data')
 const logic = require('.')
-const { AlreadyExistsError, ValueError } = require('../errors')
+const { AlreadyExistsError, AuthError, NotAllowedError, NotFoundError, ValueError } = require('../errors')
 const { expect } = require('chai')
 const fs = require('fs-extra')
 const path = require('path')
@@ -14,14 +14,13 @@ const MONGO_URL = 'mongodb://localhost:27017/easymeals'
 describe('logic', () => {
     before(() => mongoose.connect(MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }))
 
-    describe('meals', () => {
+    false && describe('meals', () => {
 
         describe('search random meal', () => {
 
-            // searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season)
             it('should succeed on correct data', async () => {
                 const res = await logic.searchRandomMeal('carb', 'pizza', 3, false, null, ['gluten', 'lactose'], false, 'autum')
-                debugger
+                
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
                 expect(res.category).to.equal('carb')
@@ -35,11 +34,12 @@ describe('logic', () => {
 
             })
 
-            false && it("should return empty object if there are no results for the search", async () => {
+            it('should return object with undefined id if there are no results for the search', async () => {
                 const res = await logic.searchRandomMeal('carb', 'fruit', 0, true, null, ['gluten'], true, 'autum')
 
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
+                expect(res.id).to.be.undefined
                 expect(res.name).not.to.exist
                 expect(res.category).not.to.exist
                 expect(res.subcategory).not.to.exist
@@ -49,7 +49,176 @@ describe('logic', () => {
                 expect(res.intolerances).not.to.exist
                 expect(res.isLight).not.to.exist
                 expect(res.season).not.to.exist
-                expect(res.id).to.be(undefined)
+            })
+
+            it('should fail on undefined category', async () => {
+                try {
+                    await logic.searchRandomMeal(undefined, 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`undefined is not a string`)
+                }
+            })
+
+            it('should fail on undefined subcategory', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', undefined, 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`undefined is not a string`)
+                }
+            })
+
+            it('should fail on undefined diet', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', undefined, true, true, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`undefined is not a number`)
+                }
+            })
+
+            it('should fail on undefined intolerances', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, true, undefined, true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`undefined is not an array`)
+                }
+            })
+
+            it('should fail on empty category', async () => {
+                try {
+                    await logic.searchRandomMeal('', 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`category is empty or blank`)
+                }
+            })
+
+            it('should fail on empty subcategory', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', '', 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`subcategory is empty or blank`)
+                }
+            })
+
+            it('should fail on empty diet', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', '', true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(` is not a number`)
+                }
+            })
+
+            it('should fail on empty season', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, null, ['gluten'], true, '')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`season is empty or blank`)
+                }
+            })
+           
+            it('should fail on category different than string', async () => {
+                try {
+                    await logic.searchRandomMeal(0, 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a string`)
+                }
+            })
+
+            it('should fail on subcategory different than string', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 0, 0, true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a string`)
+                }
+            })
+
+            it('should fail on diet different than number', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 'diet', true, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`diet is not a number`)
+                }
+            })
+
+            it('should fail on isSpecialMeal different than boolean', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, 0, null, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a boolean`)
+                }
+            })
+
+            it('should fail on isCold different than boolean', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, 0, ['gluten'], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a boolean`)
+                }
+            })
+
+            it('should fail on intolerances different than array', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, true, 'gluten', true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`gluten is not an array`)
+                }
+            })
+
+            it('should fail on intolerances content different than string', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, true, [0], true, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 inside array is not a string`)
+                }
+            })
+
+            it('should fail on isLight different than boolean', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, true, ['gluten'], 0, 'autum')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a boolean`)
+                }
+            })
+
+            it('should fail on season different than string', async () => {
+                try {
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, true, ['gluten'], true, 0)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a string`)
+                }
             })
         })
     })
@@ -73,32 +242,34 @@ describe('logic', () => {
             it('should succeed on correct data', async () => {
             mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
             
-            const res = await logic.addMealplan(user.id, mealplan)
-            
-            const _user = await User.findOne({ _username })
-            
-            // expect(res).to.be.undefined
-            // expect(_user.savedMealPlan).to.exist
-            expect(_user.savedMealPlan.length).to.equal(1)
-            expect(_user.savedMealPlan[0]).name.to.equal('balanced')
-            expect(_user.savedMealPlan[0]).date.to.equal('1543838559813')
-            expect(_user.savedMealPlan.day.monday).to.exist
+            await logic.addMealplan(user.id, mealplan)
 
+            const _user = await logic.retrieveUser(user.id)
+            debugger
+            expect(_user.savedMealPlans).to.exist
+            expect(_user.savedMealPlans).to.be.instanceOf(Array)
+            expect(_user.savedMealPlans.length).to.equal(1)
+            expect(_user.savedMealPlans[0].name).to.equal('balanced')
+            expect(_user.savedMealPlans[0].date).to.equal('1543838559813')
+            // expect(_user.savedMealPlans[0].day).to.be.instanceOf(Array)
+            // expect(_user.savedMealPlans[0].day[0].day).to.equal('monday')
+            // expect(_user.savedMealPlans[0].day[0]).to.equal('monday')
             })
 
-            false && it('should failed on incorrect user id', async () => {
-                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                
+            it('should fail on incorrect user id', async () => {
+                const mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                const userId = Math.random().toString()
+                debugger
                 try {
-                    await logic.addMealplan(Math.random(), mealplan)
+                    await logic.addMealplan(userId, mealplan)
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`user with id ${id} not found`)
+                    expect(err.message).to.equal(`user with id ${userId} not found`)
                 }
             })
             
-            false && it('should failed on undefined user id', async () => {
+            it('should fail on undefined user id', async () => {
                 
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
                 
@@ -106,12 +277,12 @@ describe('logic', () => {
                     await logic.addMealplan(undefined, mealplan)
                     expect(true).to.be.false
                 } catch (err) {
-                    expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`user with id ${id} not found`)
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`undefined is not a string`)
                 }
     
             })
-            false && it('should failed on empty user id', async () => {
+            it('should fail on empty user id', async () => {
                 
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
                 
@@ -119,25 +290,48 @@ describe('logic', () => {
                     await logic.addMealplan('', mealplan)
                     expect(true).to.be.false
                 } catch (err) {
-                    expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`user with id ${id} not found`)
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`id is empty or blank`)
                 }
     
             })
 
-            false && it('should failed on blank user id', async () => {
+            it('should fail on blank user id', async () => {
                 
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                
+                debugger
                 try {
                     await logic.addMealplan('  /t/n', mealplan)
                     expect(true).to.be.false
                 } catch (err) {
-                    expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`user with id ${id} not found`)
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`id is empty or blank`)
                 }
-    
-            })            
+            })   
+            
+            it('should fail on user id different than string', async () => {
+                
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                
+                try {
+                    await logic.addMealplan(0, mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`0 is not a string`)
+                }
+            }) 
+
+            // it('should fail on mealplan different than object', async () => {
+            //     mealplan = []
+            //     try {
+            //         await logic.addMealplan(_user.id, mealplan)
+            //         expect(true).to.be.false
+            //     } catch (err) {
+            //         expect(err).to.be.instanceof(TypeError)
+            //         expect(err.message).to.equal(`${mealplan} is not an object`)
+            //     }
+            // })
 
         })
 

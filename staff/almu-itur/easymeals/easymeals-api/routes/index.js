@@ -190,14 +190,12 @@ router.delete('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonB
 })
 
 router.post('/meals/find/:id', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    
+    debugger
     routeHandler(() => {
         const { params: { id }, sub, body: { category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season } } = req
-        // const { params: { id }, sub, body: { category, subcategory } } = req
 
         if (id !== sub) throw Error('token sub does not match user id')
-        
-        // return logic.searchRandomMeal(category, subcategory)
+   
         return logic.searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season)
             .then(meal =>
                 res.json({

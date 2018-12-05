@@ -64,6 +64,8 @@ const logic = {
                 this._userId = id
                 this._token = token
 
+                debugger
+
                 sessionStorage.setItem('userId', id)
                 sessionStorage.setItem('token', token)
             })
@@ -148,7 +150,6 @@ const logic = {
         if (!_plan.trim()) throw Error('You need to select a plan')
 
         const plan = data.selectPlan(_plan, diet)
-        const season = 'autum'
 
         switch (diet) {
             case 'vegan':
@@ -169,12 +170,14 @@ const logic = {
             
             let mealsWeek = plan.map(day => {
                 let mealsDay = day.map(meal => {
+                    const season = 'autum'
                     const category = meal.search.category
                     const subcategory = meal.search.subcategory
-                    const isSpecialMeal =  meal.isSpecialMeal
-                    const isCold = meal.isCold
-                    const isLight = meal.isLight
+                    const isSpecialMeal =  meal.isSpecialMeal ? meal.isSpecial : null
+                    const isCold = meal.isCold ? meal.isCold : null
+                    const isLight = meal.isLight ? meal.isLight : null
                     
+
                     return fetch(`${this.url}/meals/find/${this._userId}`, {
                         method: 'POST',
                         headers: {
@@ -184,7 +187,7 @@ const logic = {
                         
                         body: JSON.stringify({ category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season })
                     })
-                    
+                        
                         .then(res => res.json())
 
                         .then(res => {
@@ -194,7 +197,6 @@ const logic = {
                             let resObject = {}
                             resObject.day = meal.day
                             resObject[meal.mealTime] = res.data
-                            if (res.data.id !== 'none') resObject[meal.mealTime].id = res.data._id
                             
                             delete resObject[meal.mealTime]._id
                             delete resObject[meal.mealTime].__v
@@ -241,7 +243,7 @@ const logic = {
                         })
                         return _day
                     })
-
+                    
                     const mealPlan = JSON.stringify(_mealPlan)
                     sessionStorage.setItem('mealPlan', mealPlan)
 
@@ -253,7 +255,7 @@ const logic = {
                 })
         }
         else {
-            throw Error('You need to choose a plan') //CONTROL DOBLE, YA SE LANZA ERROR EN CREATE MENU
+            throw Error('Plan not found')
         }
 
     },
