@@ -7,20 +7,26 @@ const path = require('path')
 const hasha = require('hasha')
 const streamToArray = require('stream-to-array')
 const text2png = require('text2png')
+const meals = require('../data/demos/meals')
 
 
-const MONGO_URL = 'mongodb://localhost:27017/easymeals'
+const MONGO_URL = 'mongodb://localhost:27017/easymeals-test'
 
 describe('logic', () => {
     before(() => mongoose.connect(MONGO_URL, { useNewUrlParser: true, useCreateIndex: true }))
 
-    false && describe('meals', () => {
+    beforeEach(async () => {
+        await Meal.deleteMany()
 
+        await Meal.insertMany(meals)
+    })
+
+    describe('meals', () => {
         describe('search random meal', () => {
-
             it('should succeed on correct data', async () => {
                 const res = await logic.searchRandomMeal('carb', 'pizza', 3, false, null, ['gluten', 'lactose'], false, 'autum')
                 
+
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
                 expect(res.category).to.equal('carb')
@@ -164,6 +170,7 @@ describe('logic', () => {
             it('should fail on isSpecialMeal different than boolean', async () => {
                 try {
                     await logic.searchRandomMeal('carb', 'pizza', 0, 0, null, ['gluten'], true, 'autum')
+
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -194,6 +201,7 @@ describe('logic', () => {
             it('should fail on intolerances content different than string', async () => {
                 try {
                     await logic.searchRandomMeal('carb', 'pizza', 0, true, true, [0], true, 'autum')
+
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -258,14 +266,16 @@ describe('logic', () => {
 
             it('should fail on incorrect user id', async () => {
                 const mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+
                 const userId = Math.random().toString()
-                debugger
+
                 try {
                     await logic.addMealplan(userId, mealplan)
+
                     expect(true).to.be.false
                 } catch (err) {
-                    expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`user with id ${userId} not found`)
+                    expect(err).to.be.instanceof(ValueError)
+                    expect(err.message).to.equal(`id is not valid ${userId}`)
                 }
             })
             
@@ -299,13 +309,15 @@ describe('logic', () => {
             it('should fail on blank user id', async () => {
                 
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                debugger
+
+                const userId = '  /t/n'
+
                 try {
-                    await logic.addMealplan('  /t/n', mealplan)
+                    await logic.addMealplan(userId, mealplan)
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(ValueError)
-                    expect(err.message).to.equal(`id is empty or blank`)
+                    expect(err.message).to.equal(`id is not valid ${userId}`)
                 }
             })   
             

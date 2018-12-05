@@ -13,13 +13,13 @@ const Meal = new Schema({
     category: {
         type: String,
         enum: ['carb', 'milk', 'fruit', 'snack', 'vegetable', 'legume', 'salad', 'soup',
-         'protein', 'patisserie', 'dairy'],
+         'protein', 'pastissery', 'dairy'],
         required: true
     },
-    subCategory: {
+    subcategory: {
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
-        'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
+        'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nuts', 'meat', 'fish', 'seafood',
          'egg', 'vegetable', 'none'],
         required: true
     },
@@ -41,7 +41,7 @@ const Meal = new Schema({
     },
     intolerances: [{
         type: String,
-        enum: ['Gluten', 'Lactose'],
+        enum: ['gluten', 'lactose'],
         required: true
     }],
     isLight: {
@@ -50,7 +50,7 @@ const Meal = new Schema({
     },
     season: [{
         type: String,
-        enum: ['Spring', 'Summer', 'Autum', 'Winter'],
+        enum: ['spring', 'summer', 'autum', 'winter'],
         required: true
     }],
     recipeLink: {

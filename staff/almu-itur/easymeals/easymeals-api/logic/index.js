@@ -1,4 +1,4 @@
-const { models: { Meal, Day, MealPlan, User } } = require('easymeals-data')
+const { models: { Meal, Day, MealPlan, User }, mongoose: { Types: { ObjectId } } } = require('easymeals-data')
 const { AlreadyExistsError, AuthError, NotAllowedError, NotFoundError, ValueError } = require('../errors')
 const validate = require('../utils/validate')
 const fs = require('fs')
@@ -6,7 +6,7 @@ const path = require('path')
 
 const logic = {
     registerUser(name, surname, username, password) {
-        validate([{ key: 'name', value: name, type: String }, { key: 'surname', value: surname, type: String }, { key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
+        validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
         return (async () => {
 
@@ -21,7 +21,7 @@ const logic = {
     },
 
     authenticateUser(username, password) {
-        validate([{ key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
+        validate([{ key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
         return (async () => {
             const user = await User.findOne({ username })
@@ -33,8 +33,7 @@ const logic = {
     },
 
     retrieveUser(id) {
-        validate([{ key: 'id', value: id, type: String }])
-        debugger
+        validate([{ key: 'id', value: id, type: 'string' }])
         return (async () => {
             const user = await User.findById(id, { '_id': 0, password: 0, __v: 0 }).lean()
 
@@ -48,13 +47,13 @@ const logic = {
 
     updateUser(id, name, surname, username, oldPassword, newPassword, confirmNewPassword) {
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'name', value: name, type: String, optional: true },
-            { key: 'surname', value: surname, type: String, optional: true },
-            { key: 'username', value: username, type: String, optional: true },
-            { key: 'oldPassword', value: oldPassword, type: String },
-            { key: 'newPassword', value: newPassword, type: String, optional: true },
-            { key: 'confirmNewPassword', value: confirmNewPassword, type: String, optional: true }
+            { key: 'id', value: id, type: 'string' },
+            { key: 'name', value: name, type: 'string', optional: true },
+            { key: 'surname', value: surname, type: 'string', optional: true },
+            { key: 'username', value: username, type: 'string', optional: true },
+            { key: 'oldPassword', value: oldPassword, type: 'string' },
+            { key: 'newPassword', value: newPassword, type: 'string', optional: true },
+            { key: 'confirmNewPassword', value: confirmNewPassword, type: 'string', optional: true }
         ])
 
         return (async () => {
@@ -88,13 +87,15 @@ const logic = {
     },
 
     searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
-        debugger
         validate([
-            { key: 'category', value: category, type: String },
-            { key: 'subcategory', value: subcategory, type: String },
-            { key: 'diet', value: diet, type: Number },
-            { key: 'intolerances', value: intolerances, type: Array },
-            { key: 'season', value: season, type: String }
+            { key: 'category', value: category, type: 'string' },
+            { key: 'subcategory', value: subcategory, type: 'string' },
+            { key: 'diet', value: diet, type: 'number' },
+            { key: 'isSpecialMeal', value: isSpecialMeal, type: 'boolean', optional: true },
+            { key: 'isCold', value: isCold, type: 'boolean', optional: true },
+            { key: 'intolerances', value: intolerances, type: ['string'] },
+            { key: 'isLight', value: isLight, type: 'boolean', optional: true },
+            { key: 'season', value: season, type: 'string' }
         ])
 
         const queryObject = {
@@ -105,25 +106,15 @@ const logic = {
             season: { $in: season }
         }
 
-        if (isSpecialMeal) {
-            validate([{ key: 'isSpecialMeal', value: isSpecialMeal, type: Boolean }])
-            queryObject.isSpecialMeal = isSpecialMeal
-        }
+        if (isSpecialMeal) queryObject.isSpecialMeal = isSpecialMeal
 
-        if (isCold) {
-            validate([{ key: 'isCold', value: isCold, type: Boolean }])
-            queryObject.isCold = isCold
-        }
+        if (isCold) queryObject.isCold = isCold
 
-        if(isLight) {
-            validate([{ key: 'isLight', value: isLight, type: Boolean }])
-            queryObject.isLight = isLight
-        }
-        
+        if (isLight) queryObject.isLight = isLight
+
         return (async () => {
 
             const meals = await Meal.find(queryObject)
-            debugger
             //     //TO CONSIDER
             //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
             //     // if (!user) throw new NotFoundError(`user with id ${id} not found`)
@@ -154,9 +145,12 @@ const logic = {
 
     addMealplan(id, mealplan) {
         validate([
-            { key: 'id', value: id, type: String },
+            { key: 'id', value: id, type: 'string' },
             // { key: 'mealplan', value: mealplan, type: Object },
         ])
+
+        if (!ObjectId.isValid(id)) throw new ValueError(`id is not valid ${id}`)
+
         return (async () => {
 
             const user = await User.findById(id)
@@ -172,13 +166,12 @@ const logic = {
 
     removeMealplan(id, mealplanId) {
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'mealplanId', value: mealplanId, type: Number },
+            { key: 'id', value: id, type: 'string' },
+            { key: 'mealplanId', value: mealplanId, type: 'number' },
         ])
         return (async () => {
 
             const user = await User.findById(id)
-            debugger
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
             // if (!user.savedMealPlans.includes(mealplan)) throw new NotFoundError(`mealplan not found in saved meal plan list`) //NOT WORKING, REVIEW!!
             if (!user.savedMealPlans) throw Error(`user with id ${id} has no saved mealplans`)
@@ -190,7 +183,7 @@ const logic = {
     },
 
     addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
-        validate([{ key: 'name', value: name, type: String }, { key: 'surname', value: surname, type: String }, { key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
+        validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
         return (async () => {
 
@@ -203,8 +196,8 @@ const logic = {
     addFavouriteMeal(id, favouriteMealId) {
 
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'favouriteMealId', value: favouriteMealId, type: String },
+            { key: 'id', value: id, type: 'string' },
+            { key: 'favouriteMealId', value: favouriteMealId, type: 'string' },
         ])
         return (async () => {
 
@@ -222,8 +215,8 @@ const logic = {
     removeFavouriteMeal(id, favouriteMealId) {
 
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'favouriteMealId', value: favouriteMealId, type: String },
+            { key: 'id', value: id, type: 'string' },
+            { key: 'favouriteMealId', value: favouriteMealId, type: 'string' },
         ])
         return (async () => {
 
@@ -244,8 +237,8 @@ const logic = {
     addAvoidMeal(id, avoidMealId) {
 
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'avoidMealId', value: avoidMealId, type: String },
+            { key: 'id', value: id, type: 'string' },
+            { key: 'avoidMealId', value: avoidMealId, type: 'string' },
         ])
         return (async () => {
 
@@ -263,8 +256,8 @@ const logic = {
     removeAvoidMeal(id, avoidMealId) {
 
         validate([
-            { key: 'id', value: id, type: String },
-            { key: 'avoidMealId', value: avoidMealId, type: String },
+            { key: 'id', value: id, type: 'string' },
+            { key: 'avoidMealId', value: avoidMealId, type: 'string' },
         ])
         return (async () => {
 
@@ -283,7 +276,7 @@ const logic = {
     },
 
     retrieveMeal(id, mealId) {
-        validate([{ key: 'mealId', value: mealId, type: String }])
+        validate([{ key: 'mealId', value: mealId, type: 'string' }])
 
         return (async () => {
             const meal = await Meal.findById(mealId, { '_id': 0, __v: 0 }).lean()
@@ -299,7 +292,7 @@ const logic = {
 
     // listCollaborators(id) {
     //     validate([
-    //         { key: 'id', value: id, type: String }
+    //         { key: 'id', value: id, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -377,8 +370,8 @@ const logic = {
      */
     // addPostit(id, text) {
     //     validate([
-    //         { key: 'id', value: id, type: String },
-    //         { key: 'text', value: text, type: String }
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'text', value: text, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -394,8 +387,8 @@ const logic = {
 
     // saveMenu(userId, menu) {
     //     validate([
-    //         { key: 'userId', value: id, type: String },
-    //         // { key: 'text', value: text, type: String }
+    //         { key: 'userId', value: id, type: 'string' },
+    //         // { key: 'text', value: text, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -412,7 +405,7 @@ const logic = {
     //ESTO SERA VER MENU AL CLICKAR EN UN SAVED MENU
     // listPostits(id) {
     // validate([
-    //     { key: 'id', value: id, type: String }
+    //     { key: 'id', value: id, type: 'string' }
     // ])
 
     // return (async () => {
@@ -472,8 +465,8 @@ const logic = {
      */
     // removePostit(id, postitId) {
     //     validate([
-    //         { key: 'id', value: id, type: String },
-    //         { key: 'postitId', value: postitId, type: String }
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'postitId', value: postitId, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -516,9 +509,9 @@ const logic = {
 
     // modifyPostit(id, postitId, text) {
     //     validate([
-    //         { key: 'id', value: id, type: String },
-    //         { key: 'postitId', value: postitId, type: String },
-    //         { key: 'text', value: text, type: String }
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'postitId', value: postitId, type: 'string' },
+    //         { key: 'text', value: text, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -567,9 +560,9 @@ const logic = {
 
     // movePostit(id, postitId, status) {
     //     validate([
-    //         { key: 'id', value: id, type: String },
-    //         { key: 'postitId', value: postitId, type: String },
-    //         { key: 'status', value: status, type: String }
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'postitId', value: postitId, type: 'string' },
+    //         { key: 'status', value: status, type: 'string' }
     //     ])
 
     //     return (async () => {
@@ -589,9 +582,9 @@ const logic = {
 
     // assignPostit(id, postitId, collaboratorId) {
     //     validate([
-    //         { key: 'id', value: id, type: String },
-    //         { key: 'postitId', value: postitId, type: String },
-    //         { key: 'collaboratorId', value: collaboratorId, type: String }
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'postitId', value: postitId, type: 'string' },
+    //         { key: 'collaboratorId', value: collaboratorId, type: 'string' }
     //     ])
 
     //     return (async () => {
