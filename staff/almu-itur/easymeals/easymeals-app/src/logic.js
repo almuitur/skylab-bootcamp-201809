@@ -235,11 +235,11 @@ const logic = {
                             meal.afternoon && (meal.afternoon.status = `${_day.day}afternoon`)
                             meal.dinner && (meal.dinner.status = `${_day.day}dinner`)
 
-                            meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal.breakfast)
-                            meal.midMorning && meal.midMorning.id!==undefined && _day.midMorning.push(meal.midMorning)
-                            meal.lunch && meal.lunch.id!==undefined && _day.lunch.push(meal.lunch)
-                            meal.afternoon && meal.afternoon.id!==undefined && _day.afternoon.push(meal.afternoon)
-                            meal.dinner && meal.dinner.id!==undefined && _day.dinner.push(meal.dinner)
+                            meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal)
+                            // meal.midMorning && meal.midMorning.id!==undefined && _day.midMorning.push(meal.midMorning)
+                            // meal.lunch && meal.lunch.id!==undefined && _day.lunch.push(meal.lunch)
+                            // meal.afternoon && meal.afternoon.id!==undefined && _day.afternoon.push(meal.afternoon)
+                            // meal.dinner && meal.dinner.id!==undefined && _day.dinner.push(meal.dinner)
                         })
                         return _day
                     })

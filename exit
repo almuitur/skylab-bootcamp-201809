@@ -1,0 +1,529 @@
+[33mcommit 5806bc6d495e187eb95f7f403d3d0e664499e5d9[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/user[m[33m, [m[1;31morigin/feature/user[m[33m)[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Dec 5 16:59:15 2018 +0100
+
+    update
+
+[33mcommit ce6d8a0173d6156696fe9a1b43443b27be3ecd1c[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Dec 5 16:38:18 2018 +0100
+
+    correct tests
+
+[33mcommit b6b345edaafcf15d286fe831b10da2fd14583b9b[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Wed Dec 5 15:35:00 2018 +0100
+
+    data schemas
+
+[33mcommit cb8d35032ff7c6cea2e398f0f540e2447203cb77[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Wed Dec 5 15:26:38 2018 +0100
+
+    testing
+
+[33mcommit 01a413c5e84186ba1fd8b8b0f3a4056e72f32361[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Wed Dec 5 02:32:29 2018 +0100
+
+    amendments
+
+[33mcommit fcf3b82dad9936eb2cd96a635266d46e597c6d8a[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Dec 4 12:02:24 2018 +0100
+
+    boost
+
+[33mcommit 5bb7c76a69394b1c7d53629f24725647d2e6ddbb[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Dec 4 11:06:51 2018 +0100
+
+    testing shopping list
+
+[33mcommit b1e82bcea5691c51ae2b27a932a82605d4d1c345[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Dec 3 01:21:48 2018 +0100
+
+    search with diet, intolerance and others, style meal detail, add mealplan front
+
+[33mcommit 9d1c4d84397ea4e936d134b91822c824601adeca[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Sun Dec 2 10:24:36 2018 +0100
+
+    add a meal
+
+[33mcommit f806a982bdcb3de6a37d4de88a2e67c39936c00b[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Fri Nov 30 18:53:27 2018 +0100
+
+    amend error, my meals update, saved component, improve style
+
+[33mcommit cd3092062bb177c0ad0565e0326f07edd2c2db8b[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 29 22:25:08 2018 +0100
+
+    error handling and promises, avoid meal fixed, add meal form front
+
+[33mcommit 6712461ba5ae2086abfb41284a7753e228cb6261[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 29 15:56:17 2018 +0100
+
+    routes working and add delete avoid connected to front
+
+[33mcommit b752d2a4332f972c7dfe4aa254367508b0c20274[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 29 14:53:28 2018 +0100
+
+    routes for add to/remove from favourites (meal, mealplan) & add to or remove from avoid meals list
+
+[33mcommit ea0ae91516b4de905ac81c3b575d0681c192c684[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 29 09:39:43 2018 +0100
+
+    shopping list and meal detail
+
+[33mcommit f2293eaff64a9ac047d37d442534589075fbb1b7[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Wed Nov 28 14:08:02 2018 +0100
+
+    handling error corrected and promiss all updated
+
+[33mcommit 12fdacc149cb73c084e4ee2eda945caab1c17c45[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 27 18:27:56 2018 +0100
+
+    errors corrected
+
+[33mcommit 43c8dc7802f9a9d766b6753b5fc50502480f768b[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 26 16:06:13 2018 +0100
+
+    data in separate folder
+
+[33mcommit 6fa5582b18f7e5bd6c2cce31167666217ed6c4c4[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 26 15:07:31 2018 +0100
+
+    _id and diet and plan to session storage
+
+[33mcommit 8dc64e324bfda4c2c9aa8557914e986980be4519[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Sun Nov 25 23:16:27 2018 +0100
+
+    first working version drag and drop and shopping list
+
+[33mcommit fea4fa30e2677096391a01ef79eae193bda0922b[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Sat Nov 24 19:42:43 2018 +0100
+
+    new data schema with status and adapt logic
+
+[33mcommit b32360a46a9ca0b7d437784770412a77345da57e[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Fri Nov 23 19:24:42 2018 +0100
+
+    search returning object and starting rendering
+
+[33mcommit db6d6dd8fbe4030a9faa68e9d828a968a4284ca7[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 22 22:48:26 2018 +0100
+
+    little addings to search function and save result in session storage
+
+[33mcommit c6c87f2fd4cca0c86b47da25ffc689fc9de0589e[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 22 20:50:38 2018 +0100
+
+    first working version promiss all inside promiss all
+
+[33mcommit 3f093b58da82288d77b99627c2f8fbcbdf224954[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 22 17:04:52 2018 +0100
+
+    first working version first promiss all and search by subcategory
+
+[33mcommit 419f6bc9d971cb14ac033af6849a374ae6f9a217[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 22 16:17:57 2018 +0100
+
+    backup version
+
+[33mcommit a1606d918ece3c491d8fa9b3b4f097b5dea5a666[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 22 13:23:03 2018 +0100
+
+    first approach create menu
+
+[33mcommit 0531e0e1559a96bb8afb179fb8a1b1a8b702df9d[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 20 22:08:55 2018 +0100
+
+    first api routes
+
+[33mcommit 6ff131c83a1c476bda7d8bc93506e60552ef43e4[m[33m ([m[1;31morigin/develop[m[33m, [m[1;32measymeals[m[33m, [m[1;32mdevelop[m[33m)[m
+Merge: 2670e87c 28bad3f3
+Author: almuitur <41119998+almuitur@users.noreply.github.com>
+Date:   Mon Nov 19 10:17:13 2018 +0100
+
+    Merge pull request #34 from almuitur/easymeals
+    
+    Easymeals
+
+[33mcommit 28bad3f38f348beddd854e24045a18b76adcd952[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Sun Nov 18 19:50:31 2018 +0100
+
+    landing login register home and first api version
+
+[33mcommit e532eaa1bc6c6295ada7ebca78f0c38bc1c6e375[m[33m ([m[1;32mfeature/api[m[33m)[m
+Merge: fc522678 3a06450b
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Fri Nov 16 15:59:09 2018 +0100
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 3a06450b7796f6b3e88991856f31b77c435ba817[m[33m ([m[1;31mupstream/develop[m[33m)[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Fri Nov 16 15:54:06 2018 +0100
+
+    update kanban-api
+
+[33mcommit 40cf38e12f33fd0fd979ece207e73a2386331451[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Nov 15 18:23:21 2018 +0100
+
+    update kanban-ap*
+
+[33mcommit 6558e84186d96eab7110ad87eb4b797b32a731b4[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Nov 15 14:05:21 2018 +0100
+
+    add kanban-app
+
+[33mcommit fc522678bf85235cbc12105ca832a422f14dcb6c[m
+Merge: 15858a5f 8378bf2b
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 17:43:06 2018 +0100
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 8378bf2ba4bcb5848657a6bf2490888374a47adb[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 13 17:30:00 2018 +0100
+
+    update postit-api
+
+[33mcommit 15858a5f499e35e740874aec6f6ec2efe61c5a0e[m
+Merge: 2670e87c 575bca85
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 13:17:44 2018 +0100
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 2670e87c25466063dca2408039b7fd4a91271f01[m
+Merge: 8953b8a2 154f891a
+Author: almuitur <41119998+almuitur@users.noreply.github.com>
+Date:   Tue Nov 13 12:48:53 2018 +0100
+
+    Merge pull request #33 from almuitur/feature/kanban-app
+    
+    Feature/kanban app
+
+[33mcommit 154f891ae833bd20ecba501e34452fe0f217061a[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 12:46:39 2018 +0100
+
+    first working version with all testing passing
+
+[33mcommit 575bca8541851a335af5187e2c3a7a0d6496be00[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 13 12:34:51 2018 +0100
+
+    update postit-api
+
+[33mcommit 8310adaa3be0558769a4fdd9f80778a9b038e196[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 13 12:27:34 2018 +0100
+
+    update postit-api
+
+[33mcommit 6fb85ff55ba6cd5f32fea7ee1a95816254b5f543[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 13 12:27:02 2018 +0100
+
+    update postit-api
+
+[33mcommit f8155d62cadb5ba7b8b2cb87d32d54f1ff4b03ca[m
+Merge: 1ce005d2 5f819615
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 09:51:48 2018 +0100
+
+    Merge branch 'develop' into feature/kanban-app
+
+[33mcommit 5f819615bc2b7fe3079c1024cc6a738391a261ad[m
+Merge: 3d1f265e 699ce1fd
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 09:32:25 2018 +0100
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 1ce005d207d50df24d0e46825e4dcbf3c4bf3fcb[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Tue Nov 13 09:31:19 2018 +0100
+
+    updates kanban-api and kanban-app
+
+[33mcommit 699ce1fde743e63502b2a280edb6a9f0f4aa9468[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Mon Nov 12 17:28:24 2018 +0100
+
+    update postit-api, make model relational
+
+[33mcommit 4e0396394710a674f884b0114d0643c0a936abea[m
+Merge: 3d0d1211 3d1f265e
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 12 12:54:40 2018 +0100
+
+    Merge branch 'develop' into feature/kanban-app
+
+[33mcommit 3d1f265ea976e816fad60af75d08984c0dc7a6ce[m
+Merge: 8953b8a2 2be0a2d7
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 12 12:54:15 2018 +0100
+
+    Merge remote-tracking branch 'upstream/develop' into develop
+
+[33mcommit 3d0d1211d3b59f4509361c9ba28a96f9c9d47f1a[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 12 12:53:40 2018 +0100
+
+    mongoose installed
+
+[33mcommit 160a5bfffab3dbe33f41942fdabe7bf32bb2cc4e[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 12 12:47:00 2018 +0100
+
+    saved app version with mongo
+
+[33mcommit 2be0a2d7cb3c5a96f3cbe3904a8e4543eee43ba3[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Mon Nov 12 12:41:47 2018 +0100
+
+    update postit-api (use mongoose)
+
+[33mcommit 8953b8a2bc32b466e60fba9481869d1665434ea2[m
+Merge: 816cb051 40f0f924
+Author: almuitur <41119998+almuitur@users.noreply.github.com>
+Date:   Mon Nov 12 11:01:54 2018 +0100
+
+    Merge pull request #32 from almuitur/feature/postit-web-app
+    
+    Feature/postit web app
+
+[33mcommit 816cb0510e78cd487e09103d0926c7f0b5c5421f[m
+Merge: 19627b01 f26adc3b
+Author: almuitur <41119998+almuitur@users.noreply.github.com>
+Date:   Mon Nov 12 10:21:29 2018 +0100
+
+    Merge pull request #30 from almuitur/feature/postit-app
+    
+    Feature/postit app
+
+[33mcommit 19627b0124342d591ca3f263edc306fca0f8453f[m
+Merge: d0fe16a3 ab3a1a0d
+Author: almuitur <41119998+almuitur@users.noreply.github.com>
+Date:   Mon Nov 12 10:20:14 2018 +0100
+
+    Merge pull request #29 from almuitur/feature/kanban-app
+    
+    Feature/kanban app
+
+[33mcommit ab3a1a0d9e19f436c608f1d7951698eb52101b17[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 12 10:18:32 2018 +0100
+
+    first working version and styled
+
+[33mcommit 67a16f797ffbacca030c03d0bab7b80d294b5870[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Sat Nov 10 11:14:13 2018 +0100
+
+    kanban-app and api first version
+
+[33mcommit d0fe16a371c15451efb35d703796e95e6ada89d4[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Fri Nov 9 17:38:19 2018 +0100
+
+    update postit app and api
+
+[33mcommit db8d0a60008ca472f60828e789d6085575725379[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Fri Nov 9 13:20:29 2018 +0100
+
+    update postit api with mongo
+
+[33mcommit 4bd0a36ae867075970bfb0e9dc400f442065dc9d[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Fri Nov 9 00:21:34 2018 +0100
+
+    add robots demo
+
+[33mcommit f26adc3b2103e57bad3696916ea58df88b98ee0d[m[33m ([m[1;31morigin/feature/postit-app[m[33m, [m[1;32mfeature/postit-app[m[33m)[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 8 19:11:01 2018 +0100
+
+    last update
+
+[33mcommit 384e314291d4d2c78be1b1a0e1304ea4220beebd[m
+Merge: 969107fc 3a3deec2
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 8 19:04:18 2018 +0100
+
+    Merge branch 'develop' into feature/postit-app
+
+[33mcommit 3a3deec25554b97b995d6f84d0716878a28b78ea[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Nov 8 17:33:29 2018 +0100
+
+    add mongo client demo
+
+[33mcommit 0b9a9c559ba54c55460c50d8a291fed51c62e75f[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Nov 8 14:19:35 2018 +0100
+
+    update postit api
+
+[33mcommit 053841930a01b9d8de30deddbdfe56eab987fdf3[m
+Merge: 3dcbd2ac 5cc951e2
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Thu Nov 8 12:30:43 2018 +0100
+
+    Merge pull request #154 from Arcoders/develop
+    
+    Skytuts App
+
+[33mcommit 969107fcc1c6c5bef124bfb748d5b9a67ef15ecc[m
+Merge: 10d1df6c 3dcbd2ac
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Thu Nov 8 08:54:49 2018 +0100
+
+    Merge branch 'develop' into feature/postit-app
+
+[33mcommit 3dcbd2ac53d93ed0d81bc001f67be8269cfcfaa1[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 17:28:53 2018 +0100
+
+    update postit api and app
+
+[33mcommit 982f4c2a1bc9f6d8da7c28a8181b3eb77e134c73[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 16:15:20 2018 +0100
+
+    update postit api
+
+[33mcommit 8083e46fe8f9c900170d75a0fdc370d24b5f3776[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 16:09:02 2018 +0100
+
+    update postit api and app
+
+[33mcommit d806f49310e9becca887c92005cb4592c57b3c65[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 16:05:56 2018 +0100
+
+    update postit api and app
+
+[33mcommit 0088ea3f88e56df44d27386f0f9a2fd9ae1875a8[m
+Merge: 8d82f0ec 15a69a73
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 14:09:02 2018 +0100
+
+    Merge branch 'develop' of https://github.com/manuelbarzi/skylab-bootcamp-201809 into develop
+
+[33mcommit 8d82f0ec8ed765c40f5565f66a968dd9e5393d90[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 14:08:57 2018 +0100
+
+    update postit-api
+
+[33mcommit 15a69a738f4dccc3f19430e9651ff6b97d11c533[m
+Merge: 7d1fe88b cf62c859
+Author: gbaste <34367935+gbaste@users.noreply.github.com>
+Date:   Wed Nov 7 13:34:15 2018 +0100
+
+    Merge pull request #158 from Pacoscript/feature/postit-app
+    
+    Feature/postit app
+
+[33mcommit 10d1df6c1e1c8e5b758ac429496e402525941b01[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Wed Nov 7 13:19:18 2018 +0100
+
+    update
+
+[33mcommit 7d1fe88bb4a1feb999942d30aa6efc85b81b22ea[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 13:13:56 2018 +0100
+
+    update postit app
+
+[33mcommit 481969fe088a9e5c90395dbd42cb6f5d06baddf7[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 13:09:22 2018 +0100
+
+    update postit-api
+
+[33mcommit 20464e63b88958a25e840ad0b9743a1634998795[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 12:10:25 2018 +0100
+
+    update postit api
+
+[33mcommit 2d21002e04db25f7e6382b22a41c9b9acf8d742a[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 11:36:16 2018 +0100
+
+    update postit-api
+
+[33mcommit 9d10e6245b7d91137ac0f7a9a37527449c589adc[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Wed Nov 7 10:35:08 2018 +0100
+
+    update postit api
+
+[33mcommit c42d6dd7837efe9b82ceb3277e52bb489f8b376b[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 6 16:49:23 2018 +0100
+
+    update postit-api
+
+[33mcommit 1c185c3f2f18273593e36199016a866f5f990c5c[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 6 13:14:08 2018 +0100
+
+    add postit-api code base
+
+[33mcommit 4b664db341d32cd147ed33addde4ba409556585a[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Tue Nov 6 10:07:22 2018 +0100
+
+    update postit web-app
+
+[33mcommit 40f0f924cea35fd6b6a0550b7eac51aada13a034[m[33m ([m[1;31morigin/feature/postit-web-app[m[33m, [m[1;32mfeature/postit-web-app[m[33m)[m
+Merge: c7b9e476 32aaa604
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 5 15:38:26 2018 +0100
+
+    Merge branch 'develop' into feature/postit-web-app
+
+[33mcommit c7b9e47664310da711125ad33a875d856eced865[m
+Author: Almu Iturgoyen <almudena.iturgoyen@gmail.com>
+Date:   Mon Nov 5 15:37:35 2018 +0100
+
+    new version
+
+[33mcommit 32aaa6048411581671eca73f5239f8d700832197[m
+Author: manuelbarzi <manuelbarzi@gmail.com>
+Date:   Mon Nov 5 15:31:44 2018 +0100
+
+    update postit web-app
