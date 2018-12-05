@@ -140,6 +140,14 @@ const logic = {
         //retrieve status, retrieve search params, random search different than current id, remove old, add new, save to session storage
     },
 
+    isEmpty(obj) {
+        for(var key in obj) {
+            if(obj.hasOwnProperty(key))
+                return false
+        }
+        return true
+     },
+
     createMealPlan(diet, _plan, intolerances) {
         if (typeof diet !== 'string') throw Error(`diet is not a string`)
         if (typeof _plan !== 'string') throw Error(`plan is not a string`)
@@ -235,7 +243,13 @@ const logic = {
                             meal.afternoon && (meal.afternoon.status = `${_day.day}afternoon`)
                             meal.dinner && (meal.dinner.status = `${_day.day}dinner`)
 
-                            meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal)
+                            meal.breakfast && _day.breakfast.push(meal.breakfast)
+                            meal.midMorning && _day.midMorning.push(meal.midMorning)
+                            meal.lunch && _day.lunch.push(meal.lunch)
+                            meal.afternoon && _day.afternoon.push(meal.afternoon)
+                            meal.dinner && _day.dinner.push(meal.dinner)
+                            
+                            // meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal)
                             // meal.midMorning && meal.midMorning.id!==undefined && _day.midMorning.push(meal.midMorning)
                             // meal.lunch && meal.lunch.id!==undefined && _day.lunch.push(meal.lunch)
                             // meal.afternoon && meal.afternoon.id!==undefined && _day.afternoon.push(meal.afternoon)
