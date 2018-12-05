@@ -141,7 +141,6 @@ const logic = {
     },
 
     createMealPlan(diet, _plan, intolerances) {
-        
         if (typeof diet !== 'string') throw Error(`diet is not a string`)
         if (typeof _plan !== 'string') throw Error(`plan is not a string`)
         if (!intolerances instanceof Array) throw Error(`intolerances is not array`)
@@ -191,13 +190,13 @@ const logic = {
                         .then(res => res.json())
 
                         .then(res => {
-                            
                             if (res.error) throw Error(res.error)
                             
                             let resObject = {}
                             resObject.day = meal.day
                             resObject[meal.mealTime] = res.data
                             
+                            // TODO move to server side
                             delete resObject[meal.mealTime]._id
                             delete resObject[meal.mealTime].__v
 
@@ -211,6 +210,7 @@ const logic = {
 
             return Promise.all(mealsWeek)
                 .then((res) => {
+                    debugger
 
                     const _mealPlan = {}
                     
@@ -244,6 +244,7 @@ const logic = {
                         return _day
                     })
                     
+                    debugger
                     const mealPlan = JSON.stringify(_mealPlan)
                     sessionStorage.setItem('mealPlan', mealPlan)
 
