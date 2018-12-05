@@ -245,7 +245,7 @@ describe('logic', () => {
             await logic.addMealplan(user.id, mealplan)
 
             const _user = await logic.retrieveUser(user.id)
-            debugger
+            
             expect(_user.savedMealPlans).to.exist
             expect(_user.savedMealPlans).to.be.instanceOf(Array)
             expect(_user.savedMealPlans.length).to.equal(1)
