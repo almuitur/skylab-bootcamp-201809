@@ -87,6 +87,111 @@ const logic = {
         })()
     },
 
+    searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
+        
+        validate([
+            { key: 'category', value: category, type: String },
+            // { key: 'subcategory', value: subcategory, type: String }
+            { key: 'diet', value: diet, type: Number },
+            // { key: 'isSpecial', value: isSpecial, type: Boolean, optional: true },
+            // { key: 'isCold', value: isCold, type: Boolean, optional: true},
+            // { key: 'intolerances', value: intolerances, type: Array },
+            // { key: 'isLight', value: isLight, type: Boolean, optional: true },
+            { key: 'season', value: season, type: String, optional: true }
+        ])
+        
+        return (async () => {
+
+            const meals = await Meal.find({
+                category: category,
+                subcategory: subcategory,
+                diet: { $lte: diet},
+                isSpecialMeal: (!!isSpecialMeal),
+                // isCold: (!!isCold),
+                intolerances: { $nin: intolerances },
+                isLight: (!!isLight)
+                // season: {$in: season }
+            })
+            
+            // if (!meals) throw new NotFoundError('undefined search results')
+            // if(!meals.length) meals[0]= { name: 'Not found', id: 'none' }
+
+        //     //TO CONSIDER
+        //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
+        //     // if (!user) throw new NotFoundError(`user with id ${id} not found`)
+        //     // user.id = id
+        //     //name != null && (user.name = name)
+
+            //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
+            // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
+            
+            
+            // let counter = 0
+            // let meal
+            // do {
+                let meal = {}
+                if(meals.length) {
+                    meal = meals[Math.floor(Math.random() * meals.length)] 
+                    delete meal.__v
+                    delete meal._id
+                }
+            //     counter++
+            // }
+            // while(user.mealsToAvoid.includes(meal.id) && counter < 10)          
+            
+            return meal
+        })()
+    },
+
+    addMealplan(id, mealplan) {
+        debugger
+        validate([
+            { key: 'id', value: id, type: String },
+            { key: 'mealplan', value: mealplan, type: Object },
+        ])
+        return (async () => {
+            
+            const user = await User.findById(id)
+            debugger
+            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+            // if (user.savedMealPlans.includes(mealplan)) throw new AlreadyExistsError(`mealplan already added to saved meal plan list`) //NOT WORKING, REVIEW!!!
+            
+            user.savedMealPlans.push(mealplan)
+            debugger
+            await user.save()
+        })()
+    },
+
+    removeMealplan(id, mealplanId) {
+        validate([
+            { key: 'id', value: id, type: String },
+            { key: 'mealplanId', value: mealplanId, type: Number },
+        ])
+        return (async () => {
+            
+            const user = await User.findById(id)
+            debugger
+            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+            // if (!user.savedMealPlans.includes(mealplan)) throw new NotFoundError(`mealplan not found in saved meal plan list`) //NOT WORKING, REVIEW!!
+            if (!user.savedMealPlans) throw Error(`user with id ${id} has no saved mealplans`)
+
+            user.savedMealPlans = user.savedMealPlans.filter(_mealplan => (_mealplan.date!== mealplanId))
+
+            await user.save()
+        })()
+    },
+
+    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
+        validate([{ key: 'name', value: name, type: String }, { key: 'surname', value: surname, type: String }, { key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
+
+        return (async () => {
+
+            meal = new Meal({ name, diet, category, subcategory, mainIngredients, optionalIngredients, isSpecialMeal, isColdDish, intolerances, isLight, season, recipeLink, imageLink, status  })
+
+            await meal.save()
+        })()
+    },
+
     addFavouriteMeal(id, favouriteMealId) {
         
         validate([
@@ -183,107 +288,6 @@ const logic = {
         })()
     },
 
-    addMealplan(id, mealplan) {
-        debugger
-        
-        validate([
-            { key: 'id', value: id, type: String },
-            { key: 'mealplan', value: mealplan, type: Object },
-        ])
-        return (async () => {
-            
-            const user = await User.findById(id)
-            debugger
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            // if (user.savedMealPlans.includes(mealplan)) throw new AlreadyExistsError(`mealplan already added to saved meal plan list`) //NOT WORKING, REVIEW!!!
-            
-            user.savedMealPlans.push(mealplan)
-            debugger
-            await user.save()
-        })()
-    },
-
-    removeMealplan(id, mealplanId) {
-        validate([
-            { key: 'id', value: id, type: String },
-            { key: 'mealplanId', value: mealplanId, type: String },
-        ])
-        return (async () => {
-            
-            const user = await User.findById(id)
-            debugger
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            // if (!user.savedMealPlans.includes(mealplan)) throw new NotFoundError(`mealplan not found in saved meal plan list`) //NOT WORKING, REVIEW!!
-            if (!user.savedMealPlans) throw Error(`user with id ${id} has no saved mealplans`)
-
-            user.savedMealPlans = user.savedMealPlans.filter(_mealplan => (_mealplan.date!== mealplanId))
-
-            await user.save()
-        })()
-    },
-
-    searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
-        validate([
-            { key: 'category', value: category, type: String },
-            // { key: 'subcategory', value: subcategory, type: String }
-            { key: 'diet', value: diet, type: Number },
-            // { key: 'isSpecial', value: isSpecial, type: Boolean, optional: true },
-            // { key: 'isCold', value: isCold, type: Boolean, optional: true},
-            // { key: 'intolerances', value: intolerances, type: Array },
-            // { key: 'isLight', value: isLight, type: Boolean, optional: true },
-            { key: 'season', value: season, type: String, optional: true }
-        ])
-        
-        return (async () => {
-            const meals = await Meal.find({
-                category: category,
-                subcategory: (subcategory) ? subcategory : /.*/,
-                diet: { $lte: diet},
-                isSpecialMeal: (!!isSpecialMeal),
-                // isCold: (!!isCold),
-                intolerances: { $nin: intolerances },
-                isLight: (!!isLight)
-                // season: {$in: season }
-            })
-            
-            if (!meals) throw new NotFoundError('undefined search results')
-            if(!meals.length) meals[0]= { name: 'Not found', id: 'none' }
-
-        //     //TO CONSIDER
-        //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
-        //     // if (!user) throw new NotFoundError(`user with id ${id} not found`)
-        //     // user.id = id
-        //     //name != null && (user.name = name)
-
-            //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
-            // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
-            
-            
-            // let counter = 0
-            // let meal
-            // do {
-                meal = meals[Math.floor(Math.random() * meals.length)]
-            //     counter++
-            // }
-            // while(user.mealsToAvoid.includes(meal.id) && counter < 10)
-        
-            delete meal.__v
-            delete meal._id
-            
-            return meal
-        })()
-    },
-
-    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
-        validate([{ key: 'name', value: name, type: String }, { key: 'surname', value: surname, type: String }, { key: 'username', value: username, type: String }, { key: 'password', value: password, type: String }])
-
-        return (async () => {
-
-            meal = new Meal({ name, diet, category, subcategory, mainIngredients, optionalIngredients, isSpecialMeal, isColdDish, intolerances, isLight, season, recipeLink, imageLink, status  })
-
-            await meal.save()
-        })()
-    }
 
     // listCollaborators(id) {
     //     validate([

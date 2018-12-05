@@ -45,7 +45,7 @@ class Home extends Component {
 
     handleSubmit = event => {
         event.preventDefault()
-
+        
         const { diet, plan, intolerances } = this.state
 
         this.props.onCreateMealPlan(diet, plan, intolerances)

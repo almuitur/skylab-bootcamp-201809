@@ -16,7 +16,7 @@ const Meal = new Schema({
          'protein', 'patisserie', 'dairy'],
         required: true
     },
-    subCategory: {
+    subcategory: {
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
         'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nuts', 'meat', 'fish', 'seafood',
@@ -111,7 +111,10 @@ const User = new Schema({
         required: true
     },
 
-    savedMealPlans: [MealPlan],
+    savedMealPlans: [{
+        type: Object,
+        required: true
+    }],
 
     savedCustomMealPlan: [{ type: String, required: false }],
 

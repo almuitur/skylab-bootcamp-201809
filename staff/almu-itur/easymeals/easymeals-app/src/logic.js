@@ -127,7 +127,7 @@ const logic = {
             .then(res => res.json())
             .then(res => {
                 if (res.error) throw Error(res.error)
-                
+                debugger
                 return res.data
             })
     },
@@ -166,7 +166,7 @@ const logic = {
         }
         
         if (plan) {
-
+            
             let mealsWeek = plan.map(day => {
                 let mealsDay = day.map(meal => {
                     const category = meal.search.category
@@ -184,7 +184,7 @@ const logic = {
                         
                         body: JSON.stringify({ category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season })
                     })
-
+                    
                         .then(res => res.json())
 
                         .then(res => {
@@ -211,9 +211,8 @@ const logic = {
                 .then((res) => {
 
                     const _mealPlan = {}
-                    // _mealPlan.date = this.getDate()
+                    
                     _mealPlan.date = Date.now()
-                    debugger
                     _mealPlan.name = _plan
                     _mealPlan.days = [[]]
 
@@ -227,21 +226,22 @@ const logic = {
                         _day.dinner = []
 
                         day.forEach(meal => {
+                            
                             meal.breakfast && (meal.breakfast.status = `${_day.day}breakfast`)
                             meal.midMorning && (meal.midMorning.status = `${_day.day}midMorning`)
                             meal.lunch && (meal.lunch.status = `${_day.day}lunch`)
                             meal.afternoon && (meal.afternoon.status = `${_day.day}afternoon`)
                             meal.dinner && (meal.dinner.status = `${_day.day}dinner`)
 
-                            meal.breakfast && _day.breakfast.push(meal.breakfast)
-                            meal.midMorning && _day.midMorning.push(meal.midMorning)
-                            meal.lunch && _day.lunch.push(meal.lunch)
-                            meal.afternoon && _day.afternoon.push(meal.afternoon)
-                            meal.dinner && _day.dinner.push(meal.dinner)
+                            meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal.breakfast)
+                            meal.midMorning && meal.midMorning.id!==undefined && _day.midMorning.push(meal.midMorning)
+                            meal.lunch && meal.lunch.id!==undefined && _day.lunch.push(meal.lunch)
+                            meal.afternoon && meal.afternoon.id!==undefined && _day.afternoon.push(meal.afternoon)
+                            meal.dinner && meal.dinner.id!==undefined && _day.dinner.push(meal.dinner)
                         })
                         return _day
                     })
-                    
+
                     const mealPlan = JSON.stringify(_mealPlan)
                     sessionStorage.setItem('mealPlan', mealPlan)
 
@@ -277,10 +277,12 @@ const logic = {
     },
 
     deleteSavedMealPlan(mealplanId) {
+        
         if (mealplanId === undefined) throw Error(`mealplanId is undefined`)
         if (mealplanId === '') throw Error(`mealplanId is empty`)
-        if (!mealplanId.trim()) throw Error(`mealplanId is blank`)
-        debugger
+        // if (mealplanId.trim()) throw Error(`mealplanId is blank`)
+
+        
         return fetch(`${this.url}/users/${this._userId}/savedmealplan/`, {
             method: 'DELETE',
             headers: {
@@ -293,6 +295,16 @@ const logic = {
             .then(res => {
                 if (res.error) throw Error(res.error)
             })
+    },
+
+    openMealPlan(_mealplan) {
+        
+        if (_mealplan === undefined) throw Error(`mealplan is undefined`)
+        if (_mealplan === '') throw Error(`mealplan is empty`)
+
+        let mealPlan = JSON.stringify(_mealplan)
+        sessionStorage.setItem('mealPlan', mealPlan)
+
     },
 
     findMeal(id) {

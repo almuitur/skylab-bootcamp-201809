@@ -27,9 +27,16 @@
 .meal-font {
     font-size: 10px;
 }
-
-#meal-icon {
+.options meal i {
     font-size: 10px;
+}
+
+/* #meal-icon {
+    font-size: 10px;
+} */
+
+.fas-fa-red {
+    color: red;
 }
 
 @media screen and (min-width: 800px) {

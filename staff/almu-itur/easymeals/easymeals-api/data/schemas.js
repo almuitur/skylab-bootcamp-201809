@@ -16,7 +16,7 @@ const Meal = new Schema({
          'protein', 'patisserie', 'dairy'],
         required: true
     },
-    subCategory: {
+    subcategory: {
         type: String,
         enum: ['flake', 'toast', 'pizza', 'pasta', 'rice','pancake','fruit', 'juice', 'milkshake', 
         'cake', 'pastry', 'yoghurt', 'cheese', 'panini', 'nut', 'meat', 'fish', 'seafood',
@@ -79,17 +79,17 @@ const Day = new Schema({
     dinner: [{ type: ObjectId, ref: 'Meal', required: false }]
 })
 
-const MealPlan = new Schema({
-    date: {
-        type: String,
-        required: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    days: [Day]
-})
+// const MealPlan = new Schema({
+//     date: {
+//         type: String,
+//         required: true
+//     },
+//     name: {
+//         type: String,
+//         required: true
+//     },
+//     days: [Day]
+// })
 
 const User = new Schema({
     name: {
@@ -111,7 +111,12 @@ const User = new Schema({
     },
     savedMeals: [Meal],
 
-    savedMealPlans: [MealPlan],
+    // savedMealPlans: [MealPlan],
+
+    savedMealPlans: [{
+        type: Object,
+        required: true
+    }],
 
     favouriteMeals: [Meal],
 

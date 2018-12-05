@@ -102,10 +102,15 @@ class App extends Component {
             .catch(err => Error(err))
     }
     handleSaveMealPlan = mealplan => {
-        
         logic.saveMealPlan(mealplan)
             .then(() => swal('Meal Plan successfully saved!'))
             .catch(err => Error(err))
+    }
+    handleOpenMealPlan = mealplan => {
+        
+        logic.openMealPlan(mealplan)
+        this.props.history.push('/mealplan')
+        
     }
 
     render() {
@@ -122,7 +127,7 @@ class App extends Component {
             <Route path='/custommealplan' render={() => logic.loggedIn ? <CustomMealPlan /> : <Redirect to='/' />} />
             <Route path='/addnewmeal' render={() => logic.loggedIn ? <AddNewMeal onAddNewMeal={this.handleAddNewMeal} /> : <Redirect to='/' />} />
             <Route path='/settings' render={() => <Settings onUpdateProfileClick={this.handleUpdateProfile} />} />
-            <Route path='/mymeals' render={() => logic.loggedIn ? <MyMeals /> : <Redirect to='/' />} />
+            <Route path='/mymeals' render={() => logic.loggedIn ? <MyMeals onOpenMealPlanClick={this.handleOpenMealPlan} /> : <Redirect to='/' />} />
             {logic.loggedIn && <FooterPage />}
 
         </div>

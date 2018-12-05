@@ -1,13 +1,16 @@
-.shopping-list-container {
+.shopping-list-whole-container {
     width: 100%;
     height: 100%;
     background-color: rgba(51, 51, 50, 0.9);
-    position: absolute;
+    position: fixed;
     overflow-y: hidden;
-    z-index: 100;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    font-size: 8px;
 }
-.shopping-list-menu-summary {
-    z-index: 120;
+.shopping-list-container {
+    z-index: 1200;
     margin-top: 5%;
     margin-left: 10%;
     margin-bottom: 10%;
@@ -16,24 +19,45 @@
     display: flex;
     flex-direction: column; 
     background-color: rgb(241, 238, 238);
-    position: absolute;
+    position: fixed;
     border-radius: 5px;
-    overflow: scroll;
+    /* overflow: scroll; */
+    align-items: flex-start;
 }
-.shopping-list-day-container {
+
+.shopping-list-container h1 {
+    font-size: 30px;
+    padding: 10px;
+}
+.shopping-list-ingredients {
     display: flex;
     flex-direction: row;
-    font-size: 2px;
+    align-content: start;
+    flex-wrap: wrap;    
+    padding: 5px;
 }
-.shopping-list-day-container h3 {
-    text-orientation: upright;
-    writing-mode: vertical-lr;
+.shopping-list-ingredients h5 {
+    font-weight: bold;
+    padding: 10px;
 }
-.shopping-list-meal-time {
+.shopping-list-ingredients p {
+    font-size: 14px;
+    padding: 5px 10px;
+}
+.meal-detail-right-container-button {
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
-.mealTimeName {
-    text-orientation: upright;
-    writing-mode: vertical-lr;
+.shopping-list-button {
+    color: white;
+    background-color: #F77B72;
+    /* width: 25%; */
+    height: 3%;
+    padding: 7px 20px;;
+    border-radius: 10px;
+    border: none;
+    margin: 3%;
+    font-size: 12px;
+    margin-left: 10px;
 }
+
