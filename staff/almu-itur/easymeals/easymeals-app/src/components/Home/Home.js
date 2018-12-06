@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-// import CustomMealPlanOptionPanel from '../CustomMealPlanOptionPanel/CustomMealPlanOptionPanel'
 import './Home.css'
 
 class Home extends Component {
 
-    state = { diet: '', plan: '', intolerances: [], customMealPlanOptionPanel: null }
+    state = { diet: '', plan: '', intolerances: [] }
 
     handleDietChange = event => {
         const diet = event.target.value
@@ -18,10 +17,6 @@ class Home extends Component {
 
         this.setState({ plan })
     }
-
-    // handleCustomMealPlanOptionalPanelClick = () => this.setState({ customMealPlanOptionPanel: true })
-
-    // handleCustomMealPlanOptionPanelClose = () => this.setState({ customMealPlanOptionPanel: null })
 
     handleIntolerancesChange = event => {
         const intoleranceUser = event.target.value
@@ -87,10 +82,10 @@ class Home extends Component {
                         <input type='radio' name='plan' id='diet' value='diet' onChange={this.handlePlanChange} />
                         <div className='home-image-container'><img className={(this.state.plan === 'diet') ? 'home-select-option-img-active' : 'home-select-option-img'} src={require('../../images/diet.png')} alt='diet-option' /></div>
                     </label>
-                    <label for='custom'>
+                    {/* <label for='custom'>
                         <input type='radio' name='plan' id='custom' value='custom' onChange={this.handlePlanChange} />
                         <div className='home-image-container'><img className={(this.state.plan === 'custom') ? 'home-select-option-img-active' : 'home-select-option-img'} src={require('../../images/custom.png')} alt='custom-option' /></div>
-                    </label>
+                    </label> */}
                 </div>
 
                 <div className="form-section-color">

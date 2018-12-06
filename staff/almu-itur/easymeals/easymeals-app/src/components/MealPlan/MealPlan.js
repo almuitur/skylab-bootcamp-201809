@@ -16,26 +16,6 @@ class MealPlan extends Component {
         { this.setState({ mealPlan }) }
     }  
 
-    // handleSearchbyKeywordChange = event => {
-    //     const keyword = event.target.value
-
-    //     this.setState ({ searchByKeyword: keyword })
-    // }
-
-    // handleSearchByKeyword = event => {
-    //     event.preventDefault()
-    //     debugger
-    // }
-
-    handleMealDetail = id => {
-        
-        const meal = logic.findMeal(id)
-        
-        { this.setState ({ mealDetail: meal }) }
-    }
-
-    handleCloseMealDetail = () => this.setState ({ mealDetail: null })
-
     handleMoveMeal = (id, name, status, previousState) => {
         let mealPlan = logic.moveMeal(id, name, status, previousState)
 
@@ -82,14 +62,6 @@ class MealPlan extends Component {
         this.props.onSaveMealPlanClick(mealplan)
     }
 
-    // handleNewRandomMeal = id => {
-    //     console.log('NewMeal')
-    // }
-
-    // handleFindMeal = (id) => {
-      
-    // }
-
     dragStart = (event, mealId, name, state) => {
         event.dataTransfer.setData('id', mealId)
         event.dataTransfer.setData('name', name)
@@ -123,14 +95,6 @@ class MealPlan extends Component {
 
             {this.state.mealPlan.name && <p className="meal-plan-name">{this.state.mealPlan.name.toUpperCase()}</p> }
 
-        {/* <div className="meal-plan-input">
-            <Input label="Search by keyword..." type="text" onChange={this.handleSearchbyKeywordChange} />
-            <button id="button-add" type="submit" onClick={this.handleSearchByKeyword}><i className="fas fa-plus"></i></button>
-            <div className="add-new-meal-ingredients-container">
-                            {this.state.mainIngredients && this.state.mainIngredients.map(ingredient => <Ingredient key={ingredient} name={ingredient} onRemoveIngredient={this.handleRemoveMainIngredient} />)}
-                        </div>
-        </div>  */}
-
             <div className="meal-plan-days-container">
                 {days.map(day => <h4 className="meal-plan-day">{day}</h4>)}
             </div>
@@ -140,7 +104,7 @@ class MealPlan extends Component {
                     {this.state.mealPlan.days && this.state.mealPlan.days.map((day, dayIndex) => {
                         return <div className="column" onDragOver={event => this.dragOver(event)} onDrop={event => this.onDrop(event, `${day.day}${mealTime}`)}>
                             <h2 className="day-meal">{mealTime.toUpperCase()}</h2>
-                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => <Meal key={meal.id} id={meal.id} name={meal.name} favouriteMeals = {this.state.favouriteMeals} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onFavouriteMealClick={this.handleFavouriteMealClick} onRemoveMealFromMealPlan={this.handleRemoveMealFromMealPlan} onAvoidMeal={this.handleAvoidMeal} onMealDetailClick={this.handleMealDetail} />)}
+                            {this.state.mealPlan.days && this.state.mealPlan.days[dayIndex][mealTime].length > 0 && this.state.mealPlan.days[dayIndex][mealTime].map(meal => meal.id && <Meal key={meal.id} id={meal.id} name={meal.name} favouriteMeals = {this.state.favouriteMeals} status={meal.status} draggable onDragStart={event => this.dragStart(event, meal.id, meal.name, meal.status)} onNewMeal={this.handleNewMeal} onFindMeal={this.handleFindMeal} onFavouriteMealClick={this.handleFavouriteMealClick} onRemoveMealFromMealPlan={this.handleRemoveMealFromMealPlan} onAvoidMeal={this.handleAvoidMeal} />)}
                         </div>
                     })}
                 </div>

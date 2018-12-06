@@ -6,7 +6,7 @@ function Error(props) {
     return <div>
         {swal({
             title: "Error",
-            text: props.message || props,
+            text: props.message || props ,
             icon: "warning",
             button: "OK"
         })}

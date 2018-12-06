@@ -5,13 +5,9 @@ const jwt = require('jsonwebtoken')
 const bearerTokenParser = require('../utils/bearer-token-parser')
 const jwtVerifier = require('./jwt-verifier')
 const routeHandler = require('./route-handler')
-// const Busboy = require('busboy')
-// const fs = require('fs')
 
 const jsonBodyParser = bodyParser.json()
-
 const router = express.Router()
-
 const { env: { JWT_SECRET } } = process
 
 router.post('/users', jsonBodyParser, (req, res) => {
@@ -48,7 +44,7 @@ router.post('/auth', jsonBodyParser, (req, res) => {
 })
 
 router.get('/users/:id', [bearerTokenParser, jwtVerifier], (req, res) => {
-    debugger
+    
     routeHandler(() => {
         const { params: { id }, sub } = req
 
@@ -158,12 +154,12 @@ router.get('/users/:id/meal/:mealId', [bearerTokenParser, jwtVerifier], (req, re
 })
 
 router.post('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    debugger
+    
     routeHandler(() => {
         const { params: { id }, sub, body: { mealplan } } = req
 
         if (id !== sub) throw Error('token sub does not match user id')
-        debugger
+        
         return logic.addMealplan(id, mealplan)
             .then(() =>
                 res.json({

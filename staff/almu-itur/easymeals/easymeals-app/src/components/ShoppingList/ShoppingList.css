@@ -18,16 +18,22 @@
     height: 80%;
     display: flex;
     flex-direction: column; 
-    background-color: rgb(241, 238, 238);
+    background-color: rgb(245, 241, 241);
     position: fixed;
     border-radius: 5px;
-    /* overflow: scroll; */
-    align-items: flex-start;
+    align-items: center;
 }
-
+.shopping-list-container-content {
+    width: 95%;
+    height: 95%;
+    overflow: auto;
+    
+}
 .shopping-list-container h1 {
     font-size: 30px;
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #F77B72;
 }
 .shopping-list-ingredients {
     display: flex;
@@ -38,26 +44,29 @@
 }
 .shopping-list-ingredients h5 {
     font-weight: bold;
-    padding: 10px;
+    font-size: 18px;
+    
 }
 .shopping-list-ingredients p {
     font-size: 14px;
     padding: 5px 10px;
+    background-color: rgb(240, 212, 212);
+    border-radius: 8px;
+    margin-right: 3px;
 }
-.meal-detail-right-container-button {
+.shopping-list-container-button {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
 }
 .shopping-list-button {
     color: white;
     background-color: #F77B72;
-    /* width: 25%; */
-    height: 3%;
     padding: 7px 20px;;
     border-radius: 10px;
     border: none;
-    margin: 3%;
     font-size: 12px;
-    margin-left: 10px;
+    margin-bottom: 10px;
 }
 

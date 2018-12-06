@@ -21,6 +21,7 @@ const logic = {
     },
 
     authenticateUser(username, password) {
+        
         validate([{ key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
         return (async () => {
@@ -87,6 +88,7 @@ const logic = {
     },
 
     searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
+        debugger
         validate([
             { key: 'category', value: category, type: 'string' },
             { key: 'subcategory', value: subcategory, type: 'string' },
@@ -97,7 +99,7 @@ const logic = {
             { key: 'isLight', value: isLight, type: 'boolean', optional: true },
             { key: 'season', value: season, type: 'string' }
         ])
-
+        
         const queryObject = {
             category,
             subcategory,
@@ -106,14 +108,14 @@ const logic = {
             season: { $in: season }
         }
 
-        if (isSpecialMeal) queryObject.isSpecialMeal = isSpecialMeal
+        if (isSpecialMeal!=null) queryObject.isSpecialMeal = isSpecialMeal
 
         if (isCold) queryObject.isCold = isCold
 
         if (isLight) queryObject.isLight = isLight
 
         return (async () => {
-
+            
             const meals = await Meal.find(queryObject).lean()
             //     //TO CONSIDER
             //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
@@ -133,7 +135,6 @@ const logic = {
                 meal = meals[Math.floor(Math.random() * meals.length)]
                 delete meal.__v
                 let copy = Object.assign({}, meal)
-                debugger
                 meal.id = copy._id.toString()
                 delete meal._id
             }

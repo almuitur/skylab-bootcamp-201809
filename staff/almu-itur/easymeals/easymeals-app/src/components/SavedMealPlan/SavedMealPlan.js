@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import logic from '../../logic'
 import './SavedMealPlan.css'
 

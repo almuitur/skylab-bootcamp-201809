@@ -1,6 +1,5 @@
 import Error from './components/Error/Error'
 import data from './data'
-// import { debug } from 'util';
 
 const logic = {
     _userId: sessionStorage.getItem('userId') || null,
@@ -57,14 +56,13 @@ const logic = {
         })
             .then(res => res.json())
             .then(res => {
+                
                 if (res.error) throw Error(res.error)
-
+                
                 const { id, token } = res.data
 
                 this._userId = id
                 this._token = token
-
-                debugger
 
                 sessionStorage.setItem('userId', id)
                 sessionStorage.setItem('token', token)
@@ -129,7 +127,7 @@ const logic = {
             .then(res => res.json())
             .then(res => {
                 if (res.error) throw Error(res.error)
-                debugger
+                
                 return res.data
             })
     },
@@ -139,14 +137,6 @@ const logic = {
         //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecialMeal: false } },
         //retrieve status, retrieve search params, random search different than current id, remove old, add new, save to session storage
     },
-
-    isEmpty(obj) {
-        for(var key in obj) {
-            if(obj.hasOwnProperty(key))
-                return false
-        }
-        return true
-     },
 
     createMealPlan(diet, _plan, intolerances) {
         if (typeof diet !== 'string') throw Error(`diet is not a string`)
@@ -172,7 +162,7 @@ const logic = {
             diet = 3
             break
         }
-        
+        debugger
         if (plan) {
             
             let mealsWeek = plan.map(day => {
@@ -180,9 +170,9 @@ const logic = {
                     const season = 'autum'
                     const category = meal.search.category
                     const subcategory = meal.search.subcategory
-                    const isSpecialMeal =  meal.isSpecialMeal ? meal.isSpecial : null
-                    const isCold = meal.isCold ? meal.isCold : null
-                    const isLight = meal.isLight ? meal.isLight : null
+                    const isSpecialMeal =  meal.search.isSpecialMeal
+                    const isCold = meal.search.isCold
+                    const isLight = meal.search.isLight
                     
 
                     return fetch(`${this.url}/meals/find/${this._userId}`, {
@@ -203,10 +193,6 @@ const logic = {
                             let resObject = {}
                             resObject.day = meal.day
                             resObject[meal.mealTime] = res.data
-                            
-                            // TODO move to server side
-                            delete resObject[meal.mealTime]._id
-                            delete resObject[meal.mealTime].__v
 
                             return resObject
                         })
@@ -218,7 +204,6 @@ const logic = {
 
             return Promise.all(mealsWeek)
                 .then((res) => {
-                    debugger
 
                     const _mealPlan = {}
                     
@@ -248,17 +233,11 @@ const logic = {
                             meal.lunch && _day.lunch.push(meal.lunch)
                             meal.afternoon && _day.afternoon.push(meal.afternoon)
                             meal.dinner && _day.dinner.push(meal.dinner)
-                            
-                            // meal.breakfast && meal.breakfast.id!==undefined && _day.breakfast.push(meal)
-                            // meal.midMorning && meal.midMorning.id!==undefined && _day.midMorning.push(meal.midMorning)
-                            // meal.lunch && meal.lunch.id!==undefined && _day.lunch.push(meal.lunch)
-                            // meal.afternoon && meal.afternoon.id!==undefined && _day.afternoon.push(meal.afternoon)
-                            // meal.dinner && meal.dinner.id!==undefined && _day.dinner.push(meal.dinner)
+                     
                         })
                         return _day
                     })
                     
-                    debugger
                     const mealPlan = JSON.stringify(_mealPlan)
                     sessionStorage.setItem('mealPlan', mealPlan)
 
@@ -276,7 +255,7 @@ const logic = {
     },
 
     saveMealPlan(mealplan) {
-        debugger
+        
         if (mealplan === undefined) throw Error(`mealplan is undefined`)
         
         return fetch(`${this.url}/users/${this._userId}/savedmealplan`, {

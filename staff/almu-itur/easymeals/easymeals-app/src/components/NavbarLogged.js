@@ -19,23 +19,17 @@ class NavbarLogged extends React.Component {
                     <Collapse isOpen={this.state.collapse} navbar>
                         <NavbarNav right>
                             <NavItem>
-                                <a className="nav-link waves-effect waves-light" onClick={this.props.onMealsPlanClick}>Meal Plan</a>
+                                <a className="nav-link waves-effect waves-light" onClick={this.props.onMealsPlanClick}>MEALPLAN</a>
                             </NavItem>
                             <NavItem>
-                                <a className="nav-link waves-effect waves-light" onClick={this.props.onCustomMealPlanClick}>Custom Meal Plan</a>
+                                <a className="nav-link waves-effect waves-light" onClick={this.props.onAddNewMealClick}>ADD MEAL</a>
                             </NavItem>
-                            <NavItem>
-                                <a className="nav-link waves-effect waves-light" onClick={this.props.onAddNewMealClick}>Add New Meal</a>
-                            </NavItem>
-                            {/* <NavItem>
-                              <NavLink to="#">Add Meal</NavLink>
-                          </NavItem> */}
                             <NavItem>
                                 <Dropdown>
-                                    <DropdownToggle nav caret>Profile</DropdownToggle>
+                                    <DropdownToggle nav caret>PROFILE</DropdownToggle>
                                     <DropdownMenu>
                                         <DropdownItem href="#" onClick={this.props.onMyMealsClick}>My Meals</DropdownItem>
-                                        <DropdownItem href="#" onClick={this.props.onSettingsClick}>Settings</DropdownItem>
+                                        {/* <DropdownItem href="#" onClick={this.props.onSettingsClick}>Settings</DropdownItem> */}
                                         <DropdownItem href="#" onClick={this.props.onLogoutClick}>Logout</DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>

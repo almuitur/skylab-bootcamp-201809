@@ -24,15 +24,14 @@ describe('logic', () => {
     describe('meals', () => {
         describe('search random meal', () => {
             it('should succeed on correct data', async () => {
-                const res = await logic.searchRandomMeal('carb', 'pizza', 3, false, null, ['gluten', 'lactose'], false, 'autum')
-                
+                const res = await logic.searchRandomMeal('carb', 'pizza', 0, false, null, ['gluten', 'lactose'], false, 'autum')
 
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
                 expect(res.category).to.equal('carb')
                 expect(res._doc.subcategory).to.equal('pizza')
                 expect(res.intolerances.length).to.equal(0)
-                expect(res.diet).to.be.at.most(3)
+                expect(res.diet).to.be(0)
                 expect(res.isSpecialMeal).to.equal(false)
                 expect(res.intolerances).not.to.contain('gluten')
                 expect(res.intolerances).not.to.contain('lactose')
@@ -259,9 +258,7 @@ describe('logic', () => {
             expect(_user.savedMealPlans.length).to.equal(1)
             expect(_user.savedMealPlans[0].name).to.equal('balanced')
             expect(_user.savedMealPlans[0].date).to.equal('1543838559813')
-            // expect(_user.savedMealPlans[0].day).to.be.instanceOf(Array)
-            // expect(_user.savedMealPlans[0].day[0].day).to.equal('monday')
-            // expect(_user.savedMealPlans[0].day[0]).to.equal('monday')
+            
             })
 
             it('should fail on incorrect user id', async () => {
@@ -334,20 +331,20 @@ describe('logic', () => {
                 }
             }) 
 
-            // it('should fail on mealplan different than object', async () => {
-            //     mealplan = []
-            //     try {
-            //         await logic.addMealplan(_user.id, mealplan)
-            //         expect(true).to.be.false
-            //     } catch (err) {
-            //         expect(err).to.be.instanceof(TypeError)
-            //         expect(err.message).to.equal(`${mealplan} is not an object`)
-            //     }
-            // })
+            it('should fail on mealplan different than object', async () => {
+                mealplan = []
+                try {
+                    await logic.addMealplan(_user.id, mealplan)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(TypeError)
+                    expect(err.message).to.equal(`${mealplan} is not an object`)
+                }
+            })
 
         })
 
-        false && describe('remove mealplan', () => {
+        describe('remove mealplan', () => {
             let user, mealplan            
 
             beforeEach(async () => {
@@ -385,9 +382,9 @@ describe('logic', () => {
         })
     })
 
-    false && beforeEach(() => Promise.all([User.deleteMany()]))
+    beforeEach(() => Promise.all([User.deleteMany()]))
 
-    false && describe('user', () => {
+    describe('user', () => {
         describe('register', () => {
             let name, surname, username, password
 

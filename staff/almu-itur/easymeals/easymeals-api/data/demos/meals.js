@@ -13,7 +13,23 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/12/18/12/53/corn-flakes-1915632_1280.jpg'
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Low sugar rice flakes',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'flake',
+    mainIngredients: ['rice'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
 })
 
 meals.push({
@@ -29,7 +45,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2012/02/22/09/06/food-15183_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -45,7 +61,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/05/10/19/49/oatmeal-761434_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -61,7 +77,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://frommybowl.com/easy-muesli-recipe/',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/05/02/20/09/muesli-750365_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -97,6 +113,102 @@ meals.push({
 })
 
 meals.push({
+    name: 'Special veggie toast',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['avocado', 'kale', 'tomato', 'mushroom','bread'],
+    optionalIngredients: ['olive oil', 'salt'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
+    name: 'Gluten free Special veggie toast',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['avocado', 'kale', 'tomato', 'mushroom','bread'],
+    optionalIngredients: ['olive oil', 'salt'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
+    name: 'Pan tumaca',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['tomato', 'olive oil'],
+    optionalIngredients: ['salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
+    name: 'Gluten free Pan tumaca',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['tomato', 'olive oil'],
+    optionalIngredients: ['salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
+    name: 'Veggie toast',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['lettuce', 'tomato'],
+    optionalIngredients: ['olive oil', 'salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
+    name: 'Veggie toast (gluten-free)',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'toast',
+    mainIngredients: ['lettuce', 'tomato'],
+    optionalIngredients: ['olive oil', 'salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: 'https://images.pexels.com/photos/1321942/pexels-photo-1321942.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
+meals.push({
     name: 'Avocado toast with egg',
     diet: 1,
     category: 'carb',
@@ -109,7 +221,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/08/23/18/02/food-2673724_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -125,7 +237,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/08/23/18/02/food-2673724_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -141,7 +253,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/03/17/18/17/bruschetti-2152337_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -157,7 +269,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/03/17/18/17/bruschetti-2152337_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -186,10 +298,10 @@ meals.push({
     isSpecialMeal: false,
     isColdDish: false,
     intolerances: ['gluten', 'lactose'],
-    isLight: false,
+    isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://www.edamam.com/recipe/margarita-pizza-ab4fe63f36e9e6aed813bb0bf1295b02/margarita+pizza',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/10/17/20/22/margherita-pizza-993274_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -202,10 +314,10 @@ meals.push({
     isSpecialMeal: false,
     isColdDish: false,
     intolerances: ['lactose'],
-    isLight: false,
+    isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://www.edamam.com/recipe/margarita-pizza-a5ac95f928dbcb07e25d1ce7aa5c4a6e/margarita+pizza/gluten-free',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/10/17/20/22/margherita-pizza-993274_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -218,10 +330,10 @@ meals.push({
     isSpecialMeal: false,
     isColdDish: false,
     intolerances: [],
-    isLight: false,
+    isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://www.edamam.com/recipe/margarita-pizza-a5ac95f928dbcb07e25d1ce7aa5c4a6e/margarita+pizza/gluten-free',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/10/17/20/22/margherita-pizza-993274_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -237,7 +349,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/04/08/13/13/pasta-712664_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -253,7 +365,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/04/08/13/13/pasta-712664_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -269,7 +381,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://www.edamam.com/recipe/ramp-pesto-pasta-ee678be26349cac7dddb2cb70a16887a/pasta+pesto',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/11/08/07/38/pasta-1033216_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -285,7 +397,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: 'https://www.edamam.com/recipe/ramp-pesto-0ad0d2c971532de1b042d51c42210855/pasta+pesto/gluten-free',
-    imageLink: 'https://cdn.pixabay.com/photo/2015/11/08/07/38/pasta-1033216_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -400,6 +512,23 @@ meals.push({
     imageLink: 'https://images.pexels.com/photos/315708/pexels-photo-315708.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 })
 
+
+meals.push({
+    name: 'Crepe (gluten and lactose free)',
+    diet: 0,
+    category: 'carb',
+    subcategory: 'pancake',
+    mainIngredients: ['gluten-free flour', 'almond milk', 'almond butter'],
+    optionalIngredients: ['salt'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: ['lactose'],
+    isLight: false,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: 'https://www.edamam.com/recipe/basic-buckwheat-crepes-recipes-691424a3d15620c78f3d3626a1fd4f46/crepe/gluten-free',
+    imageLink: 'https://images.pexels.com/photos/315708/pexels-photo-315708.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+})
+
 meals.push({
     name: 'Green beans and potatoes',
     diet: 0,
@@ -409,6 +538,22 @@ meals.push({
     optionalIngredients: ['salt', 'olive oil'],
     isSpecialMeal: false,
     isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: 'https://www.edamam.com/recipe/italian-green-beans-and-potatoes-022a855c240097c58b3d20d299d87ffc/green+beans+potato',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Mango ceviche',
+    diet: 0,
+    category: 'vegetable',
+    subcategory: 'none',
+    mainIngredients: ['mango', 'tomato', 'mustard', 'onion', 'soy sauce'],
+    optionalIngredients: ['salt', 'olive oil', 'black pepper'],
+    isSpecialMeal: true,
+    isColdDish: true,
     intolerances: [],
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
@@ -529,6 +674,38 @@ meals.push({
 })
 
 meals.push({
+    name: 'Skimmed dairy milk',
+    diet: 1,
+    category: 'milk',
+    subcategory: 'none',
+    mainIngredients: ['skimmed dairy milk'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: ['lactose'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Soy milk',
+    diet: 0,
+    category: 'milk',
+    subcategory: 'none',
+    mainIngredients: ['soy milk'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
     name: 'Almond milk',
     diet: 0,
     category: 'milk',
@@ -589,7 +766,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/09/29/08/33/apple-1702316_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -605,7 +782,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2018/06/06/10/43/apple-3457644_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -621,7 +798,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/01/20/15/06/orange-1995056_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -637,7 +814,7 @@ meals.push({
     isLight: true,
     season: ['autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/10/07/13/36/tangerines-1721590_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -653,7 +830,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/03/05/23/02/breakfast-1239438_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -669,7 +846,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2018/10/29/10/01/bananas-3780761_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -685,7 +862,7 @@ meals.push({
     isLight: true,
     season: ['summer'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/08/02/22/46/peach-2573836_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -701,7 +878,7 @@ meals.push({
     isLight: true,
     season: ['summer'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2017/07/20/18/40/apricots-2523272_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -717,7 +894,7 @@ meals.push({
     isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/12/20/21/43/orange-juice-1921548_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -747,6 +924,54 @@ meals.push({
     isColdDish: true,
     intolerances: [],
     isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Strawberry low-fat milkshake',
+    diet: 1,
+    category: 'fruit',
+    subcategory: 'milkshake',
+    mainIngredients: ['strawberry', 'skimmed dairy milk'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Strawberry milkshake',
+    diet: 0,
+    category: 'fruit',
+    subcategory: 'milkshake',
+    mainIngredients: ['strawberry', 'almond milk'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Hazelnut and chocolate milkshake',
+    diet: 0,
+    category: 'fruit',
+    subcategory: 'milkshake',
+    mainIngredients: ['cocoa', 'hazelnut milk'],
+    optionalIngredients: [],
+    isSpecialMeal: true,
+    isColdDish: true,
+    intolerances: [],
+    isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
     imageLink: ''
@@ -791,6 +1016,70 @@ meals.push({
     subcategory: 'panini',
     mainIngredients: ['bread', 'ham'],
     optionalIngredients: ['tomato', 'olive oil'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Avocado panini',
+    diet: 0,
+    category: 'snack',
+    subcategory: 'panini',
+    mainIngredients: ['bread', 'avocado'],
+    optionalIngredients: ['tomato', 'olive oil', 'salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Gluten-free Avocado panini',
+    diet: 0,
+    category: 'snack',
+    subcategory: 'panini',
+    mainIngredients: ['gluten free bread', 'avocado'],
+    optionalIngredients: ['tomato', 'olive oil', 'salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Veggie panini',
+    diet: 0,
+    category: 'snack',
+    subcategory: 'panini',
+    mainIngredients: ['bread', 'tomato', 'lettuce'],
+    optionalIngredients: ['olive oil', 'salt'],
+    isSpecialMeal: false,
+    isColdDish: true,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Gluten-free veggie panini',
+    diet: 0,
+    category: 'snack',
+    subcategory: 'panini',
+    mainIngredients: ['gluten free bread', 'tomato', 'lettuce'],
+    optionalIngredients: ['olive oil', 'salt'],
     isSpecialMeal: false,
     isColdDish: true,
     intolerances: [],
@@ -1005,7 +1294,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/12/11/23/13/burger-1900560_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -1021,7 +1310,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/12/11/23/13/burger-1900560_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -1037,7 +1326,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/11/23/18/31/close-up-1854245_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -1053,7 +1342,7 @@ meals.push({
     isLight: false,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
-    imageLink: 'https://cdn.pixabay.com/photo/2016/11/23/18/31/close-up-1854245_1280.jpg'
+    imageLink: ''
 })
 
 meals.push({
@@ -1223,10 +1512,26 @@ meals.push({
     subcategory: 'fish',
     mainIngredients: ['seabream', 'potato', 'olive oil'],
     optionalIngredients: ['salt', 'lemon', 'black pepper', 'onion'],
-    isSpecialMeal: false,
+    isSpecialMeal: true,
     isColdDish: false,
     intolerances: [],
-    isLight: false,
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Grilled Seabream',
+    diet: 2,
+    category: 'protein',
+    subcategory: 'fish',
+    mainIngredients: ['seabream', 'olive oil'],
+    optionalIngredients: ['salt', 'lemon', 'black pepper', 'onion'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
     imageLink: ''
@@ -1247,6 +1552,87 @@ meals.push({
     recipeLink: '',
     imageLink: ''
 })
+
+meals.push({
+    name: 'Grilled tofu',
+    diet: 0,
+    category: 'protein',
+    subcategory: 'fish',
+    mainIngredients: ['tofu'],
+    optionalIngredients: ['olive oil', 'salt', 'lemon', 'black pepper'],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Portobello steak',
+    diet: 0,
+    category: 'protein',
+    subcategory: 'meat',
+    mainIngredients: ['portobello mushroom'],
+    optionalIngredients: ['olive oil', 'salt', 'black pepper'],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Veggie hamburger',
+    diet: 0,
+    category: 'protein',
+    subcategory: 'meat',
+    mainIngredients: ['bread', 'lentils', 'onion', 'red pepper', 'carrot'],
+    optionalIngredients: ['olive oil', 'salt', 'black pepper'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: ['gluten'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Vegan omelette',
+    diet: 0,
+    category: 'protein',
+    subcategory: 'egg',
+    mainIngredients: ['chickpea flour', 'potato', 'onion'],
+    optionalIngredients: ['olive oil', 'salt', 'black pepper'],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Gluten free Veggie hamburger',
+    diet: 0,
+    category: 'protein',
+    subcategory: 'meat',
+    mainIngredients: ['gluten free bread', 'lentils', 'onion', 'red pepper', 'carrot'],
+    optionalIngredients: ['olive oil', 'salt', 'black pepper'],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
 
 meals.push({
     name: 'Salmon',
@@ -1441,6 +1827,38 @@ meals.push({
 })
 
 meals.push({
+    name: 'Vegan apple muffin',
+    diet: 0,
+    category: 'pastissery',
+    subcategory: 'pastry',
+    mainIngredients: ['buckwheat flour', 'yeast', 'baking soda', 'cinnamon', 'sugar', 'coconut milk', 'banana', 'applesauce'],
+    optionalIngredients: ['honey'],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: false,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Vegan chocolate cake',
+    diet: 0,
+    category: 'pastissery',
+    subcategory: 'cake',
+    mainIngredients: ['almond milk', 'applesauce', 'brewed coffee', 'coconut oil', 'vanilla', 'buckwheat flour', 'baking soda', 'baking powder'],
+    optionalIngredients: [],
+    isSpecialMeal: true,
+    isColdDish: false,
+    intolerances: [],
+    isLight: false,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
     name: 'Chocolate croissant',
     diet: 1,
     category: 'pastissery',
@@ -1525,12 +1943,44 @@ meals.push({
     diet: 1,
     category: 'dairy',
     subcategory: 'yoghurt',
-    mainIngredients: ['dairy milk'],
+    mainIngredients: ['yoghurt'],
     optionalIngredients: [],
     isSpecialMeal: false,
     isColdDish: false,
     intolerances: ['lactose'],
     isLight: false,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Skimmed natural yoghurt',
+    diet: 1,
+    category: 'dairy',
+    subcategory: 'yoghurt',
+    mainIngredients: ['skimmed yoghurt'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: ['lactose'],
+    isLight: true,
+    season: ['spring', 'summer', 'autum', 'winter'],
+    recipeLink: '',
+    imageLink: ''
+})
+
+meals.push({
+    name: 'Soy chocolate yoghurt',
+    diet: 0,
+    category: 'dairy',
+    subcategory: 'yoghurt',
+    mainIngredients: ['soy chocolate yoghurt'],
+    optionalIngredients: [],
+    isSpecialMeal: false,
+    isColdDish: false,
+    intolerances: [],
+    isLight: true,
     season: ['spring', 'summer', 'autum', 'winter'],
     recipeLink: '',
     imageLink: ''

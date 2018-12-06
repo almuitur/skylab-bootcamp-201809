@@ -59,12 +59,12 @@ class CustomMealPlan extends Component {
     }
 
     handleSaveCustomMealPlan = () => {
-        debugger
+        
     }
 
     handleSubmit = event => {
         event.preventDefault()
-        debugger
+        
         // const { customMealPlan, name } = this.state
 
         // this.props.onSaveMealPlan(customMealPlan, name)
