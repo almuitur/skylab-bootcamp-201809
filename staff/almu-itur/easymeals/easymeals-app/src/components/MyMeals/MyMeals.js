@@ -6,11 +6,16 @@ import './MyMeals.css'
 
 class MyMeals extends Component {
 
-    state = { savedMealPlans: [], savedCustomPlans: [], favouriteMeals: [], mealsToAvoid: [] }
+    state = { savedMealPlans: [], favouriteMeals: [], mealsToAvoid: [] }
 
     componentDidMount() {
         logic.retrieveUser()
-            .then((res) => this.setState({ favouriteMeals: res.favouriteMeals, savedMealPlans: res.savedMealPlans, savedCustomPlans: res.savedCustomPlans, mealsToAvoid: res.mealsToAvoid }))
+            .then((res) => {
+                
+                if(res.savedMealPlans && res.savedMealPlans.length) this.setState({ savedMealPlans: res.savedMealPlans })
+                if(res.favouriteMeals && res.favouriteMeals.length) this.setState ({ favouriteMeals: res.favouriteMeals })
+                // if(res.mealsToAvoid && res.mealsToAvoid.length) this.setState ({ mealsToAvoid: res.mealsToAvoid })
+            })
             .catch(err => Error(err))
     }
     handleOpenMealPlan = mealplan => {
@@ -24,22 +29,17 @@ class MyMeals extends Component {
          .catch(err => Error(err))    
     }
 
-    handleDeleteSavedCustomPlan = id => {
-         // logic.deleteSavedCustomPlan(id)
-        //  .then(res => this.setState({ savedCustomPlans: res }))
-        //  .catch(err => Error(err))    
-    }
-
-    handleRemoveFavouriteMeal = id => {
-        logic.removeMealFromFavourites(id)
-        .then(res => this.setState({ favouriteMeals: res }))
+    handleRemoveFavouriteMeal = mealId => {
+        logic.removeMealFromFavourites(mealId)
+        .then(() => logic.retrieveUser())
+        .then((res) => this.setState ({ favouriteMeals: res.favouriteMeals }))
         .catch(err => Error(err))    
     }
 
     handleRemoveMealToAvoid = id => {
-        // logic.removeAvoidMeal(id)
-        //  .then(res => this.setState({ mealsToAvoid: res }))
-        //  .catch(err => Error(err))    
+        logic.removeMealFromAvoidList(id)
+            .then(res => this.setState({ mealsToAvoid: res }))
+            .catch(err => Error(err))    
     }
 
     render() {
@@ -53,22 +53,16 @@ class MyMeals extends Component {
                 : <div className="my-meals-item-saved">{this.state.savedMealPlans.map(mealPlan => <SavedMealPlan key={mealPlan.date} mealplan={mealPlan} id={mealPlan.date} name={mealPlan.name} date={mealPlan.date} deleteSaved={this.handleDeleteSavedMealPlan} openMealPlan = { this.handleOpenMealPlan}/>)}</div> }
             </div>
 
-            {/* <h3 className="my-meals-title">My Custom Plans</h3>
-            <div>
-                {!this.state.savedCustomPlans ? <div><h1 className="my-meals-nothing-found">No favourite custom meal plans saved yet.</h1></div>
-                : <div className="my-meals-item-saved">{this.state.savedCustomPlans.map(customPlan => <Saved key={customPlan.id} id={customPlan.id} name={customPlan.name} deleteSaved={this.handleDeleteSaved} />)}</div> }   
-            </div> */}
-
             <h3 className="my-meals-title">My Favourite Meals</h3>
             <div>
-                {(!this.state.favouriteMeals || this.state.favouriteMeals.length) ? <div><h1 className="my-meals-nothing-found">No favourite meals added yet to your favourite meals list.</h1></div> 
-                : <div className="my-meals-item-saved">{this.state.favouriteMeals.map(meal => <SavedMeal key={meal.id} id={meal.id} deleteSaved={this.handleRemoveFavouriteMeal} />)}</div>} 
+                {(!this.state.favouriteMeals || !this.state.favouriteMeals.length) ? <div><h1 className="my-meals-nothing-found">No favourite meals added yet to your favourite meals list.</h1></div> 
+                : <div className="my-meals-item-saved">{this.state.favouriteMeals.map(mealId => <SavedMeal key={mealId} id={mealId} deleteSaved={this.handleRemoveFavouriteMeal} />)}</div>} 
             </div>
 
             {/* <h3 className="my-meals-title">Meals to Avoid</h3>
             <div>
-                {!this.state.mealsToAvoid ? <div><h1 className="my-meals-nothing-found">No meals added yet to your meals to avoid list.</h1></div>
-                : <div className="my-meals-favourite-meals">{this.state.mealsToAvoid.map(meal => <Saved key={meal.id} id={meal.id} img={meal.imageLink} name={meal.name} deleteFavouriteMeal={this.handleDeleteFavouriteMeal} />)}</div>} }
+                {(!this.state.mealsToAvoid || !this.state.mealsToAvoid.length) ? <div><h1 className="my-meals-nothing-found">No meals added yet to your meals to avoid list.</h1></div>
+                : <div className="my-meals-item-saved">{this.state.mealsToAvoid.map(meal => <SavedMeal key={meal.id} id={meal.id} deleteSaved={this.handleRemoveMealToAvoid} />)}</div>} 
             </div > */}
 
         </div>

@@ -24,14 +24,14 @@ describe('logic', () => {
     describe('meals', () => {
         describe('search random meal', () => {
             it('should succeed on correct data', async () => {
-                const res = await logic.searchRandomMeal('carb', 'pizza', 0, false, null, ['gluten', 'lactose'], false, 'autum')
+                const res = await logic.searchRandomMeal('carb', 'pizza', 0, false, false, ['gluten', 'lactose'], false, 'autum')
 
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
                 expect(res.category).to.equal('carb')
-                expect(res._doc.subcategory).to.equal('pizza')
+                expect(res.subcategory).to.equal('pizza')
                 expect(res.intolerances.length).to.equal(0)
-                expect(res.diet).to.be(0)
+                expect(res.diet).to.equal(0)
                 expect(res.isSpecialMeal).to.equal(false)
                 expect(res.intolerances).not.to.contain('gluten')
                 expect(res.intolerances).not.to.contain('lactose')
@@ -40,7 +40,7 @@ describe('logic', () => {
             })
 
             it('should return object with undefined id if there are no results for the search', async () => {
-                const res = await logic.searchRandomMeal('carb', 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                const res = await logic.searchRandomMeal('carb', 'fruit', 0, true, false, ['gluten'], true, 'autum')
 
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
@@ -58,7 +58,7 @@ describe('logic', () => {
 
             it('should fail on undefined category', async () => {
                 try {
-                    await logic.searchRandomMeal(undefined, 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal(undefined, 'fruit', 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -68,7 +68,7 @@ describe('logic', () => {
 
             it('should fail on undefined subcategory', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', undefined, 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', undefined, 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -98,7 +98,7 @@ describe('logic', () => {
 
             it('should fail on empty category', async () => {
                 try {
-                    await logic.searchRandomMeal('', 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('', 'fruit', 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(ValueError)
@@ -108,7 +108,7 @@ describe('logic', () => {
 
             it('should fail on empty subcategory', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', '', 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', '', 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(ValueError)
@@ -118,7 +118,7 @@ describe('logic', () => {
 
             it('should fail on empty diet', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', 'pizza', '', true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', 'pizza', '', true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -128,7 +128,7 @@ describe('logic', () => {
 
             it('should fail on empty season', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', 'pizza', 0, true, null, ['gluten'], true, '')
+                    await logic.searchRandomMeal('carb', 'pizza', 0, true, false, ['gluten'], true, '')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(ValueError)
@@ -138,7 +138,7 @@ describe('logic', () => {
            
             it('should fail on category different than string', async () => {
                 try {
-                    await logic.searchRandomMeal(0, 'fruit', 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal(0, 'fruit', 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -148,7 +148,7 @@ describe('logic', () => {
 
             it('should fail on subcategory different than string', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', 0, 0, true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', 0, 0, true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -158,7 +158,7 @@ describe('logic', () => {
 
             it('should fail on diet different than number', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', 'pizza', 'diet', true, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', 'pizza', 'diet', true, false, ['gluten'], true, 'autum')
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(TypeError)
@@ -168,7 +168,7 @@ describe('logic', () => {
 
             it('should fail on isSpecialMeal different than boolean', async () => {
                 try {
-                    await logic.searchRandomMeal('carb', 'pizza', 0, 0, null, ['gluten'], true, 'autum')
+                    await logic.searchRandomMeal('carb', 'pizza', 0, 0, false, ['gluten'], true, 'autum')
 
                     expect(true).to.be.false
                 } catch (err) {

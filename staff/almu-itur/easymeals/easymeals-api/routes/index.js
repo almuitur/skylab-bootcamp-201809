@@ -144,7 +144,7 @@ router.get('/users/:id/meal/:mealId', [bearerTokenParser, jwtVerifier], (req, re
 
         if (id !== sub) throw Error('token sub does not match user id')
 
-        return logic.retrieveMeal(id, mealId)
+        return logic.retrieveMeal(mealId)
             .then(meal =>
                 res.json({
                     data: meal

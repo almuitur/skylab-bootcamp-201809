@@ -132,12 +132,6 @@ const logic = {
             })
     },
 
-    findNewRandomMeal() {
-        // monday = [
-        //     { day: 'monday', mealTime: 'breakfast', search: { category: 'carb', subcategory: 'flake', isSpecialMeal: false } },
-        //retrieve status, retrieve search params, random search different than current id, remove old, add new, save to session storage
-    },
-
     createMealPlan(diet, _plan, intolerances) {
         if (typeof diet !== 'string') throw Error(`diet is not a string`)
         if (typeof _plan !== 'string') throw Error(`plan is not a string`)
@@ -162,7 +156,7 @@ const logic = {
             diet = 3
             break
         }
-        debugger
+        
         if (plan) {
             
             let mealsWeek = plan.map(day => {
@@ -303,23 +297,23 @@ const logic = {
 
     },
 
-    findMeal(id) {
+    // findMeal(id) {
 
-        let _mealPlan = sessionStorage.getItem('mealPlan')
-        let mealPlan = JSON.parse(_mealPlan)
+    //     let _mealPlan = sessionStorage.getItem('mealPlan')
+    //     let mealPlan = JSON.parse(_mealPlan)
 
-        const mealsDay = ['breakfast', 'midMorning', 'lunch', 'afternoon', 'dinner']
-        let _meal = {}
+    //     const mealsDay = ['breakfast', 'midMorning', 'lunch', 'afternoon', 'dinner']
+    //     let _meal = {}
 
-        mealsDay.map(mealTime => {
-            mealPlan.days.map(day => {
-                day[mealTime] && day[mealTime].filter(meal => {
-                    if (meal.id === id) _meal = meal
-                })
-            })
-        })
-        return _meal
-    },
+    //     mealsDay.map(mealTime => {
+    //         mealPlan.days.map(day => {
+    //             day[mealTime] && day[mealTime].filter(meal => {
+    //                 if (meal.id === id) _meal = meal
+    //             })
+    //         })
+    //     })
+    //     return _meal
+    // },
 
     addMealToFavourites(favouriteMealId) {
 

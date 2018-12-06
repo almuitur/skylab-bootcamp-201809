@@ -227,8 +227,9 @@ const logic = {
             const user = await User.findById(id)
 
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            if (!user.favouriteMeals.includes(favouriteMealId)) throw new NotFoundError(`meal with id ${id} not found`)
             if (!user.favouriteMeals) throw Error(`favourites list of user with id ${id} is empty`)
+            debugger
+            if (!(user.favouriteMeals.includes(favouriteMealId))) throw new NotFoundError(`meal with id ${id} not found`)
 
             user.favouriteMeals = user.favouriteMeals.filter(id => {
                 if (id !== favouriteMealId) return id
@@ -279,15 +280,13 @@ const logic = {
         })()
     },
 
-    retrieveMeal(id, mealId) {
+    retrieveMeal(mealId) {
         validate([{ key: 'mealId', value: mealId, type: 'string' }])
 
         return (async () => {
             const meal = await Meal.findById(mealId, { '_id': 0, __v: 0 }).lean()
 
             if (!meal) throw new NotFoundError(`meal with id ${mealId} not found`)
-
-            meal.id = id
 
             return meal
         })()

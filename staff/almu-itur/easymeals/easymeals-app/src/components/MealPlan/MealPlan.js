@@ -32,14 +32,15 @@ class MealPlan extends Component {
         // const checked = event.target.checked
 
         // if(checked)
+        debugger
         logic.addMealToFavourites(id)
         // else
         // logic.removeMealFromFavourites(id)
         
-        let _mealPlan = sessionStorage.getItem('mealPlan')
-        let mealPlan = JSON.parse(_mealPlan)
+        // let _mealPlan = sessionStorage.getItem('mealPlan')
+        // let mealPlan = JSON.parse(_mealPlan)
 
-        { this.setState({ mealPlan }) }
+        // { this.setState({ mealPlan }) }
     }
 
     handleAvoidMeal = id => {
