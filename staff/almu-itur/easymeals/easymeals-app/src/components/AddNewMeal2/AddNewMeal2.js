@@ -1,22 +1,21 @@
 import React, { Component } from 'react'
-import { Container, Input, MDBInput } from "mdbreact"
+import { Input } from 'mdbreact'
 import Ingredient from '../Ingredient/Ingredient'
 import Error from '../Error/Error'
-import './AddNewMeal.css'
-import '../AddNewMeal2/AddNewMeal2.css'
+import './AddNewMeal2.css'
 
 class AddNewMeal extends Component {
 
-    state = { name: '', diet: '', category: '', subcategory: '', mainIngredients: [], optionalIngredients: [], isSpecialMeal: '', isColdDish: '', intolerances: [], isLight: '', season: [], recipelink: '', mainIngredient: '', optionalIngredient: '', radioDiet: '' }
+    state = { name: '', diet: '', category: '', subcategory: '', mainIngredients: [], optionalIngredients: [], isSpecialMeal: '', isColdDish: '', intolerances: [], isLight: '', season: [], recipelink: '', mainIngredient: '', optionalIngredient: '' }
 
     handleNameChange = event => {
         const name = event.target.value
         this.setState({ name })
     }
 
-    handleDietChange = nr => {
-        // const diet = event.target.value
-        this.setState({ diet: nr })
+    handleDietChange = event => {
+        const diet = event.target.value
+        this.setState({ diet })
     }
 
     handleCategoryChange = event => {
@@ -151,12 +150,13 @@ class AddNewMeal extends Component {
     }
 
     render() {
-        return <div>
+
+        return <div className='add-new-meal-container'>
             <h1>Add a Meal</h1>
             <form onSubmit={this.handleSubmit} >
                 <div className="add-new-meal-name">
                     <h2 className='add-new-meal-title'>Name your meal:</h2>
-                    <MDBInput label="Name of your meal" onChange={this.handleNameChange} />
+                    <input className="add-new-meal-name-input" type="text" onChange={this.handleNameChange}></input>
                 </div>
 
                 <h2 className='add-new-meal-title'>Choose the type of diet it belongs to:</h2>
@@ -202,18 +202,14 @@ class AddNewMeal extends Component {
                     </div>
                 </div>
 
-                 <h2 className='add-new-meal-title'>Special meal:</h2>
-                <div className="isSpecialMeal">
-                    <h2 className='add-new-meal-title'>Is this meal suitable for special occasions (like for a first date)?</h2>
-                    <input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealtrue" name="specialmeal" /><label for="specialmealtrue">YES</label>
-                    <input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealfalse" name="specialmeal" /><label for="specialmealfalse">NO</label>
-                </div>
-
-                <h2 className='add-new-meal-title'>Cold meal:</h2>
-                <div className="isCold">
-                    <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
-                    <input onClick={this.handleIsColdChange} type="radio" id="iscoldtrue" name="iscold" /><label for="iscoldtrue">YES</label>
-                    <input onClick={this.handleIsColdChange} type="radio" id="iscoldfalse" name="iscold" /><label for="iscoldfalse">NO</label>
+                <div className="add-new-meal-name">
+                    <h2 className='add-new-meal-title'>Is this meal suitable for special occasions?</h2>
+                        <label for='isSpecialMeal'>True
+                            <input type='radio' name='isSpecialMeal' id='isSpecialMeal' value='true' onChange={this.handleIsSpecialMealChange} />
+                        </label>
+                        <label for='isSpecialMeal'>False
+                            <input type='radio' name='isSpecialMeal' id='isSpecialMeal' value='false' onChange={this.handleIsSpecialMealChange} />
+                        </label> 
                 </div>
 
                 <h2 className='add-new-meal-title'>Select intolerance of the meal:</h2>
@@ -229,11 +225,9 @@ class AddNewMeal extends Component {
                     </label>
                 </div>
 
-                 <h2 className='add-new-meal-title'>Is this a light meal (low in fat)?</h2>
-                <div className="isLight">
-                    <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
-                    <input onClick={this.handleisLightChange} type="radio" id="islight" name="isLight" /><label for="isLighttrue">YES</label>
-                    <input onClick={this.handleisLightChange} type="radio" id="islightfalse" name="isLight" /><label for="isLightfalse">NO</label>
+                <div className="add-new-meal-name">
+                    <h2 className='add-new-meal-title'>Add a link to the recipe of your meal:</h2>
+                    <input className="add-new-meal-name-input" type="text" onChange={this.handlehandleLinkRecipeChange}></input>
                 </div>
 
                 <h2 className='add-new-meal-title'>Select which seasons you can eat this meal:</h2>
@@ -256,14 +250,10 @@ class AddNewMeal extends Component {
                     </label>
                 </div>
 
-                <div className="add-new-meal-name">
-                    <h2 className='add-new-meal-title'>Add a link to the recipe of the meal (optional):</h2>
-                    <MDBInput label="Link to recipe" onChange={this.handleLinkRecipeChange} />
-                </div>
-
+                <div className='add-new-meal-button-container'><button className='home-create-button' type='submit'>ADD MEAL</button></div>
             </form>
         </div>
     }
 }
 
-export default AddNewMeal
+export default AddNewMeal2

@@ -25,8 +25,9 @@ class MyMeals extends Component {
 
     handleDeleteSavedMealPlan = id => {
         logic.deleteSavedMealPlan(id)
-         .then(res => this.setState({ savedMealPlans: res }))
-         .catch(err => Error(err))    
+        .then(() => logic.retrieveUser())
+        .then((res) => this.setState ({ savedMealPlans: res.savedMealPlans }))
+        .catch(err => Error(err))       
     }
 
     handleRemoveFavouriteMeal = mealId => {

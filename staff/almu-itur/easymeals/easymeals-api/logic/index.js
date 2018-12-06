@@ -5,6 +5,20 @@ const fs = require('fs')
 const path = require('path')
 
 const logic = {
+
+    //ESTO SERA GENERATE MENU
+    /**
+     * Registers a user
+     * 
+     * @param {string} id The user id
+     * @param {string} text The postit text
+     * 
+     * @throws {TypeError} On non-string user id, or non-string postit text
+     * @throws {Error} On empty or blank user id or postit text
+     * 
+     * @returns {Promise} Resolves on correct data, rejects on wrong user id
+     */
+    
     registerUser(name, surname, username, password) {
         validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
@@ -46,49 +60,49 @@ const logic = {
         })()
     },
 
-    updateUser(id, name, surname, username, oldPassword, newPassword, confirmNewPassword) {
-        validate([
-            { key: 'id', value: id, type: 'string' },
-            { key: 'name', value: name, type: 'string', optional: true },
-            { key: 'surname', value: surname, type: 'string', optional: true },
-            { key: 'username', value: username, type: 'string', optional: true },
-            { key: 'oldPassword', value: oldPassword, type: 'string' },
-            { key: 'newPassword', value: newPassword, type: 'string', optional: true },
-            { key: 'confirmNewPassword', value: confirmNewPassword, type: 'string', optional: true }
-        ])
+    // updateUser(id, name, surname, username, oldPassword, newPassword, confirmNewPassword) {
+    //     validate([
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'name', value: name, type: 'string', optional: true },
+    //         { key: 'surname', value: surname, type: 'string', optional: true },
+    //         { key: 'username', value: username, type: 'string', optional: true },
+    //         { key: 'oldPassword', value: oldPassword, type: 'string' },
+    //         { key: 'newPassword', value: newPassword, type: 'string', optional: true },
+    //         { key: 'confirmNewPassword', value: confirmNewPassword, type: 'string', optional: true }
+    //     ])
 
-        return (async () => {
+    //     return (async () => {
 
-            const user = await User.findById(id)
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
 
-            if (user.password !== oldPassword) throw new AuthError('invalid password')
+    //         if (user.password !== oldPassword) throw new AuthError('invalid password')
 
-            if (username) {
-                const _user = await User.findOne({ username })
+    //         if (username) {
+    //             const _user = await User.findOne({ username })
 
-                if (_user) throw new AlreadyExistsError(`username ${username} already exists`)
+    //             if (_user) throw new AlreadyExistsError(`username ${username} already exists`)
 
-                name != null && (user.name = name)
-                surname != null && (user.surname = surname)
-                user.username = username
+    //             name != null && (user.name = name)
+    //             surname != null && (user.surname = surname)
+    //             user.username = username
 
-                if (newPassword != null && newPassword !== confirmNewPassword) throw new ValueError('new passwords provided do not match')
-                user.password = newPassword
+    //             if (newPassword != null && newPassword !== confirmNewPassword) throw new ValueError('new passwords provided do not match')
+    //             user.password = newPassword
 
-                await user.save()
-            } else {
-                name != null && (user.name = name)
-                surname != null && (user.surname = surname)
-                newPassword != null && (user.password = newPassword)
-            }
-            await user.save()
-        })()
-    },
+    //             await user.save()
+    //         } else {
+    //             name != null && (user.name = name)
+    //             surname != null && (user.surname = surname)
+    //             newPassword != null && (user.password = newPassword)
+    //         }
+    //         await user.save()
+    //     })()
+    // },
 
     searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
-        debugger
+        
         validate([
             { key: 'category', value: category, type: 'string' },
             { key: 'subcategory', value: subcategory, type: 'string' },
@@ -186,16 +200,16 @@ const logic = {
         })()
     },
 
-    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
-        validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
+    // addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
+    //     validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
-        return (async () => {
+    //     return (async () => {
 
-            meal = new Meal({ name, diet, category, subcategory, mainIngredients, optionalIngredients, isSpecialMeal, isColdDish, intolerances, isLight, season, recipeLink, imageLink, status })
+    //         meal = new Meal({ name, diet, category, subcategory, mainIngredients, optionalIngredients, isSpecialMeal, isColdDish, intolerances, isLight, season, recipeLink, imageLink, status })
 
-            await meal.save()
-        })()
-    },
+    //         await meal.save()
+    //     })()
+    // },
 
     addFavouriteMeal(id, favouriteMealId) {
 
@@ -239,46 +253,46 @@ const logic = {
         })()
     },
 
-    addAvoidMeal(id, avoidMealId) {
+    // addAvoidMeal(id, avoidMealId) {
 
-        validate([
-            { key: 'id', value: id, type: 'string' },
-            { key: 'avoidMealId', value: avoidMealId, type: 'string' },
-        ])
-        return (async () => {
+    //     validate([
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'avoidMealId', value: avoidMealId, type: 'string' },
+    //     ])
+    //     return (async () => {
 
-            const user = await User.findById(id)
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            if (user.mealsToAvoid.includes(avoidMealId)) throw new AlreadyExistsError(`meal already added to avoid meals list`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (user.mealsToAvoid.includes(avoidMealId)) throw new AlreadyExistsError(`meal already added to avoid meals list`)
 
-            user.mealsToAvoid.push(avoidMealId)
+    //         user.mealsToAvoid.push(avoidMealId)
 
-            await user.save()
-        })()
-    },
+    //         await user.save()
+    //     })()
+    // },
 
-    removeAvoidMeal(id, avoidMealId) {
+    // removeAvoidMeal(id, avoidMealId) {
 
-        validate([
-            { key: 'id', value: id, type: 'string' },
-            { key: 'avoidMealId', value: avoidMealId, type: 'string' },
-        ])
-        return (async () => {
+    //     validate([
+    //         { key: 'id', value: id, type: 'string' },
+    //         { key: 'avoidMealId', value: avoidMealId, type: 'string' },
+    //     ])
+    //     return (async () => {
 
-            const user = await User.findById(id)
+    //         const user = await User.findById(id)
 
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            if (!user.mealsToAvoid.includes(avoidMealId)) throw new NotFoundError(`meal with id ${id} not found`)
-            if (!user.mealsToAvoid) throw Error(`avoids list of user with id ${id} is empty`)
+    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
+    //         if (!user.mealsToAvoid.includes(avoidMealId)) throw new NotFoundError(`meal with id ${id} not found`)
+    //         if (!user.mealsToAvoid) throw Error(`avoids list of user with id ${id} is empty`)
 
-            user.mealsToAvoid = user.mealsToAvoid.filter(id => {
-                if (id !== avoidMealId) return id
-            })
+    //         user.mealsToAvoid = user.mealsToAvoid.filter(id => {
+    //             if (id !== avoidMealId) return id
+    //         })
 
-            await user.save()
-        })()
-    },
+    //         await user.save()
+    //     })()
+    // },
 
     retrieveMeal(mealId) {
         validate([{ key: 'mealId', value: mealId, type: 'string' }])
@@ -290,320 +304,7 @@ const logic = {
 
             return meal
         })()
-    },
-
-
-    // listCollaborators(id) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const collaborators = await Promise.all(user.collaborators.map(async collaboratorId => await User.findById(collaboratorId)))
-
-    //         return collaborators.map(({ id, username }) => ({ id, username }))
-    //     })()
-    // },
-
-    // saveUserPhoto(id, file, filename) {
-    //     const folder = `data/users/${id}`
-
-    //     return new Promise((resolve, reject) => {
-    //         try {
-    //             if (!fs.existsSync(folder)) {
-    //                 fs.mkdirSync(folder)
-    //             } else {
-    //                 const files = fs.readdirSync(folder)
-
-    //                 files.forEach(file => fs.unlinkSync(path.join(folder, file)))
-    //             }
-
-    //             const pathToFile = path.join(folder, filename)
-
-    //             const ws = fs.createWriteStream(pathToFile)
-
-    //             file.pipe(ws)
-
-    //             resolve()
-    //         } catch (err) {
-    //             reject(err)
-    //         }
-    //     })
-    // },
-
-    // retrieveUserPhoto(id) {
-    //     const folder = `data/users/${id}`
-
-    //     return new Promise((resolve, reject) => {
-    //         try {
-    //             let file
-
-    //             if (!fs.existsSync(folder)) {
-    //                 file = 'data/users/default/profile.png'
-    //             } else {
-    //                 const files = fs.readdirSync(folder)
-
-    //                 file = `data/users/${id}/${files[0]}`
-    //             }
-
-    //             const rs = fs.createReadStream(file)
-
-    //             resolve(rs)
-    //         } catch (err) {
-    //             reject(err)
-    //         }
-    //     })
-    // },
-
-    //ESTO SERA GENERATE MENU
-    /**
-     * Adds a postit
-     * 
-     * @param {string} id The user id
-     * @param {string} text The postit text
-     * 
-     * @throws {TypeError} On non-string user id, or non-string postit text
-     * @throws {Error} On empty or blank user id or postit text
-     * 
-     * @returns {Promise} Resolves on correct data, rejects on wrong user id
-     */
-    // addPostit(id, text) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' },
-    //         { key: 'text', value: text, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const postit = new Postit({ text, user: user.id })
-
-    //         await postit.save()
-    //     })()
-    // },
-
-    // saveMenu(userId, menu) {
-    //     validate([
-    //         { key: 'userId', value: id, type: 'string' },
-    //         // { key: 'text', value: text, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const Menu = new Menu({ text, user: user.id })
-
-    //         await menu.save()
-    //     })()
-    // },
-
-    //ESTO SERA VER MENU AL CLICKAR EN UN SAVED MENU
-    // listPostits(id) {
-    // validate([
-    //     { key: 'id', value: id, type: 'string' }
-    // ])
-
-    // return (async () => {
-    //     const user = await User.findById(id).lean()
-
-    //     if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //     const postits = await Postit.find({ $or: [{ user: user._id }, { assignedTo: user._id }] })
-    //         .lean()
-
-    //     postits.forEach(postit => {
-    //         postit.id = postit._id.toString()
-
-    //         delete postit._id
-
-    //         postit.user = postit.user.toString()
-
-    //         if (postit.assignedTo)
-    //             postit.assignedTo = postit.assignedTo.toString()
-
-    //         return postit
-    //     })
-
-    //     return postits
-    // })()
-
-    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
-
-    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
-
-    //     return User.findById(id)
-    //         .lean()
-    //         .then(user => {
-    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //             // return user.postits.map(({ _id, text }) => { id: _id.toString(), text })
-    //             return user.postits.map(postit => {
-    //                 postit.id = postit._id.toString()
-
-    //                 delete postit._id
-
-    //                 return postit
-    //             })
-    //         })
-    // },
-
-    /**
-     * Removes a postit
-     * 
-     * @param {string} id The user id
-     * @param {string} postitId The postit id
-     * 
-     * @throws {TypeError} On non-string user id, or non-string postit id
-     * @throws {Error} On empty or blank user id or postit text
-     * 
-     * @returns {Promise} Resolves on correct data, rejects on wrong user id, or postit id
-     */
-    // removePostit(id, postitId) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' },
-    //         { key: 'postitId', value: postitId, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
-
-    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
-
-    //         await postit.remove()
-    //     })()
-    // },
-
-    // removePostit(id, postitId) {
-    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
-
-    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
-
-    //     if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
-
-    //     if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
-
-    //     return User.findById(id)
-    //         .then(user => {
-    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //             const { postits } = user
-
-    //             const index = postits.findIndex(postit => postit.id === postitId)
-
-    //             if (index < 0) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
-
-    //             postits.splice(index, 1)
-
-    //             return user.save()
-    //         })
-    // },
-
-    // modifyPostit(id, postitId, text) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' },
-    //         { key: 'postitId', value: postitId, type: 'string' },
-    //         { key: 'text', value: text, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
-
-    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
-
-    //         postit.text = text
-
-    //         await postit.save()
-    //     })()
-    // },
-
-    // modifyPostit(id, postitId, text) {
-    //     if (typeof id !== 'string') throw TypeError(`${id} is not a string`)
-
-    //     if (!id.trim().length) throw new ValueError('id is empty or blank')
-
-    //     if (typeof postitId !== 'string') throw TypeError(`${postitId} is not a string`)
-
-    //     if (!postitId.trim().length) throw new ValueError('postit id is empty or blank')
-
-    //     if (typeof text !== 'string') throw TypeError(`${text} is not a string`)
-
-    //     if (!text.trim().length) throw new ValueError('text is empty or blank')
-
-    //     return User.findById(id)
-    //         .then(user => {
-    //             if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //             const { postits } = user
-
-    //             const postit = postits.find(postit => postit.id === postitId)
-
-    //             if (!postit) throw new NotFoundError(`postit with id ${postitId} not found in user with id ${id}`)
-
-    //             postit.text = text
-
-    //             return user.save()
-    //         })
-    // },
-
-    // movePostit(id, postitId, status) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' },
-    //         { key: 'postitId', value: postitId, type: 'string' },
-    //         { key: 'status', value: status, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
-
-    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
-
-    //         postit.status = status
-
-    //         await postit.save()
-    //     })()
-    // },
-
-    // assignPostit(id, postitId, collaboratorId) {
-    //     validate([
-    //         { key: 'id', value: id, type: 'string' },
-    //         { key: 'postitId', value: postitId, type: 'string' },
-    //         { key: 'collaboratorId', value: collaboratorId, type: 'string' }
-    //     ])
-
-    //     return (async () => {
-    //         const user = await User.findById(id)
-
-    //         if (!user) throw new NotFoundError(`user with id ${id} not found`)
-
-    //         const postit = await Postit.findOne({ user: user._id, _id: postitId })
-
-    //         if (!postit) throw new NotFoundError(`postit with id ${postitId} not found`)
-
-    //         postit.assignedTo = collaboratorId
-
-    //         await postit.save()
-    //     })()
-    // }
+    }
 }
 
 module.exports = logic
