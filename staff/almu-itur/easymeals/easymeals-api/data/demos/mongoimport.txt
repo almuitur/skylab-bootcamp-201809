@@ -1,1 +1,0 @@
-λ mongoimport -h ds227594.mlab.com:27594 -d easymeals -c easymeals -u user -p user123 --file c:\users\almui\bootcamp\collab\skylab-bootcamp-201809\staff\almu-itur\easymeals\easymeals-api\data\demos\meals.js --jsonArray
