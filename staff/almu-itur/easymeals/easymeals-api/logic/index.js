@@ -6,19 +6,17 @@ const path = require('path')
 
 const logic = {
 
-    //ESTO SERA GENERATE MENU
     /**
      * Registers a user
-     * 
-     * @param {string} id The user id
-     * @param {string} text The postit text
-     * 
-     * @throws {TypeError} On non-string user id, or non-string postit text
-     * @throws {Error} On empty or blank user id or postit text
-     * 
-     * @returns {Promise} Resolves on correct data, rejects on wrong user id
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} username 
+     * @param {string} password 
+     * @throws {AlreadyExistsError in case of username already registered}
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
      */
-    
     registerUser(name, surname, username, password) {
         validate([{ key: 'name', value: name, type: 'string' }, { key: 'surname', value: surname, type: 'string' }, { key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
 
@@ -33,7 +31,16 @@ const logic = {
             await user.save()
         })()
     },
-
+    
+    /**
+     * Authenticates a user
+     * @param {string} username 
+     * @param {string} password 
+     * @throws {AuthError in case of wrong combination of username and password}
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
+     */
     authenticateUser(username, password) {
         
         validate([{ key: 'username', value: username, type: 'string' }, { key: 'password', value: password, type: 'string' }])
@@ -47,6 +54,12 @@ const logic = {
         })()
     },
 
+    /**
+     * Retrieves a user
+     * @param {string} id 
+     * @throws {NotFoundError in case of user id not found}
+     * @returns {Promise}
+     */
     retrieveUser(id) {
         validate([{ key: 'id', value: id, type: 'string' }])
         return (async () => {
@@ -101,6 +114,20 @@ const logic = {
     //     })()
     // },
 
+    /**
+     * Search of a random meal
+     * @param {string} category 
+     * @param {string} subcategory 
+     * @param {number} diet 
+     * @param {boolean} isSpecialMeal 
+     * @param {boolean} isCold 
+     * @param {array} intolerances 
+     * @param {boolean} isLight 
+     * @param {string} season 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
+     */
     searchRandomMeal(category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season) {
         
         validate([
@@ -134,7 +161,7 @@ const logic = {
             //     //TO CONSIDER
             //     // const user = await User.findById(id, { '_id': 0, password: 0, postits: 0, __v: 0 }).lean()
             //     // if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            //     // user.id = id
+            //     user.savedMealPlans = user.savedMealPlans.filter(_mealplan => (_mealplan.date !== mealplanId))
             //     //name != null && (user.name = name)
 
             //CHECKS IF RANDOM MEAL IS CONTAINED WITHIN AVOID MEALS LIST OF USER
@@ -152,7 +179,6 @@ const logic = {
                 meal.id = copy._id.toString()
                 delete meal._id
             }
-
             //     counter++
             // }
             // while(user.mealsToAvoid.includes(meal.id) && counter < 10)          
@@ -161,9 +187,19 @@ const logic = {
         })()
     },
 
+    /**
+     * Add meal plan to favourites
+     * @param {string} id 
+     * @param {object} mealplan 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {NotFoundError in case of user id not found}
+     * @throws {ValueError in case of user id not valid}
+     * @returns {Promise}
+     */
     addMealplan(id, mealplan) {
         validate([
-            { key: 'id', value: id, type: 'string' },
+            { key: 'id', value: id, type: 'string' }
             // { key: 'mealplan', value: mealplan, type: Object },
         ])
 
@@ -175,13 +211,25 @@ const logic = {
 
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
             // if (user.savedMealPlans.includes(mealplan)) throw new AlreadyExistsError(`mealplan already added to saved meal plan list`) //NOT WORKING, REVIEW!!!
-
+            
+            mealplan.date = Date.now()
+            
             user.savedMealPlans.push(mealplan)
 
             await user.save()
         })()
     },
 
+    /**
+     * Deletes meal plan from favourites
+     * @param {string} id 
+     * @param {number} mealplanId 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {NotFoundError in case of user id not found}
+     * @throws {Error in case of user favourite list being empty}
+     * @returns {Promise}
+     */
     removeMealplan(id, mealplanId) {
         validate([
             { key: 'id', value: id, type: 'string' },
@@ -190,10 +238,10 @@ const logic = {
         return (async () => {
 
             const user = await User.findById(id)
-            if (!user) throw new NotFoundError(`user with id ${id} not found`)
-            // if (!user.savedMealPlans.includes(mealplan)) throw new NotFoundError(`mealplan not found in saved meal plan list`) //NOT WORKING, REVIEW!!
-            if (!user.savedMealPlans) throw Error(`user with id ${id} has no saved mealplans`)
 
+            if (!user) throw new NotFoundError(`user with id ${id} not found`)
+            if (!user.savedMealPlans) throw Error(`user with id ${id} has no saved mealplans`)
+            
             user.savedMealPlans = user.savedMealPlans.filter(_mealplan => (_mealplan.date !== mealplanId))
 
             await user.save()
@@ -211,6 +259,15 @@ const logic = {
     //     })()
     // },
 
+    /**
+     * Adds a meal to favourites
+     * @param {string} id 
+     * @param {string} favouriteMealId 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {NotFoundError in case of user id not found}
+     * @returns {Promise}
+     */
     addFavouriteMeal(id, favouriteMealId) {
 
         validate([
@@ -230,6 +287,16 @@ const logic = {
         })()
     },
 
+    /**
+     * Removes a meal from favourites
+     * @param {string} id 
+     * @param {string} favouriteMealId 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {NotFoundError in case of user id not found}
+     * @throws {Error in case of user favourite list being empty}
+     * @returns {Promise}
+     */
     removeFavouriteMeal(id, favouriteMealId) {
 
         validate([
@@ -242,7 +309,7 @@ const logic = {
 
             if (!user) throw new NotFoundError(`user with id ${id} not found`)
             if (!user.favouriteMeals) throw Error(`favourites list of user with id ${id} is empty`)
-            debugger
+            
             if (!(user.favouriteMeals.includes(favouriteMealId))) throw new NotFoundError(`meal with id ${id} not found`)
 
             user.favouriteMeals = user.favouriteMeals.filter(id => {
@@ -294,6 +361,14 @@ const logic = {
     //     })()
     // },
 
+    /**
+     * Retrieves a meal
+     * @param {string} mealId
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {NotFoundError in case of meal id not found}
+     * @returns {Promise} 
+     */
     retrieveMeal(mealId) {
         validate([{ key: 'mealId', value: mealId, type: 'string' }])
 

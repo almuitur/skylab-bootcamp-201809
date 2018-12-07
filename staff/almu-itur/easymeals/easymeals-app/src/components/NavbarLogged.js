@@ -21,9 +21,9 @@ class NavbarLogged extends React.Component {
                             <NavItem>
                                 <a className="nav-link waves-effect waves-light" onClick={this.props.onMealsPlanClick}>MEALPLAN</a>
                             </NavItem>
-                            <NavItem>
+                            {/* <NavItem>
                                 <a className="nav-link waves-effect waves-light" onClick={this.props.onAddNewMealClick}>ADD MEAL</a>
-                            </NavItem>
+                            </NavItem> */}
                             <NavItem>
                                 <Dropdown>
                                     <DropdownToggle nav caret>PROFILE</DropdownToggle>

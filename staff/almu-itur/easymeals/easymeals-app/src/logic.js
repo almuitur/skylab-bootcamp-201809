@@ -10,6 +10,17 @@ const logic = {
 
     url: 'NO-URL',
 
+     /*** Sends POST request with user info to register
+     * Registers a user
+     * @param {string} name 
+     * @param {string} surname 
+     * @param {string} username 
+     * @param {string} password 
+     * @throws {AlreadyExistsError in case of username already registered}
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
+     */
     registerUser(name, surname, username, password, repeatPassword) {
         
         if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
@@ -39,6 +50,15 @@ const logic = {
             })
     },
 
+      /**Sends POST request with user info to log in
+     * Logs a user in
+     * @param {string} username 
+     * @param {string} password 
+     * @throws {AuthError in case of wrong combination of username and password}
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
+     */
     login(username, password) {
 
         if (typeof username !== 'string') throw TypeError(`${username} is not a string`)
@@ -69,10 +89,17 @@ const logic = {
             })
     },
 
+    /** Gets information about user being logged in
+     * Returns either user id or false
+     * @returns user id
+     */
     get loggedIn() {
         return !!this._userId
     },
 
+    /**Sets variables to null and save them to session storage
+     * Logs out
+     */
     logout() {
         this._mealPlan = null
         this._userId = null
@@ -87,36 +114,39 @@ const logic = {
         sessionStorage.removeItem('intolerances')
     },
 
-    updateUser(name, surname, username, oldPassword, newPassword, confirmNewPassword) {
+    // updateUser(name, surname, username, oldPassword, newPassword, confirmNewPassword) {
 
-        if (typeof name !== 'string') throw TypeError(`${name} is not a string (name)`)
-        if (typeof surname !== 'string') throw TypeError(`${surname} is not a string (surname)`)
-        if (typeof username !== 'string') throw TypeError(`${username} is not a string (username)`)
-        if (typeof oldPassword !== 'string') throw TypeError(`${oldPassword} is not a string (current password)`)
-        if (typeof newPassword !== 'string') throw TypeError(`${newPassword} is not a string (new password)`)
-        if (typeof confirmNewPassword !== 'string') throw TypeError(`${confirmNewPassword} is not a string (new password confirmation)`)
+    //     if (typeof name !== 'string') throw TypeError(`${name} is not a string (name)`)
+    //     if (typeof surname !== 'string') throw TypeError(`${surname} is not a string (surname)`)
+    //     if (typeof username !== 'string') throw TypeError(`${username} is not a string (username)`)
+    //     if (typeof oldPassword !== 'string') throw TypeError(`${oldPassword} is not a string (current password)`)
+    //     if (typeof newPassword !== 'string') throw TypeError(`${newPassword} is not a string (new password)`)
+    //     if (typeof confirmNewPassword !== 'string') throw TypeError(`${confirmNewPassword} is not a string (new password confirmation)`)
 
-        if (!name.trim()) throw Error('name is empty or blank')
-        if (!surname.trim()) throw Error('surname is empty or blank')
-        if (!username.trim()) throw Error('username is empty or blank')
-        if (!oldPassword.trim()) throw Error('oldPassword is empty or blank')
-        if (!newPassword.trim()) throw Error('newPassword is empty or blank')
-        if (!confirmNewPassword.trim()) throw Error('confirmNewPassword is empty or blank')
+    //     if (!name.trim()) throw Error('name is empty or blank')
+    //     if (!surname.trim()) throw Error('surname is empty or blank')
+    //     if (!username.trim()) throw Error('username is empty or blank')
+    //     if (!oldPassword.trim()) throw Error('oldPassword is empty or blank')
+    //     if (!newPassword.trim()) throw Error('newPassword is empty or blank')
+    //     if (!confirmNewPassword.trim()) throw Error('confirmNewPassword is empty or blank')
 
-        return fetch(`${this.url}/users/${this._userId}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Bearer ${this._token}`
-            },
-            body: JSON.stringify({ name, surname, username, oldPassword, newPassword, confirmNewPassword })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) throw Error(res.error)
-            })
-    },
+    //     return fetch(`${this.url}/users/${this._userId}`, {
+    //         method: 'PATCH',
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Authorization': `Bearer ${this._token}`
+    //         },
+    //         body: JSON.stringify({ name, surname, username, oldPassword, newPassword, confirmNewPassword })
+    //     })
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             if (res.error) throw Error(res.error)
+    //         })
+    // },
 
+    /**Sends GET request with user id to retrieve user information
+     * @returns {Promise}
+     */
     retrieveUser() {
         return fetch(`${this.url}/users/${this._userId}`, {
             method: 'GET',
@@ -132,6 +162,16 @@ const logic = {
             })
     },
 
+    /****Sends POST request with search parameters to find a meal
+     * Finds a random meal that complies with the given search parameters
+     * @param {string} diet 
+     * @param {array} _plan 
+     * @param {array} intolerances
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @throws {Error in case of empty mandatory variables}
+     * @returns {Promise} 
+     */
     createMealPlan(diet, _plan, intolerances) {
         if (typeof diet !== 'string') throw Error(`diet is not a string`)
         if (typeof _plan !== 'string') throw Error(`plan is not a string`)
@@ -202,6 +242,7 @@ const logic = {
                     const _mealPlan = {}
                     
                     _mealPlan.date = Date.now()
+                    
                     _mealPlan.name = _plan
                     _mealPlan.days = [[]]
 
@@ -248,6 +289,11 @@ const logic = {
 
     },
 
+     /****Sends POST request to save a meal plan
+     * Saves meal plan to user
+     * @param {object} mealplan 
+     * @returns {Promise} 
+     */
     saveMealPlan(mealplan) {
         
         if (mealplan === undefined) throw Error(`mealplan is undefined`)
@@ -266,12 +312,15 @@ const logic = {
             })
     },
 
+    /****Sends DELETE request to delete a meal plan
+     * Deletes meal plan from user
+     * @param {number} mealplanId 
+     * @returns {Promise} 
+     */
     deleteSavedMealPlan(mealplanId) {
-        
+        if (typeof mealplanId !== 'number') throw Error(`mealplanId is not a number`)
         if (mealplanId === undefined) throw Error(`mealplanId is undefined`)
-        if (mealplanId === '') throw Error(`mealplanId is empty`)
-        // if (mealplanId.trim()) throw Error(`mealplanId is blank`)
-
+        if (mealplanId === '') throw Error(`mealplanId is empty or blank`)
         
         return fetch(`${this.url}/users/${this._userId}/savedmealplan/`, {
             method: 'DELETE',
@@ -287,6 +336,12 @@ const logic = {
             })
     },
 
+     /****
+     * Retrieves meal plan from session storage
+     * @param {object} mealplanId 
+     * @throws Error on undefined meal plan
+     * @throws Error on empty meal plan
+     */
     openMealPlan(_mealplan) {
         
         if (_mealplan === undefined) throw Error(`mealplan is undefined`)
@@ -315,6 +370,13 @@ const logic = {
     //     return _meal
     // },
 
+      /**Sends POST request to save a meal
+     * Adds a meal to favourites
+     * @param {string} favouriteMealId 
+     * @throws {TypeError in case of wrong input data}
+     * @throws {ValueError in case of input data empty or blank}
+     * @returns {Promise}
+     */
     addMealToFavourites(favouriteMealId) {
 
         if (favouriteMealId === undefined) throw Error(`favouriteMealId is undefined`)
@@ -335,6 +397,11 @@ const logic = {
             })
     },
 
+    /****Sends DELETE request to delete a meal
+     * Deletes meal from user
+     * @param {number} favouriteMealId 
+     * @returns {Promise} 
+     */
     removeMealFromFavourites(favouriteMealId) {
         if (favouriteMealId === undefined) throw Error(`favouriteMealId is undefined`)
         if (favouriteMealId === '') throw Error(`favouriteMealId is empty`)
@@ -354,45 +421,52 @@ const logic = {
             })
     },
 
-    addMealToAvoidList(avoidMealId) {
+    // addMealToAvoidList(avoidMealId) {
 
-        if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
-        if (avoidMealId === '') throw Error(`avoidMealId is empty`)
-        if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
+    //     if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
+    //     if (avoidMealId === '') throw Error(`avoidMealId is empty`)
+    //     if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
         
-        return fetch(`${this.url}/users/${this._userId}/avoid`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Bearer ${this._token}`
-            },
-            body: JSON.stringify({ avoidMealId })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) throw Error(res.error)
-            })
-    },
+    //     return fetch(`${this.url}/users/${this._userId}/avoid`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Authorization': `Bearer ${this._token}`
+    //         },
+    //         body: JSON.stringify({ avoidMealId })
+    //     })
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             if (res.error) throw Error(res.error)
+    //         })
+    // },
 
-    removeMealFromAvoidList(avoidMealId) {
-        if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
-        if (avoidMealId === '') throw Error(`avoidMealId is empty`)
-        if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
+    // removeMealFromAvoidList(avoidMealId) {
+    //     if (avoidMealId === undefined) throw Error(`avoidMealId is undefined`)
+    //     if (avoidMealId === '') throw Error(`avoidMealId is empty`)
+    //     if (!avoidMealId.trim()) throw Error(`avoidMealId is blank`)
 
-        return fetch(`${this.url}/users/${this._userId}/fav/${avoidMealId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Bearer ${this._token}`
-            },
-            body: JSON.stringify({ avoidMealId })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) throw Error(res.error)
-            })
-    },
+    //     return fetch(`${this.url}/users/${this._userId}/fav/${avoidMealId}`, {
+    //         method: 'DELETE',
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Authorization': `Bearer ${this._token}`
+    //         },
+    //         body: JSON.stringify({ avoidMealId })
+    //     })
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             if (res.error) throw Error(res.error)
+    //         })
+    // },
 
+      /**Sends GET request to retrieve a meal
+     * Retrieves a meal
+     * @param {string} mealId
+     * @throws {Error in case of undefined data}
+     * @throws {Error in case of input data empty or blank}
+     * @returns {Promise} 
+     */
     retrieveMeal(mealId) {
         if (mealId === undefined) throw Error(`mealId is undefined`)
         if (mealId === '') throw Error(`mealId is empty`)
@@ -412,12 +486,18 @@ const logic = {
             })
     },
 
+    /**
+     * Removes a meal from meal plan
+     * @param {string} id 
+     * @param {string} status 
+     * @returns {mealplan}
+     */
     removeMealFromMealPlan(id, status) {
-        // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
-        // if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
+        if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
+        if (typeof status !== 'string') throw new TypeError(`${status} is not a string`)
 
-        // if (!id.trim().length) throw Error('id is empty or blank')
-        // if (!status.trim().length) throw Error('status is empty or blank')
+        if (!id.trim().length) throw Error('id is empty or blank')
+        if (!status.trim().length) throw Error('status is empty or blank')
 
         let _mealPlan = sessionStorage.getItem('mealPlan')
         let mealPlan = JSON.parse(_mealPlan)
@@ -442,6 +522,14 @@ const logic = {
         return mealPlan
     },
 
+     /**
+     * Moves a meal from meal plan
+     * @param {string} id 
+     * @param {string} name
+     * @param {string} status 
+     * @param {string} previousStatus
+     * @returns {mealplan}
+     */
     moveMeal(id, name, status, previousStatus) {
         // if (typeof id !== 'string') throw new TypeError(`${id} is not a string`)
         // if (!id.trim().length) throw Error('id is empty or blank')
@@ -498,6 +586,10 @@ const logic = {
         return mealPlan
     },
 
+    /**
+     * Generates a shopping list
+     * @returns {shopping list}
+     */
     generateShoppingList() {
 
         let _mealPlan = sessionStorage.getItem('mealPlan')
@@ -532,40 +624,46 @@ const logic = {
         }
         return shoppingList
     },
-    addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
-        if (!name) throw Error('You need to name your recipe')
-        if(!diet) throw Error('You need to specidy a diet')
-        if(!mainIngredients) throw Error('At least one main ingredient should be added')
-        if (!seasons.length) throw Error('You need to select at least one season')
 
-        if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
-        if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
-        // if (instanceof mainIngredients !== 'Array') throw TypeError(`${mainIngredients} is not an array`)
-        // if (instanceof optionalIngredients !== 'Array') throw TypeError(`${optionalIngredients} is not an array`)
-        // if (instanceof intolerances !== 'Array') throw TypeError(`${intolerances} is not an array`)
-        if (typeof linkRecipe !== 'string') throw TypeError(`${linkRecipe} is not a string`)
-        if (typeof linkImage !== 'string') throw TypeError(`${linkImage} is not a string`)
-        // if (instanceof seasons !== 'Array') throw TypeError(`${seasons} is not an array`)
+    // addNewMeal(name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons) {
+    //     if (!name) throw Error('You need to name your recipe')
+    //     if(!diet) throw Error('You need to specidy a diet')
+    //     if(!mainIngredients) throw Error('At least one main ingredient should be added')
+    //     if (!seasons.length) throw Error('You need to select at least one season')
 
-        if (!name.trim()) throw Error('name is empty or blank')
-        if (!diet.trim()) throw Error('diet is empty or blank')
-        if (!linkRecipe.trim()) throw Error('linkRecipe is empty or blank')
-        if (!linkImage.trim()) throw Error('linkImage is empty or blank')
+    //     if (typeof name !== 'string') throw TypeError(`${name} is not a string`)
+    //     if (typeof diet !== 'string') throw TypeError(`${diet} is not a string`)
+    //     // if (instanceof mainIngredients !== 'Array') throw TypeError(`${mainIngredients} is not an array`)
+    //     // if (instanceof optionalIngredients !== 'Array') throw TypeError(`${optionalIngredients} is not an array`)
+    //     // if (instanceof intolerances !== 'Array') throw TypeError(`${intolerances} is not an array`)
+    //     if (typeof linkRecipe !== 'string') throw TypeError(`${linkRecipe} is not a string`)
+    //     if (typeof linkImage !== 'string') throw TypeError(`${linkImage} is not a string`)
+    //     // if (instanceof seasons !== 'Array') throw TypeError(`${seasons} is not an array`)
 
-        return fetch(`${this.url}/meals/addmeal`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'Authorization': `Bearer ${this._token}`
-            },
-            body: JSON.stringify({ name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons })
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.error) throw Error(res.error)
-            })
+    //     if (!name.trim()) throw Error('name is empty or blank')
+    //     if (!diet.trim()) throw Error('diet is empty or blank')
+    //     if (!linkRecipe.trim()) throw Error('linkRecipe is empty or blank')
+    //     if (!linkImage.trim()) throw Error('linkImage is empty or blank')
 
-    },
+    //     return fetch(`${this.url}/meals/addmeal`, {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json; charset=utf-8',
+    //             'Authorization': `Bearer ${this._token}`
+    //         },
+    //         body: JSON.stringify({ name, diet, mainIngredients, optionalIngredients, intolerances, linkRecipe, linkImage, seasons })
+    //     })
+    //         .then(res => res.json())
+    //         .then(res => {
+    //             if (res.error) throw Error(res.error)
+    //         })
+
+    // },
+    
+    /**
+     * Returns a date with dd/mm/yyyy format
+     * @returns 
+     */
     getDate() {
 
     let today = new Date()

@@ -3,6 +3,7 @@ import logic from '../../logic'
 import Meal from '../Meal/Meal'
 import MealDetail from '../MealDetail/MealDetail'
 import ShoppingList from '../ShoppingList/ShoppingList'
+import swal from 'sweetalert'
 import './MealPlan.css'
 
 class MealPlan extends Component {
@@ -32,8 +33,10 @@ class MealPlan extends Component {
         // const checked = event.target.checked
 
         // if(checked)
-        debugger
+        
         logic.addMealToFavourites(id)
+        .then(() => swal('Meal successfully saved!'))
+            .catch(err => Error(err))
         // else
         // logic.removeMealFromFavourites(id)
         

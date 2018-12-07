@@ -29,7 +29,7 @@ describe('logic', () => {
                 expect(res).not.to.be.undefined
                 expect(res).to.be.instanceOf(Object)
                 expect(res.category).to.equal('carb')
-                expect(res.subcategory).to.equal('pizza')
+                // expect(res.subcategory).to.equal('pizza')
                 expect(res.intolerances.length).to.equal(0)
                 expect(res.diet).to.equal(0)
                 expect(res.isSpecialMeal).to.equal(false)
@@ -135,7 +135,7 @@ describe('logic', () => {
                     expect(err.message).to.equal(`season is empty or blank`)
                 }
             })
-           
+
             it('should fail on category different than string', async () => {
                 try {
                     await logic.searchRandomMeal(0, 'fruit', 0, true, false, ['gluten'], true, 'autum')
@@ -242,23 +242,23 @@ describe('logic', () => {
                 _password = `password-${Math.random()}`
 
                 user = new User({ name: _name, surname: _surname, username: _username, password: _password })
-                
+
                 await user.save()
             })
 
             it('should succeed on correct data', async () => {
-            mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-            
-            await logic.addMealplan(user.id, mealplan)
+                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
 
-            const _user = await logic.retrieveUser(user.id)
-            
-            expect(_user.savedMealPlans).to.exist
-            expect(_user.savedMealPlans).to.be.instanceOf(Array)
-            expect(_user.savedMealPlans.length).to.equal(1)
-            expect(_user.savedMealPlans[0].name).to.equal('balanced')
-            expect(_user.savedMealPlans[0].date).to.equal('1543838559813')
-            
+                await logic.addMealplan(user.id, mealplan)
+
+                const _user = await logic.retrieveUser(user.id)
+
+                expect(_user.savedMealPlans).to.exist
+                expect(_user.savedMealPlans).to.be.instanceOf(Array)
+                expect(_user.savedMealPlans.length).to.equal(1)
+                expect(_user.savedMealPlans[0].name).to.equal('balanced')
+                expect(_user.savedMealPlans[0].date).to.equal('1543838559813')
+
             })
 
             it('should fail on incorrect user id', async () => {
@@ -275,11 +275,11 @@ describe('logic', () => {
                     expect(err.message).to.equal(`id is not valid ${userId}`)
                 }
             })
-            
+
             it('should fail on undefined user id', async () => {
-                
+
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                
+
                 try {
                     await logic.addMealplan(undefined, mealplan)
                     expect(true).to.be.false
@@ -287,12 +287,12 @@ describe('logic', () => {
                     expect(err).to.be.instanceof(TypeError)
                     expect(err.message).to.equal(`undefined is not a string`)
                 }
-    
+
             })
             it('should fail on empty user id', async () => {
-                
+
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                
+
                 try {
                     await logic.addMealplan('', mealplan)
                     expect(true).to.be.false
@@ -300,11 +300,11 @@ describe('logic', () => {
                     expect(err).to.be.instanceof(ValueError)
                     expect(err.message).to.equal(`id is empty or blank`)
                 }
-    
+
             })
 
             it('should fail on blank user id', async () => {
-                
+
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
 
                 const userId = '  /t/n'
@@ -316,12 +316,12 @@ describe('logic', () => {
                     expect(err).to.be.instanceof(ValueError)
                     expect(err.message).to.equal(`id is not valid ${userId}`)
                 }
-            })   
-            
+            })
+
             it('should fail on user id different than string', async () => {
-                
+
                 mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
-                
+
                 try {
                     await logic.addMealplan(0, mealplan)
                     expect(true).to.be.false
@@ -329,7 +329,7 @@ describe('logic', () => {
                     expect(err).to.be.instanceof(TypeError)
                     expect(err.message).to.equal(`0 is not a string`)
                 }
-            }) 
+            })
 
             it('should fail on mealplan different than object', async () => {
                 mealplan = []
@@ -345,7 +345,7 @@ describe('logic', () => {
         })
 
         describe('remove mealplan', () => {
-            let user, mealplan            
+            let user, mealplan
 
             beforeEach(async () => {
                 name = `name-${Math.random()}`
@@ -353,9 +353,9 @@ describe('logic', () => {
                 username = `username-${Math.random()}`
                 password = `password-${Math.random()}`
 
-                (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+                user = new User({ name: name, surname: surname, username: username, password: password })
 
-                mealplan = new MealPlan({ date: '1543838559813', name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
+                mealplan = new MealPlan({ date: 1543838559813, name: 'balanced', day: [{ day: 'monday' }, { day: 'tuesday' }, { day: 'wednesday' }, { day: 'thursday' }, { day: 'friday' }, { day: 'saturday' }, { day: 'sunday' }] })
 
                 user.savedMealPlans.push(mealplan)
 
@@ -365,21 +365,106 @@ describe('logic', () => {
             it('should succeed on correct data', async () => {
                 const res = await logic.removeMealplan(user.id, mealplan.date)
 
-                expect(res).to.be.a('array')             
-
-                expect(postits.length).to.equal(0)
+                expect(res).to.be.a('array')
+                expect(user.savedMealPlans.length).to.equal(0)
             })
 
-            it('should fail on incorrect data', async () => {
+            it('should fail on incorrect user id', async () => {
+                const res = await logic.removeMealplan(user.id, mealplan.date)
+
                 try {
-                    await logic.removeMealplan(user.id, 'wrong-mealplan-id')
+                    await logic.removeMealplan('wronguserid000', 1544175904514)
                     expect(true).to.be.false
                 } catch (err) {
                     expect(err).to.be.instanceof(NotFoundError)
-                    expect(err.message).to.equal(`mealplan not found in saved meal plan list`)
+                    expect(err.message).to.equal(` user with id ${id} not found`)
                 }
             })
+
+            it('should fail on incorrect mealplan id', async () => {
+                try {
+                    await logic.removeMealplan(user.id, 1544175904514)
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`meal with id ${id} not found`)
+                }
+            })
+
+            it('should fail on mealplan id different than number', async () => {
+                try {
+                    await logic.removeMealplan(user.id, 'string-mealplan-id')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(NotFoundError)
+                    expect(err.message).to.equal(`mealplanId is not a number`)
+                }
+            })
+
+            it('should fail if savedmealplans from user is blank', async () => {
+                try {
+                    await logic.removeMealplan(user.id, 'string-mealplan-id')
+                    expect(true).to.be.false
+                } catch (err) {
+                    expect(err).to.be.instanceof(Error)
+                    expect(err.message).to.equal(`favourites list of user with id ${id} is empty`)
+                }
+            })
+
         })
+    })
+
+    describe('meals', () => {
+        let user, mealId
+
+        beforeEach(async () => {
+
+            mealId = '5bfbdc2844b7a54b0cc68271'
+
+            name = `name-${Math.random()}`
+            surname = `surname-${Math.random()}`
+            username = `username-${Math.random()}`
+            password = `password-${Math.random()}`
+
+            user = new User({ name: name, surname: surname, username: username, password: password })
+           
+            await user.save()
+        })
+
+        describe('add favourite meal', () => {
+
+            it('should succeed on correct data', async () => {
+                const res = await logic.addFavouriteMeal(user.id, mealId)
+
+                expect(res).to.be.a('array')
+                expect(user.savedMeals.length).to.equal(1)
+            })
+        })
+
+        describe('remove favourite meal', () => {
+
+            it('should succeed on correct data', async () => {
+                const res = await logic.addFavouriteMeal(user.id, mealId)
+
+                expect(res).to.be.a('array')
+                expect(user.savedMeals.length).to.equal(0)
+            })
+        })
+
+        describe('retrieve favourite meal', () => {
+   
+            it('should succeed on valid id', async () => {
+                const meal = await logic.retrieveMeal(mealId)
+
+                expect(meal).not.to.be.instanceof(Meal)
+                expect(meal.id).to.exist
+                expect(meal.id).to.be.a('string')
+                expect(meal.name).to.exist
+                expect(meal.name).to.be.a('string')
+                expect(meal.category).to.exist
+                expect(meal.category).to.be.a(string)
+            })
+
     })
 
     beforeEach(() => Promise.all([User.deleteMany()]))
@@ -393,6 +478,10 @@ describe('logic', () => {
                 surname = `surname-${Math.random()}`
                 username = `username-${Math.random()}`
                 password = `password-${Math.random()}`
+
+                user = new User({ name: name, surname: surname, username: username, password: password })
+           
+                await user.save()
             })
 
             it('should succeed on correct data', async () => {
@@ -478,7 +567,9 @@ describe('logic', () => {
                 username = `username-${Math.random()}`
                 password = `password-${Math.random()}`
 
-                    (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+                user = new User({ name: name, surname: surname, username: username, password: password })
+                
+                await user.save()
             })
 
             it('should authenticate on correct credentials', async () => {
@@ -548,7 +639,9 @@ describe('logic', () => {
                 username = `username-${Math.random()}`
                 password = `password-${Math.random()}`
 
-                    (user = new User({ name: name, surname: surname, username: username, password: password })).save()
+                user = new User({ name: name, surname: surname, username: username, password: password })
+
+                await user.save()
             })
 
             it('should succeed on valid id', async () => {
@@ -704,8 +797,7 @@ describe('logic', () => {
         //     })
     })
 
-    afterEach(() => Promise.all([User.deleteMany()]))
-
+    // afterEach(() => Promise.all([User.deleteMany()]))
 
     after(() => mongoose.disconnect())
 })

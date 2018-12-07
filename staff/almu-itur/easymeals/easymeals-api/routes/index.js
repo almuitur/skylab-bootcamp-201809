@@ -186,7 +186,7 @@ router.delete('/users/:id/savedmealplan', [bearerTokenParser, jwtVerifier, jsonB
 })
 
 router.post('/meals/find/:id', [bearerTokenParser, jwtVerifier, jsonBodyParser], (req, res) => {
-    debugger
+    
     routeHandler(() => {
         const { params: { id }, sub, body: { category, subcategory, diet, isSpecialMeal, isCold, intolerances, isLight, season } } = req
 

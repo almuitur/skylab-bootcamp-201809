@@ -3,7 +3,6 @@ import { Container, Input, MDBInput } from "mdbreact"
 import Ingredient from '../Ingredient/Ingredient'
 import Error from '../Error/Error'
 import './AddNewMeal.css'
-import '../AddNewMeal2/AddNewMeal2.css'
 
 class AddNewMeal extends Component {
 
@@ -202,68 +201,70 @@ class AddNewMeal extends Component {
                     </div>
                 </div>
 
-                 <h2 className='add-new-meal-title'>Special meal:</h2>
-                <div className="isSpecialMeal">
-                    <h2 className='add-new-meal-title'>Is this meal suitable for special occasions (like for a first date)?</h2>
-                    <input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealtrue" name="specialmeal" /><label for="specialmealtrue">YES</label>
-                    <input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealfalse" name="specialmeal" /><label for="specialmealfalse">NO</label>
+
+             
+                            <h2 className='add-new-meal-title'>Special meal:</h2>
+                            <div className="isSpecialMeal">
+                                <h2 className='add-new-meal-title'>Is this meal suitable for special occasions (like for a first date)?</h2>
+                                <label for='specialmealyes'><input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealyes" name="specialmealyes" />YES</label>
+                                <label for="specialmealno"><input onClick={this.handleIsSpecialMealChange} type="radio" id="specialmealno" name="specialmealno" />NO</label>
+                            </div>
+
+                            <h2 className='add-new-meal-title'>Cold meal:</h2>
+                            <div className="isCold">
+                                <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
+                                <input onClick={this.handleIsColdChange} type="radio" id="iscoldtrue" name="iscold" value="true" />True
+                    <input onClick={this.handleIsColdChange} type="radio" id="iscoldfalse" name="iscold" value="false" />False
                 </div>
 
-                <h2 className='add-new-meal-title'>Cold meal:</h2>
-                <div className="isCold">
-                    <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
-                    <input onClick={this.handleIsColdChange} type="radio" id="iscoldtrue" name="iscold" /><label for="iscoldtrue">YES</label>
-                    <input onClick={this.handleIsColdChange} type="radio" id="iscoldfalse" name="iscold" /><label for="iscoldfalse">NO</label>
-                </div>
+                            <h2 className='add-new-meal-title'>Select intolerance of the meal:</h2>
+                            <p className='add-new-meal-subtitle'>(based on its main ingredients only...):</p>
+                            <div className='add-new-meal-option'>
+                                <label for='lactose'>
+                                    <input type='checkbox' name='intolerances' id='lactose' value='lactose' onChange={this.handleIntolerancesChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('lactose')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/lactose.png')} alt='lactose' /></div>
+                                </label>
+                                <label for='gluten'>
+                                    <input type='checkbox' name='intolerances' id='gluten' value='gluten' onChange={this.handleIntolerancesChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('gluten')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/gluten.png')} alt='gluten' /></div>
+                                </label>
+                            </div>
 
-                <h2 className='add-new-meal-title'>Select intolerance of the meal:</h2>
-                <p className='add-new-meal-subtitle'>(based on its main ingredients only...):</p>
-                <div className='add-new-meal-option'>
-                    <label for='lactose'>
-                        <input type='checkbox' name='intolerances' id='lactose' value='lactose' onChange={this.handleIntolerancesChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('lactose')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/lactose.png')} alt='lactose' /></div>
-                    </label>
-                    <label for='gluten'>
-                        <input type='checkbox' name='intolerances' id='gluten' value='gluten' onChange={this.handleIntolerancesChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.intolerances.includes('gluten')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/gluten.png')} alt='gluten' /></div>
-                    </label>
-                </div>
+                            <h2 className='add-new-meal-title'>Is this a light meal (low in fat)?</h2>
+                            <div className="isLight">
+                                <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
+                                <input onClick={this.handleisLightChange} type="radio" id="islight" name="isLight" /><label for="isLighttrue">YES</label>
+                                <input onClick={this.handleisLightChange} type="radio" id="islightfalse" name="isLight" /><label for="isLightfalse">NO</label>
+                            </div>
 
-                 <h2 className='add-new-meal-title'>Is this a light meal (low in fat)?</h2>
-                <div className="isLight">
-                    <h2 className='add-new-meal-title'>Is this meal more likely to be a cold meal (like a salad or ice-cream)?</h2>
-                    <input onClick={this.handleisLightChange} type="radio" id="islight" name="isLight" /><label for="isLighttrue">YES</label>
-                    <input onClick={this.handleisLightChange} type="radio" id="islightfalse" name="isLight" /><label for="isLightfalse">NO</label>
-                </div>
+                            <h2 className='add-new-meal-title'>Select which seasons you can eat this meal:</h2>
+                            <div className='add-new-meal-option'>
+                                <label for='winter'>
+                                    <input type='checkbox' name='seasons' id='winter' value='winter' onChange={this.handleSeasonChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.season.includes('winter')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/winter.jpg')} alt='winter' /></div>
+                                </label>
+                                <label for='spring'>
+                                    <input type='checkbox' name='seasons' id='spring' value='spring' onChange={this.handleSeasonChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.season.includes('spring')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/spring.jpg')} alt='spring' /></div>
+                                </label>
+                                <label for='summer'>
+                                    <input type='checkbox' name='seasons' id='summer' value='summer' onChange={this.handleSeasonChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.season.includes('summer')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/summer.png')} alt='summer' /></div>
+                                </label>
+                                <label for='autum'>
+                                    <input type='checkbox' name='seasons' id='autum' value='autum' onChange={this.handleSeasonChange} />
+                                    <div className='add-meal-image-container'><img className={(this.state.season.includes('autum')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/autum.png')} alt='autum' /></div>
+                                </label>
+                            </div>
 
-                <h2 className='add-new-meal-title'>Select which seasons you can eat this meal:</h2>
-                <div className='add-new-meal-option'>
-                    <label for='winter'>
-                        <input type='checkbox' name='seasons' id='winter' value='winter' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('winter')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/winter.jpg')} alt='winter' /></div>
-                    </label>
-                    <label for='spring'>
-                        <input type='checkbox' name='seasons' id='spring' value='spring' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('spring')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/spring.jpg')} alt='spring' /></div>
-                    </label>
-                    <label for='summer'>
-                        <input type='checkbox' name='seasons' id='summer' value='summer' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('summer')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/summer.png')} alt='summer' /></div>
-                    </label>
-                    <label for='autum'>
-                        <input type='checkbox' name='seasons' id='autum' value='autum' onChange={this.handleSeasonChange} />
-                        <div className='add-meal-image-container'><img className={(this.state.season.includes('autum')) ? 'select-option-img-active' : 'select-option-img'} src={require('../../images/autum.png')} alt='autum' /></div>
-                    </label>
-                </div>
-
-                <div className="add-new-meal-name">
-                    <h2 className='add-new-meal-title'>Add a link to the recipe of the meal (optional):</h2>
-                    <MDBInput label="Link to recipe" onChange={this.handleLinkRecipeChange} />
-                </div>
+                            <div className="add-new-meal-name">
+                                <h2 className='add-new-meal-title'>Add a link to the recipe of the meal (optional):</h2>
+                                <MDBInput label="Link to recipe" onChange={this.handleLinkRecipeChange} />
+                            </div>
 
             </form>
         </div>
-    }
-}
-
+                        }
+                    }
+                    
 export default AddNewMeal
