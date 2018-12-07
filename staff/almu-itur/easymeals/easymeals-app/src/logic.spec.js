@@ -1,15 +1,18 @@
-//import logic from './logic'
+require('dotenv').config()
+
+// import logic from './logic'
+const logic = require('./logic')
+const { mongoose, models: { Meal, Day, MealPlan, User } } = require('easymeals-data')
 
 require('isomorphic-fetch')
-
 global.sessionStorage = require('sessionstorage')
 
-const logic = require('./logic')
 
-logic.url = 'http://localhost:5000/api'
-// logic.url = 'http://192.168.0.82:5000' // DEV server!
+logic.url = process.env.REACT_APP_API_URL
 
 const { expect } = require('chai')
+// const fs = require('fs-extra')
+// const path = require('path')
 
 // running test from CLI
 // normal -> $ mocha src/logic.spec.js --timeout 10000
