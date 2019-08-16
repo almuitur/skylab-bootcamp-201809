@@ -414,7 +414,7 @@ describe('logic', () => {
         })
     })
 
-    describe('meals', () => {
+    describe('meals', async () => {
         let user, mealId
 
         beforeEach(async () => {
@@ -473,7 +473,7 @@ describe('logic', () => {
         describe('register', () => {
             let name, surname, username, password
 
-            beforeEach(() => {
+            beforeEach(async () => {
                 name = `name-${Math.random()}`
                 surname = `surname-${Math.random()}`
                 username = `username-${Math.random()}`
@@ -507,53 +507,53 @@ describe('logic', () => {
                 expect(user.password).to.equal(password)
             })
 
-            it('should fail on undefined name', () => {
+            it('should fail on undefined name', async () => {
                 expect(() => logic.registerUser(undefined, surname, username, password)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty name', () => {
+            it('should fail on empty name', async () => {
                 expect(() => logic.registerUser('', surname, username, password)).to.throw(ValueError, 'name is empty or blank')
             })
 
-            it('should fail on blank name', () => {
+            it('should fail on blank name', async () => {
                 expect(() => logic.registerUser('   \t\n', surname, username, password)).to.throw(ValueError, 'name is empty or blank')
             })
 
-            it('should fail on undefined surname', () => {
+            it('should fail on undefined surname', async () => {
                 expect(() => logic.registerUser(name, undefined, username, password)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty surname', () => {
+            it('should fail on empty surname', async () => {
                 expect(() => logic.registerUser(name, '', username, password)).to.throw(ValueError, 'surname is empty or blank')
             })
 
-            it('should fail on blank surname', () => {
+            it('should fail on blank surname', async () => {
                 expect(() => logic.registerUser(name, '   \t\n', username, password)).to.throw(ValueError, 'surname is empty or blank')
             })
-            it('should fail on undefined username', () => {
+            it('should fail on undefined username', async () => {
                 expect(() => logic.registerUser(name, surname, undefined, password)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty username', () => {
+            it('should fail on empty username', async () => {
                 expect(() => logic.registerUser(name, surname, '', password)).to.throw(ValueError, 'username is empty or blank')
             })
 
-            it('should fail on blank username', () => {
+            it('should fail on blank username', async () => {
                 expect(() => logic.registerUser(name, surname, '   \t\n', password)).to.throw(ValueError, 'username is empty or blank')
             })
-            it('should fail on undefined password', () => {
+            it('should fail on undefined password', async () => {
                 expect(() => logic.registerUser(name, surname, username, undefined)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty password', () => {
+            it('should fail on empty password', async () => {
                 expect(() => logic.registerUser(name, surname, username, '')).to.throw(ValueError, 'password is empty or blank')
             })
 
-            it('should fail on blank password', () => {
+            it('should fail on blank password', async () => {
                 expect(() => logic.registerUser(name, surname, username, '   \t\n')).to.throw(ValueError, 'password is empty or blank')
             })
 
-            it('should fail on already registered username', () => {
+            it('should fail on already registered username', async () => {
                 expect(() => logic.registerUser(name, surname, username, password)).to.throw(AlreadyExistsError, `username ${username} already registered`)
             })
         })
@@ -561,7 +561,7 @@ describe('logic', () => {
         describe('authenticate', () => {
             let user
 
-            beforeEach(() => {
+            beforeEach( async () => {
                 name = `name-${Math.random()}`
                 surname = `surname-${Math.random()}`
                 username = `username-${Math.random()}`
@@ -584,27 +584,27 @@ describe('logic', () => {
                 expect(id).to.equal(_user.id)
             })
 
-            it('should fail on undefined username', () => {
+            it('should fail on undefined username', async () => {
                 expect(() => logic.authenticateUser(undefined, user.password)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty username', () => {
+            it('should fail on empty username', async () => {
                 expect(() => logic.authenticateUser('', user.password)).to.throw(ValueError, 'username is empty or blank')
             })
 
-            it('should fail on blank username', () => {
+            it('should fail on blank username', async () => {
                 expect(() => logic.authenticateUser('   \t\n', user.password)).to.throw(ValueError, 'username is empty or blank')
             })
 
-            it('should fail on undefined password', () => {
+            it('should fail on undefined password', async () => {
                 expect(() => logic.authenticateUser(user.username, undefined)).to.throw(TypeError, 'undefined is not a string')
             })
 
-            it('should fail on empty password', () => {
+            it('should fail on empty password', async () => {
                 expect(() => logic.authenticateUser(user.username, '')).to.throw(ValueError, 'password is empty or blank')
             })
 
-            it('should fail on blank password', () => {
+            it('should fail on blank password', async () => {
                 expect(() => logic.authenticateUser(user.username, '   \t\n')).to.throw(ValueError, 'password is empty or blank')
             })
 
@@ -630,10 +630,10 @@ describe('logic', () => {
 
         })
 
-        describe('retrieve', () => {
+        describe('retrieve', async () => {
             let user
 
-            beforeEach(() => {
+            beforeEach(async () => {
                 name = `name-${Math.random()}`
                 surname = `surname-${Math.random()}`
                 username = `username-${Math.random()}`
@@ -675,129 +675,10 @@ describe('logic', () => {
             })
         })
 
-        // describe('update', () => {
-        //     let user
-
-        //     beforeEach(() => {
-        //         name = `name-${Math.random()}`
-        //         surname = `surname-${Math.random()}`
-        //         username = `username-${Math.random()}`
-        //         password = `password-${Math.random()}`
-
-        //         (user = new User({ name: name, surname: surname, username: username, password: password })).save()
-        //     })
-
-        //     it('should update on correct data and password', async () => {
-        //         const { id, name, surname, username, password } = user
-
-        //         const newName = `${name}-${Math.random()}`
-        //         const newSurname = `${surname}-${Math.random()}`
-        //         const newUsername = `${username}-${Math.random()}`
-        //         const newPassword = `${password}-${Math.random()}`
-
-        //         const res = await logic.updateUser(id, newName, newSurname, newUsername, newPassword, password)
-
-        //         expect(res).to.be.undefined
-
-        //         const _users = await User.find()
-
-        //         const [_user] = _users
-
-        //         expect(_user.id).to.equal(id)
-
-        //         expect(_user.name).to.equal(newName)
-        //         expect(_user.surname).to.equal(newSurname)
-        //         expect(_user.username).to.equal(newUsername)
-        //         expect(_user.password).to.equal(newPassword)
-        //     })
-
-        //     it('should update on correct id, name and password (other fields null)', async () => {
-        //         const { id, name, surname, username, password } = user
-
-        //         const newName = `${name}-${Math.random()}`
-
-        //         const res = await logic.updateUser(id, newName, null, null, null, password)
-
-        //         expect(res).to.be.undefined
-
-        //         const _users = await User.find()
-
-        //         const [_user] = _users
-
-        //         expect(_user.id).to.equal(id)
-
-        //         expect(_user.name).to.equal(newName)
-        //         expect(_user.surname).to.equal(surname)
-        //         expect(_user.username).to.equal(username)
-        //         expect(_user.password).to.equal(password)
-        //     })
-
-        //     it('should update on correct id, surname and password (other fields null)', async () => {
-        //         const { id, name, surname, username, password } = user
-
-        //         const newSurname = `${surname}-${Math.random()}`
-
-        //         const res = await logic.updateUser(id, null, newSurname, null, null, password)
-
-        //         expect(res).to.be.undefined
-
-        //         const _users = await User.find()
-
-        //         const [_user] = _users
-
-        //         expect(_user.id).to.equal(id)
-
-        //         expect(_user.name).to.equal(name)
-        //         expect(_user.surname).to.equal(newSurname)
-        //         expect(_user.username).to.equal(username)
-        //         expect(_user.password).to.equal(password)
-        //     })
-
-        //     // TODO other combinations of valid updates
-
-        //     it('should fail on undefined id', () => {
-        //         const { id, name, surname, username, password } = user
-
-        //         expect(() => logic.updateUser(undefined, name, surname, username, password, password)).to.throw(TypeError, 'undefined is not a string')
-        //     })
-
-        //     // TODO other test cases
-
-        //     describe('with existing user', () => {
-        //         let user2
-
-        //         beforeEach(async () => {
-        //             user2 = new User({ name: 'John', surname: 'Doe', username: 'jd2', password: '123' })
-
-        //             await user2.save()
-        //         })
-
-        //         it('should update on correct data and password', async () => {
-        //             const { id, name, surname, username, password } = user2
-
-        //             const newUsername = 'jd'
-
-        //             try {
-        //                 const res = await logic.updateUser(id, null, null, newUsername, null, password)
-
-        //                 expect(true).to.be.false
-        //             } catch (err) {
-        //                 expect(err).to.be.instanceof(AlreadyExistsError)
-        //             } finally {
-        //                 const _user = await User.findById(id)
-
-        //                 expect(_user.id).to.equal(id)
-
-        //                 expect(_user.name).to.equal(name)
-        //                 expect(_user.surname).to.equal(surname)
-        //                 expect(_user.username).to.equal(username)
-        //                 expect(_user.password).to.equal(password)
-        //             }
-        //         })
-        //     })
+    })
     })
 
-    // afterEach(() => Promise.all([User.deleteMany()]))
+    afterEach(() => Promise.all([User.deleteMany()]))
 
     after(() => mongoose.disconnect())
 })
